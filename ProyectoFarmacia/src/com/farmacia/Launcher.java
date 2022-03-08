@@ -7,9 +7,10 @@ public class Launcher {
 
     static LoginScreen loginScreen;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         FlatLightLaf.setup();
-        loginScreen = new LoginScreen();
+        //loginScreen = new LoginScreen();
+        VentanaPrincipal launcher = new VentanaPrincipal();
     }
 
 }

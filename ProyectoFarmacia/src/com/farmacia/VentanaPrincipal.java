@@ -79,11 +79,10 @@ public class VentanaPrincipal extends JFrame {
     JButton btnAgregar = new JButton("Agregar");
     JButton btnSalir = new JButton("Salir");
 
-    File file = new File("ProyectosSemestre4/ProyectoFarmacia/src/resources/vesa_pharmacy.xlsx");
+    File file = new File("ProyectoFarmacia/src/resources/vesa_pharmacy.xlsx");
 
     FileInputStream inputStream = new FileInputStream(file);
     XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
-
 
     public VentanaPrincipal() throws Exception {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -293,9 +292,9 @@ public class VentanaPrincipal extends JFrame {
             });
 
             btnEliminar.addActionListener(e12 -> {
-                if(tableVenta.getSelectedRow() >= 0){
+                if (tableVenta.getSelectedRow() >= 0) {
                     int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el producto de la venta actual?", "", JOptionPane.YES_NO_OPTION);
-                    if(respuesta == 0) {
+                    if (respuesta == 0) {
                         float importe = Float.parseFloat(tableVenta.getValueAt(tableVenta.getSelectedRow(), 4).toString().replace("$", ""));
                         float nuevoPrecio = Float.parseFloat(labelPrecioTotal.getText().replace("$", "")) - importe;
                         tableModelVentas.removeRow(tableVenta.getSelectedRow());
@@ -322,31 +321,57 @@ public class VentanaPrincipal extends JFrame {
                 JTextField tfPrecio = new JTextField();
                 JTextField tfStock = new JTextField();
                 JLabel labelTitulo = new JLabel("Modificar producto");
+                JLabel labelDescripcion = new JLabel("Descripción");
+                JLabel labelPrecio = new JLabel("Precio");
+                JLabel labelStock = new JLabel("Productos en existencia");
                 JButton btnAceptar = new JButton("Aceptar");
                 JButton btnCancelar = new JButton("Cancelar");
 
+                frameModificar.setSize(450, 550);
                 frameModificar.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                frameModificar.setLayout(null);
-                frameModificar.setLocationRelativeTo(null);
-                frameModificar.setSize(500, 600);
                 frameModificar.setResizable(false);
+                frameModificar.setLocationRelativeTo(null);
+                frameModificar.setLayout(null);
 
-                labelTitulo.setBounds(20, 50, 100, 30);
+                labelTitulo.setFont(new Font("Myriad Pro", Font.BOLD, 20 ));
+                tfDescripcion.setText(tableInventario.getValueAt(tableInventario.getSelectedRow(), 1).toString());
+                tfPrecio.setText(tableInventario.getValueAt(tableInventario.getSelectedRow(), 2).toString().replace("$", ""));
+                tfStock.setText(tableInventario.getValueAt(tableInventario.getSelectedRow(), 3).toString());
+
+                labelTitulo.setBounds(60, 50, 200, 30);
+                labelDescripcion.setBounds(60, 100, 300, 30);
+                tfDescripcion.setBounds(60, 140, 300, 30);
+                labelPrecio.setBounds(60, 180, 300, 30);
+                tfPrecio.setBounds(60, 220, 300, 30);
+                labelStock.setBounds(60, 260, 300, 30);
+                tfStock.setBounds(60, 300, 300, 30);
+                btnAceptar.setBounds(60, 380, 150, 30);
+                btnCancelar.setBounds(240, 380, 150, 30);
 
                 frameModificar.add(labelTitulo);
-
-
-                frameModificar.add(new JLabel("Modificar producto"));
-                frameModificar.add(new JLabel("Descripción"));
                 frameModificar.add(tfDescripcion);
-                frameModificar.add(new JLabel("Precio de venta"));
                 frameModificar.add(tfPrecio);
-                frameModificar.add(new JLabel("Cantidad en inventario"));
                 frameModificar.add(tfStock);
                 frameModificar.add(btnAceptar);
                 frameModificar.add(btnCancelar);
+                frameModificar.add(labelDescripcion);
+                frameModificar.add(labelPrecio);
+                frameModificar.add(labelStock);
 
                 frameModificar.setVisible(true);
+
+                btnAceptar.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+
+                    }
+                });
+
+                btnCancelar.addActionListener(e13 -> {
+                    int respuesta = JOptionPane.showConfirmDialog(null, "¿Seguro que desea cancelar?", "", JOptionPane.YES_NO_OPTION);
+                    if (respuesta == 0) {
+                        frameModificar.dispose();
+                    }
+                });
             }
         });
 
