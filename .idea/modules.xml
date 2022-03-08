@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/PracticaTrece/PracticaTrece.iml" filepath="$PROJECT_DIR$/PracticaTrece/PracticaTrece.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProyectoFarmacia/ProyectoFarmacia.iml" filepath="$PROJECT_DIR$/ProyectoFarmacia/ProyectoFarmacia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TopicosAvanzados/TopicosAvanzados.iml" filepath="$PROJECT_DIR$/TopicosAvanzados/TopicosAvanzados.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java-4thsemester.iml" filepath="$PROJECT_DIR$/java-4thsemester.iml" />
+    </modules>
+  </component>
+</project>
