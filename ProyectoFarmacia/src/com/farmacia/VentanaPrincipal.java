@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -337,6 +338,8 @@ public class VentanaPrincipal extends JFrame {
                 tfDescripcion.setText(tableInventario.getValueAt(tableInventario.getSelectedRow(), 1).toString());
                 tfPrecio.setText(tableInventario.getValueAt(tableInventario.getSelectedRow(), 2).toString().replace("$", ""));
                 tfStock.setText(tableInventario.getValueAt(tableInventario.getSelectedRow(), 3).toString());
+                String folio = tableInventario.getValueAt(tableInventario.getSelectedRow(), 0).toString();
+                int selectedRow = tableInventario.getSelectedRow();
 
                 labelTitulo.setBounds(60, 50, 200, 30);
                 labelDescripcion.setBounds(60, 100, 300, 30);
@@ -362,6 +365,39 @@ public class VentanaPrincipal extends JFrame {
 
                 btnAceptar.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        String descripcion = tfDescripcion.getText();
+                        float precioVenta = Float.parseFloat(tfPrecio.getText());
+                        int stock = Integer.parseInt(tfStock.getText());
+
+                        XSSFSheet sheet = workbook.getSheetAt(1);
+
+                        XSSFRow row = sheet.getRow(selectedRow + 1);
+                        System.out.println("selected row " + selectedRow);
+
+                        XSSFCell cell = row.createCell(0, CellType.STRING);
+                        cell.setCellValue(folio);
+                        cell = row.createCell(1, CellType.STRING);
+                        cell.setCellValue(descripcion);
+                        cell = row.createCell(2, CellType.NUMERIC);
+                        cell.setCellValue(precioVenta);
+                        cell = row.createCell(3, CellType.NUMERIC);
+                        cell.setCellValue(stock);
+
+                        try {
+                            FileOutputStream outputStream = new FileOutputStream(file);
+                            workbook.write(outputStream);
+                            outputStream.close();
+                            frameModificar.dispose();
+                            JOptionPane.showMessageDialog(null, "Dato actualizado correctamente!");
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                            return;
+                        }
+
+                        tableModelInventario.setValueAt(descripcion, selectedRow, 1);
+                        tableModelInventario.setValueAt("$" + precioVenta, selectedRow, 2);
+                        tableModelInventario.setValueAt(stock, selectedRow, 3);
+
 
                     }
                 });

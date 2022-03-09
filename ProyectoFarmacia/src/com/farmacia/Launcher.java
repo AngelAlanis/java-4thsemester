@@ -9,8 +9,7 @@ public class Launcher {
 
     public static void main(String[] args) throws Exception {
         FlatLightLaf.setup();
-        //loginScreen = new LoginScreen();
-        VentanaPrincipal launcher = new VentanaPrincipal();
+        loginScreen = new LoginScreen();
     }
 
 }
