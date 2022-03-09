@@ -27,6 +27,7 @@ public class VentanaPrincipal extends JFrame {
 
     ImageIcon iconoCambiarUsuario = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/usuario.png")));
     ImageIcon iconoVentas = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/ventas.png")));
+    ImageIcon iconoAceptar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/aceptar.png")));
     ImageIcon iconoInventario = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/inventario.png")));
     ImageIcon iconoRegistro = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/registro.png")));
     ImageIcon iconoBuscar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/buscar.png")));
@@ -365,6 +366,9 @@ public class VentanaPrincipal extends JFrame {
                 frameModificar.setResizable(false);
                 frameModificar.setLocationRelativeTo(null);
                 frameModificar.setLayout(null);
+
+                btnAceptar.setIcon(iconoAceptar);
+                btnCancelar.setIcon(iconoCancelar);
 
                 labelTitulo.setFont(new Font("Myriad Pro", Font.BOLD, 20));
                 tfDescripcion.setText(tableInventario.getValueAt(tableInventario.getSelectedRow(), 1).toString());
