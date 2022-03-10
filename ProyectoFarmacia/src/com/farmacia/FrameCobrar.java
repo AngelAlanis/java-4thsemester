@@ -65,14 +65,19 @@ public class FrameCobrar extends JFrame {
 
         resultado += "\n--------------------------------------------------------------";
 
-        resultado += String.format("\n%s $%49.2f", "Total", total);
+        resultado += String.format("\n%s %49.2f", "Total", total);
         resultado += String.format("\n%s $%46.2f", "Recibido", cantidadIngresada);
         float cambio = cantidadIngresada - total;
         resultado += String.format("\n%s $%48.2f", "Cambio", cambio);
 
         resultado += "\n--------------------------------------------------------------";
 
+        resultado += String.format("\n%40s", "GRACIAS POR SU COMPRA");
+
+        resultado += "\n--------------------------------------------------------------";
+
         tpRecibo.setText(resultado);
+        frameRecibo.getRootPane().setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         frameRecibo.pack();
         frameRecibo.setVisible(true);
         frameRecibo.setLocationRelativeTo(null);
