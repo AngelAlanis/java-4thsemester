@@ -5,12 +5,16 @@ public class Producto {
     private String folio;
     private String descripcion;
     private float precioVenta;
+    private float importe;
+    private int cantidad;
     private int stock;
 
-    public Producto (String folio, String descripcion, float precioVenta, int stock) {
+    public Producto (String folio, String descripcion, float precioVenta, int cantidad, float importe, int stock) {
         this.folio = folio;
         this.descripcion = descripcion;
         this.precioVenta = precioVenta;
+        this.cantidad = cantidad;
+        this.importe = importe;
         this.stock = stock;
     }
 
@@ -18,31 +22,23 @@ public class Producto {
         return folio;
     }
 
-    public void setFolio(String folio) {
-        this.folio = folio;
-    }
-
     public String getDescripcion() {
         return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public float getPrecioVenta() {
         return precioVenta;
     }
 
-    public void setPrecioVenta(float precioVenta) {
-        this.precioVenta = precioVenta;
+    public float getImporte() {
+        return importe;
+    }
+
+    public int getCantidad() {
+        return cantidad;
     }
 
     public int getStock() {
         return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
     }
 }

@@ -8,7 +8,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
@@ -19,14 +18,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class VentanaPrincipal extends JFrame {
@@ -48,6 +46,8 @@ public class VentanaPrincipal extends JFrame {
     JCheckBox checkBoxFiltro = new JCheckBox();
 
     JTabbedPane tabbedPane = new JTabbedPane();
+
+    ArrayList<Producto> productos = new ArrayList<>();
 
     JPanel panelPrincipal = new JPanel();
     JPanel panelHora = new JPanel();
@@ -318,7 +318,10 @@ public class VentanaPrincipal extends JFrame {
 
         btnCobrar.addActionListener(e -> {
             FrameCobrar frameCobrar = new FrameCobrar();
-            frameCobrar.pedirCantidad();
+            float total = Float.parseFloat(labelPrecioTotal.getText().replace("$", ""));
+
+            frameCobrar.pedirCantidad(productos, total);
+
         });
 
         btnEliminarVenta.addActionListener(e -> {
@@ -578,6 +581,7 @@ public class VentanaPrincipal extends JFrame {
         opciones[4] = "$" + importe;
         opciones[5] = String.valueOf(stock);
         tableModelVentas.addRow(opciones);
+        productos.add(new Producto(folio, descripcion, precioVenta, cantidad, importe, stock));
     }
 
     public void ingresarInventarioTabla(String folio, String descripcion, float precioVenta, int stock) throws IOException {
