@@ -1,7 +1,13 @@
 package com.farmacia;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.Font;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;

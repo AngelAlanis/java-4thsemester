@@ -1,10 +1,25 @@
 package com.farmacia;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.awt.print.PrinterException;
+import java.util.Objects;
+
 
 public class FrameCobrar extends JFrame {
     JLabel labelInformacion = new JLabel("Ingrese la cantidad del cliente recibida");
@@ -43,45 +58,67 @@ public class FrameCobrar extends JFrame {
         JTextPane tpRecibo = new JTextPane();
         tpRecibo.setEditable(false);
 
-        frameRecibo.add(tpRecibo);
+        frameRecibo.setLayout(new BorderLayout());
 
-        String resultado = "";
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ISO_DATE;
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        String horaActual = formatoHora.format(now);
+        String fechaActual = formatoFecha.format(now);
 
-        resultado += "--------------------------------------------------------------";
-        resultado += String.format("\n\n%35s", "VesaPharmacy.com");
-        resultado += String.format("\n%35s", "Blvd. Felipe Pescador 1830, Nueva Vizcaya, 34080 Durango, Dgo.");
-        resultado += String.format("\n%35s", "+52 610 438 2356");
-        resultado += "\n\n--------------------------------------------------------------";
-        resultado += String.format("\n%-22.22s %-12s %-12s %-12s", "Producto", "Precio", "Cantidad", "Importe");
-        resultado += "\n--------------------------------------------------------------";
+        ImageIcon logoByN = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/logoRecibo.png")));
+        JLabel labelLogo = new JLabel();
+        labelLogo.setIcon(logoByN);
 
-        for (int i = 0; i < listaProductos.size(); i++) {
-            resultado += String.format("\n%-22.22s $%-12.2f %-12s $%-12.2f",
-                    listaProductos.get(i).getDescripcion(),
-                    listaProductos.get(i).getPrecioVenta(),
-                    listaProductos.get(i).getCantidad(),
-                    listaProductos.get(i).getImporte());
+        frameRecibo.add(labelLogo, BorderLayout.NORTH);
+        tpRecibo.setText(tpRecibo.getText() + ("--------------------------------------------------------------"));
+        tpRecibo.setText(tpRecibo.getText() + (String.format("\n\n%37s", "VesaPharmacy")));
+        tpRecibo.setText(tpRecibo.getText() + (String.format("\n%s", "Blvd. Felipe Pescador 1830, Nueva Vizcaya, 34080 Durango, Dgo.")));
+        tpRecibo.setText(tpRecibo.getText() + (String.format("\n%39s", "+52 610 438 2356")));
+
+        tpRecibo.setText(tpRecibo.getText() + ("\n\n--------------------------------------------------------------"));
+        tpRecibo.setText(tpRecibo.getText() + (String.format("\n%-22.22s %-12s %-12s %-12s", "Producto", "Precio", "Cantidad", "Importe")));
+        tpRecibo.setText(tpRecibo.getText() + ("\n--------------------------------------------------------------"));
+
+        for (Producto listaProducto : listaProductos) {
+            tpRecibo.setText(tpRecibo.getText() + (String.format("\n%-22.22s $%-12.2f %-12s $%-12.2f",
+                    listaProducto.getDescripcion(),
+                    listaProducto.getPrecioVenta(),
+                    listaProducto.getCantidad(),
+                    listaProducto.getImporte())));
         }
 
-        resultado += "\n--------------------------------------------------------------";
+        tpRecibo.setText(tpRecibo.getText() + ("\n--------------------------------------------------------------"));
 
-        resultado += String.format("\n%s %49.2f", "Total", total);
-        resultado += String.format("\n%s $%46.2f", "Recibido", cantidadIngresada);
+        tpRecibo.setText(tpRecibo.getText() + (String.format("\n%s $%49.2f", "Total", total)));
+        tpRecibo.setText(tpRecibo.getText() + (String.format("\n%s $%46.2f", "Recibido", cantidadIngresada)));
         float cambio = cantidadIngresada - total;
-        resultado += String.format("\n%s $%48.2f", "Cambio", cambio);
+        tpRecibo.setText(tpRecibo.getText() + (String.format("\n%s $%48.2f", "Cambio", cambio)));
 
-        resultado += "\n--------------------------------------------------------------";
+        tpRecibo.setText(tpRecibo.getText() + ("\n--------------------------------------------------------------"));
 
-        resultado += String.format("\n%40s", "GRACIAS POR SU COMPRA");
 
-        resultado += "\n--------------------------------------------------------------";
+        tpRecibo.setText(tpRecibo.getText() + (String.format("\n%18s %5s %10s %5s", "Hora:", horaActual, "Fecha:", fechaActual)));
 
-        tpRecibo.setText(resultado);
+        tpRecibo.setText(tpRecibo.getText() + ("\n**************************************************************"));
+
+        tpRecibo.setText(tpRecibo.getText() + (String.format("\n%41s", "GRACIAS POR SU COMPRA")));
+
+        tpRecibo.setText(tpRecibo.getText() + ("\n**************************************************************"));
+
+        tpRecibo.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+        frameRecibo.add(tpRecibo, BorderLayout.CENTER);
         frameRecibo.getRootPane().setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         frameRecibo.pack();
         frameRecibo.setVisible(true);
         frameRecibo.setLocationRelativeTo(null);
-        System.out.println(resultado);
+
+        try{
+            tpRecibo.print();
+        } catch (PrinterException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     public void definirActionListeners(ArrayList<Producto> listaProductos, float total) {
@@ -114,5 +151,6 @@ public class FrameCobrar extends JFrame {
             }
         });
     }
+
 
 }
