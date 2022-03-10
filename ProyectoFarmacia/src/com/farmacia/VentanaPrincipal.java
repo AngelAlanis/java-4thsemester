@@ -508,6 +508,7 @@ public class VentanaPrincipal extends JFrame {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ISO_DATE;
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
+        
         labelHora.setText(formatoHora.format(now));
         labelFecha.setText(formatoFecha.format(now));
 

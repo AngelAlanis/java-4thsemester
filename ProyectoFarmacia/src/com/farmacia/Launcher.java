@@ -11,5 +11,4 @@ public class Launcher {
         FlatLightLaf.setup();
         loginScreen = new LoginScreen();
     }
-
 }
