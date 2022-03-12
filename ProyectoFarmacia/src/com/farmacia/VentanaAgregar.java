@@ -29,7 +29,7 @@ public class VentanaAgregar extends JFrame {
     JButton btnAceptar = new JButton("Aceptar");
     JButton btnCancelar = new JButton("Cancelar");
 
-    public VentanaAgregar(){
+    public VentanaAgregar() {
         setSize(450, 550);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -39,10 +39,10 @@ public class VentanaAgregar extends JFrame {
         setVisible(true);
     }
 
-    public void configurarComponentes () {
+    public void configurarComponentes() {
         panelPrincipal.setLayout(null);
-        labelTitulo.setFont(new Font("Myriad Pro", Font.BOLD, 20 ));
-        labelTitulo.setBounds(60,50,200,30);
+        labelTitulo.setFont(new Font("Myriad Pro", Font.BOLD, 20));
+        labelTitulo.setBounds(60, 50, 200, 30);
         labelDescripcion.setBounds(60, 100, 300, 30);
         tfDescripcion.setBounds(60, 140, 330, 30);
         labelPrecio.setBounds(60, 180, 300, 30);
@@ -67,13 +67,19 @@ public class VentanaAgregar extends JFrame {
 
         btnAceptar.addActionListener(e -> {
             try {
-                Launcher.loginScreen.ventanaPrincipal.escribirInventario(generarFolio(), tfDescripcion.getText(), Integer.parseInt(tfPrecio.getText()) , Integer.parseInt(tfStock.getText()));
+                if (Integer.parseInt(tfPrecio.getText()) < 0 || Integer.parseInt(tfStock.getText()) < 0) {
+                    JOptionPane.showMessageDialog(null, "No se pueden introducir valores negativos.");
+                } else {
+                    Launcher.loginScreen.ventanaPrincipal.escribirInventario(generarFolio(), tfDescripcion.getText(), Integer.parseInt(tfPrecio.getText()), Integer.parseInt(tfStock.getText()));
+                    dispose();
+                    JOptionPane.showMessageDialog(null, "Producto agregado correctamente!");
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Solo introduzca números en el campo de precio y existencia");
             }
 
-            dispose();
-            JOptionPane.showMessageDialog(null, "Producto agregado correctamente!");
         });
 
         btnCancelar.addActionListener(e -> {
@@ -84,7 +90,7 @@ public class VentanaAgregar extends JFrame {
         });
     }
 
-    public String generarFolio(){
+    public String generarFolio() {
         int folio;
         Random rnd = new Random();
         folio = rnd.nextInt(10000);

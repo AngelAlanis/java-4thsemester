@@ -76,7 +76,7 @@ public class LoginScreen extends JFrame {
     }
 
     public int isLoginValid() {
-        if(tfUser.getText().isEmpty() || String.valueOf(tfPassword.getPassword()).isEmpty()){
+        if (tfUser.getText().isEmpty() || String.valueOf(tfPassword.getPassword()).isEmpty()) {
             JOptionPane.showMessageDialog(null, "No deje espacios vacíos");
         } else if (tfUser.getText().equals(userAdmin) && String.valueOf(tfPassword.getPassword()).equals(passwordAdmin)) {
             return 10;

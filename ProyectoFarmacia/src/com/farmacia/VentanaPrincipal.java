@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -114,6 +115,7 @@ public class VentanaPrincipal extends JFrame {
     XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 
     public VentanaPrincipal(int permisos) throws Exception {
+        this.permisos = permisos;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1366, 728);
         setLocationRelativeTo(null);
@@ -121,7 +123,6 @@ public class VentanaPrincipal extends JFrame {
         setExtendedState(MAXIMIZED_BOTH);
         setUndecorated(true);
         setContentPane(panelPrincipal);
-        this.permisos = permisos;
         configurarLayout();
         configurarComponentes();
         setVisible(true);
@@ -161,7 +162,7 @@ public class VentanaPrincipal extends JFrame {
 
         tabbedPane.add("Ventas", panelTablaVentas);
         tabbedPane.setIconAt(0, iconoVentas);
-        if(permisos == 10) {
+        if (permisos == 10) {
             tabbedPane.add("Inventario", panelTablaInventario);
             tabbedPane.add("Registro de ventas", panelTablaRegistro);
             tabbedPane.setIconAt(1, iconoInventario);
@@ -247,8 +248,8 @@ public class VentanaPrincipal extends JFrame {
     public void configurarComponentes() {
 
         btnSalir.addActionListener(e -> {
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?","",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if(respuesta == 0){
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (respuesta == 0) {
                 System.exit(0);
             }
         });
@@ -347,22 +348,25 @@ public class VentanaPrincipal extends JFrame {
                 int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el producto de la venta actual?", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (respuesta == 0) {
                     float importe = Float.parseFloat(tableVenta.getValueAt(tableVenta.getSelectedRow(), 4).toString().replace("$", ""));
+                    int productosMenos = Integer.parseInt(tableVenta.getValueAt(tableVenta.getSelectedRow(), 3).toString().replace("$", ""));
                     float nuevoPrecio = Float.parseFloat(labelPrecioTotal.getText().replace("$", "")) - importe;
                     tableModelVentas.removeRow(tableVenta.getSelectedRow());
                     labelPrecioTotal.setText("$" + nuevoPrecio);
+                    productosActuales -= productosMenos;
+                    labelNumProductos.setText(productosActuales + " productos en la venta actual.");
                 }
             }
         });
 
         btnEliminarInventario.addActionListener(e -> {
             System.out.println("ping");
-            if(tableInventario.getSelectedRow() >= 0) {
+            if (tableInventario.getSelectedRow() >= 0) {
                 System.out.println("pong");
                 int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el producto del inventario?\nEsta acción no se puede deshacer", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (respuesta == 0) {
                     XSSFSheet sheet = workbook.getSheetAt(1);
                     XSSFRow row = sheet.getRow(tableInventario.getSelectedRow() + 1);
-                    if(sheet.getLastRowNum() > 0){
+                    if (sheet.getLastRowNum() > 0) {
                         sheet.removeRow(row);
                         //sheet.shiftRows(tableInventario.getSelectedRow() + 1, sheet.getLastRowNum(), -1 );
                     }
@@ -514,7 +518,7 @@ public class VentanaPrincipal extends JFrame {
         DateTimeFormatter formatoFecha = DateTimeFormatter.ISO_DATE;
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        
+
         labelHora.setText(formatoHora.format(now));
         labelFecha.setText(formatoFecha.format(now));
 
@@ -577,10 +581,6 @@ public class VentanaPrincipal extends JFrame {
         panelBotonesPie.add(btnAgregar);
         panelBotonesPie.add(btnModificar);
         panelBotonesPie.add(btnEliminarInventario);
-        labelNumProductos.setText("X productos disponibles en inventario");
-        labelNumProductos.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
-        labelNumProductos.setFont(new Font("Arial", Font.ITALIC, 14));
-        panelBotonesPie.add(labelNumProductos);
 
         panelPie.add(panelBotonesPie, BorderLayout.WEST);
         panelPie.add(panelBuscar, BorderLayout.EAST);
