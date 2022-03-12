@@ -72,6 +72,9 @@ public class VentanaPrincipal extends JFrame {
     JPanel panelTablaRegistro = new JPanel();
     JPanel panelPie = new JPanel();
 
+    int permisos;
+
+    int productosActuales;
 
     DefaultTableModel tableModelVentas = new DefaultTableModel();
     DefaultTableModel tableModelInventario = new DefaultTableModel();
@@ -94,9 +97,9 @@ public class VentanaPrincipal extends JFrame {
     JLabel labelFecha = new JLabel(fechaActual);
     JLabel labelHora = new JLabel(horaActual);
     JLabel labelPrecioTotal = new JLabel("$0");
-    JLabel labelNumProductos = new JLabel("X productos en la venta actual");
+    JLabel labelNumProductos = new JLabel("0 productos en la venta actual");
 
-    JButton btnUsuario = new JButton("Admin", iconoCambiarUsuario);
+    JButton btnUsuario = new JButton("Cajero", iconoCambiarUsuario);
     JButton btnBuscar = new JButton("Buscar");
     JButton btnModificar = new JButton("Modificar");
     JButton btnEliminarVenta = new JButton("Eliminar");
@@ -110,7 +113,7 @@ public class VentanaPrincipal extends JFrame {
     FileInputStream inputStream = new FileInputStream(file);
     XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 
-    public VentanaPrincipal() throws Exception {
+    public VentanaPrincipal(int permisos) throws Exception {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1366, 728);
         setLocationRelativeTo(null);
@@ -118,6 +121,7 @@ public class VentanaPrincipal extends JFrame {
         setExtendedState(MAXIMIZED_BOTH);
         setUndecorated(true);
         setContentPane(panelPrincipal);
+        this.permisos = permisos;
         configurarLayout();
         configurarComponentes();
         setVisible(true);
@@ -156,8 +160,14 @@ public class VentanaPrincipal extends JFrame {
         //panelTabla
 
         tabbedPane.add("Ventas", panelTablaVentas);
-        tabbedPane.add("Inventario", panelTablaInventario);
-        tabbedPane.add("Registro de ventas", panelTablaRegistro);
+        tabbedPane.setIconAt(0, iconoVentas);
+        if(permisos == 10) {
+            tabbedPane.add("Inventario", panelTablaInventario);
+            tabbedPane.add("Registro de ventas", panelTablaRegistro);
+            tabbedPane.setIconAt(1, iconoInventario);
+            tabbedPane.setIconAt(2, iconoRegistro);
+            btnUsuario.setText("Admin");
+        }
         JToolBar trailing = new JToolBar();
         trailing.setFloatable(false);
         trailing.setBorder(null);
@@ -166,10 +176,6 @@ public class VentanaPrincipal extends JFrame {
         trailing.add(btnSalir);
 
         tabbedPane.putClientProperty(FlatClientProperties.TABBED_PANE_TRAILING_COMPONENT, trailing);
-
-        tabbedPane.setIconAt(0, iconoVentas);
-        tabbedPane.setIconAt(1, iconoInventario);
-        tabbedPane.setIconAt(2, iconoRegistro);
 
         panelTablaVentas.setLayout(new GridLayout());
         panelTablaVentas.setBorder(BorderFactory.createEtchedBorder());
@@ -540,7 +546,6 @@ public class VentanaPrincipal extends JFrame {
         btnEliminarVenta.setIcon(iconoEliminar);
         panelBotonesPie.add(btnBuscar);
         panelBotonesPie.add(btnEliminarVenta);
-        labelNumProductos.setText("X productos en la venta actual");
         labelNumProductos.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
         labelNumProductos.setFont(new Font("Arial", Font.ITALIC, 14));
         panelBotonesPie.add(labelNumProductos);
@@ -595,6 +600,8 @@ public class VentanaPrincipal extends JFrame {
         opciones[5] = String.valueOf(stock);
         tableModelVentas.addRow(opciones);
         productos.add(new Producto(folio, descripcion, precioVenta, cantidad, importe, stock));
+        productosActuales += cantidad;
+        labelNumProductos.setText(productosActuales + " productos en la venta actual.");
     }
 
     public void ingresarInventarioTabla(String folio, String descripcion, float precioVenta, int stock) throws IOException {

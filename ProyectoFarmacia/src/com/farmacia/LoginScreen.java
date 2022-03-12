@@ -1,12 +1,6 @@
 package com.farmacia;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Font;
 import java.util.Objects;
 
@@ -14,7 +8,6 @@ public class LoginScreen extends JFrame {
 
     VentanaPrincipal ventanaPrincipal;
     static boolean loginIsValid = false;
-
     JPanel panelPrincipal = new JPanel();
 
     JLabel labelIngreso = new JLabel("Ingreso");
@@ -28,7 +21,12 @@ public class LoginScreen extends JFrame {
     JLabel labelLogo = new JLabel(imagenLogo);
     JButton btnLogin = new JButton("Ingresar");
 
-    public LoginScreen(){
+    String userAdmin = "admin";
+    String passwordAdmin = "admin";
+    String userEmpleado = "cajero";
+    String passwordEmpleado = "cajero";
+
+    public LoginScreen() {
         setSize(450, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -39,13 +37,13 @@ public class LoginScreen extends JFrame {
         setVisible(true);
     }
 
-    public void configurarComponentes(){
+    public void configurarComponentes() {
 
         panelPrincipal.setLayout(null);
 
         labelLogo.setBounds(300, 10, 90, 90);
-        labelIngreso.setFont(new Font("Myriad Pro", Font.BOLD, 20 ));
-        labelIngreso.setBounds(60,50,100,30);
+        labelIngreso.setFont(new Font("Myriad Pro", Font.BOLD, 20));
+        labelIngreso.setBounds(60, 50, 100, 30);
         labelInstrucciones.setBounds(60, 80, 300, 30);
         labelUser.setBounds(60, 150, 100, 30);
         tfUser.setBounds(60, 190, 330, 30);
@@ -63,20 +61,30 @@ public class LoginScreen extends JFrame {
         panelPrincipal.add(btnLogin);
 
         btnLogin.addActionListener(e -> {
-            loginIsValid = true;
-            dispose();
-            try {
-                ventanaPrincipal = new VentanaPrincipal();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            int permisos = isLoginValid();
+
+            if (permisos == 10 || permisos == 1) {
+                try {
+                    dispose();
+                    ventanaPrincipal = new VentanaPrincipal(permisos);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
+
         });
-
-
-
     }
 
-    public boolean isLoginValid() {
-        return loginIsValid;
+    public int isLoginValid() {
+        if(tfUser.getText().isEmpty() || String.valueOf(tfPassword.getPassword()).isEmpty()){
+            JOptionPane.showMessageDialog(null, "No deje espacios vacíos");
+        } else if (tfUser.getText().equals(userAdmin) && String.valueOf(tfPassword.getPassword()).equals(passwordAdmin)) {
+            return 10;
+        } else if (tfUser.getText().equals(userEmpleado) && String.valueOf(tfPassword.getPassword()).equals(passwordEmpleado)) {
+            return 1;
+        } else {
+            JOptionPane.showMessageDialog(null, "Datos incorrectos.");
+        }
+        return 0;
     }
 }

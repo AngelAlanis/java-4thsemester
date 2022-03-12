@@ -7,8 +7,8 @@ public class Launcher {
 
     static LoginScreen loginScreen;
 
-    public static void main(String[] args) throws Exception {
-        //FlatLightLaf.setup();
+    public static void main(String[] args) {
+        FlatLightLaf.setup();
         loginScreen = new LoginScreen();
     }
 }
