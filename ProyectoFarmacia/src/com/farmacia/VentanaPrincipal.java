@@ -1,30 +1,17 @@
 package com.farmacia;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,6 +20,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -220,11 +209,10 @@ public class VentanaPrincipal extends JFrame {
         tableModelInventario.addColumn("Precio de venta");
         tableModelInventario.addColumn("Existencia");
 
-        tableModelRegistro.addColumn("Folio");
-        tableModelRegistro.addColumn("Descripción del producto");
-        tableModelRegistro.addColumn("Precio de venta");
-        tableModelRegistro.addColumn("Cantidad");
-        tableModelRegistro.addColumn("Existencia");
+        tableModelRegistro.addColumn("Num. Ticket");
+        tableModelRegistro.addColumn("Ticket");
+        tableModelRegistro.addColumn("Fecha");
+        tableModelRegistro.addColumn("Hora");
 
         panelTablaVentas.add(scrollVenta);
         panelTablaInventario.add(scrollInventario);
@@ -265,6 +253,25 @@ public class VentanaPrincipal extends JFrame {
             JButton btnAgregar = new JButton("Agregar");
             JButton btnCancelar = new JButton("Cancelar");
             JTextField tfCantidad = new JTextField();
+
+            filtrarLista("", tableModelInventario, tableInventario);
+
+            tfBusqueda.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {
+
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    filtrarLista(tfBusqueda.getText(), tableModelInventario, tableInventario);
+                }
+            });
 
             frameBusqueda.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
             frameBusqueda.setLayout(new BorderLayout());
@@ -560,11 +567,30 @@ public class VentanaPrincipal extends JFrame {
     public void cargarPanelInventario() {
         JPanel panelBuscar = new JPanel();
         panelBuscar.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        panelBuscar.add(new JLabel("Solo mostrar disponibles"));
-        panelBuscar.add(checkBoxFiltro);
-        checkBoxFiltro.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
         panelBuscar.add(new JLabel("Buscar"));
         panelBuscar.add(tfBuscar);
+
+        tfBuscar.setText("");
+
+        tfBuscar.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String query = tfBuscar.getText();
+                filtrarLista(query, tableModelInventario, tableInventario);
+            }
+        });
+
+        filtrarLista("", tableModelInventario, tableInventario);
 
         panelTablaInventario.add(scrollInventario);
 
@@ -585,31 +611,36 @@ public class VentanaPrincipal extends JFrame {
         panelPie.add(panelBuscar, BorderLayout.EAST);
     }
 
-    public void cargarPanelRegistro() {
-
-    }
-
     public void ingresarProductoVentas(String folio, String descripcion, float precioVenta, int cantidad, float importe, int stock) {
-        String[] opciones = new String[6];
-        opciones[0] = folio;
-        opciones[1] = descripcion;
-        opciones[2] = "$" + precioVenta;
-        opciones[3] = String.valueOf(cantidad);
-        opciones[4] = "$" + importe;
-        opciones[5] = String.valueOf(stock);
-        tableModelVentas.addRow(opciones);
+        String[] columnas = new String[6];
+        columnas[0] = folio;
+        columnas[1] = descripcion;
+        columnas[2] = "$" + precioVenta;
+        columnas[3] = String.valueOf(cantidad);
+        columnas[4] = "$" + importe;
+        columnas[5] = String.valueOf(stock);
+        tableModelVentas.addRow(columnas);
         productos.add(new Producto(folio, descripcion, precioVenta, cantidad, importe, stock));
         productosActuales += cantidad;
         labelNumProductos.setText(productosActuales + " productos en la venta actual.");
     }
 
     public void ingresarInventarioTabla(String folio, String descripcion, float precioVenta, int stock) throws IOException {
-        String[] opciones = new String[4];
-        opciones[0] = folio;
-        opciones[1] = descripcion;
-        opciones[2] = "$" + precioVenta;
-        opciones[3] = String.valueOf(stock);
-        tableModelInventario.addRow(opciones);
+        String[] columnas = new String[4];
+        columnas[0] = folio;
+        columnas[1] = descripcion;
+        columnas[2] = "$" + precioVenta;
+        columnas[3] = String.valueOf(stock);
+        tableModelInventario.addRow(columnas);
+    }
+
+    public void ingresarProductoRegistro(String numTicket, File ticket, String fecha, String hora) {
+        String[] columnas = new String[4];
+        columnas[0] = numTicket;
+        columnas[1] = ticket.getName();
+        columnas[2] = fecha;
+        columnas[3] = hora;
+        tableModelRegistro.addRow(columnas);
     }
 
     public void escribirInventario(String folio, String descripcion, float precioVenta, int stock) throws IOException {
@@ -657,6 +688,18 @@ public class VentanaPrincipal extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void leerRegistro(){
+
+    }
+
+    public void filtrarLista(String busqueda, DefaultTableModel tableModel, JTable table){
+        TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(tableModel);
+        table.setRowSorter(trs);
+
+        trs.setRowFilter(RowFilter.regexFilter("(?i)" +busqueda));
+
     }
 
 }
