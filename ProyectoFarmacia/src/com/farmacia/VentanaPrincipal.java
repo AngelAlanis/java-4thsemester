@@ -506,12 +506,11 @@ public class VentanaPrincipal extends JFrame {
                     panelPie.repaint();
                     cargarPanelInventario();
                 }
-                case 2 -> System.out.println("Frame registro");
-
-//                        panelPie.removeAll();
-//                        panelPie.revalidate();
-//                        panelPie.repaint();
-//                        cargarPanelRegistro();
+                case 2 -> {
+                    panelPie.removeAll();
+                    panelPie.revalidate();
+                    panelPie.repaint();
+                }
             }
         });
 

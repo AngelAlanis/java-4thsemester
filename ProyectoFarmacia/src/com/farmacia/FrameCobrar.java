@@ -1,6 +1,20 @@
 package com.farmacia;
 
-import javax.swing.*;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -8,10 +22,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.awt.print.PrinterException;
 import java.util.Objects;
 
 
@@ -21,6 +35,7 @@ public class FrameCobrar extends JFrame {
     JTextField tfCantidad = new JTextField();
     GridBagConstraints gbc = new GridBagConstraints();
     JTextPane tPRecibo = new JTextPane();
+    String stringTicket;
 
     float cantidadIngresada;
 
@@ -47,17 +62,14 @@ public class FrameCobrar extends JFrame {
         definirActionListeners(listaProductos, total);
     }
 
-    public void imprimirTicket(ArrayList<Producto> listaProductos, float total) {
+    public void generarTicket(ArrayList<Producto> listaProductos, float total) {
         if (cantidadIngresada < total) {
             JOptionPane.showMessageDialog(null, "La cantidad ingresada es menor a la del costo total.");
             return;
         }
 
-        JFrame frameRecibo = new JFrame();
         JTextPane tpRecibo = new JTextPane();
         tpRecibo.setEditable(false);
-
-        frameRecibo.setLayout(new BorderLayout());
 
         DateTimeFormatter formatoFecha = DateTimeFormatter.ISO_DATE;
         DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -106,16 +118,15 @@ public class FrameCobrar extends JFrame {
         tpRecibo.setText(tpRecibo.getText() + ("\n********************************************************"));
 
         tpRecibo.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
-        frameRecibo.add(tpRecibo, BorderLayout.CENTER);
-        frameRecibo.getRootPane().setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        frameRecibo.pack();
-        frameRecibo.setVisible(true);
-        frameRecibo.setLocationRelativeTo(null);
+
+        stringTicket = tpRecibo.getText();
 
         try {
-            tpRecibo.print();
-        } catch (PrinterException ex) {
+            printPDF(stringTicket);
+        } catch (IOException ex) {
             ex.printStackTrace();
+        } finally {
+            JOptionPane.showMessageDialog(null, "Venta realizada con éxito\nGracias por su compra!");
         }
 
     }
@@ -136,7 +147,7 @@ public class FrameCobrar extends JFrame {
 
                     } else {
                         cantidadIngresada = Float.parseFloat(tfCantidad.getText());
-                        imprimirTicket(listaProductos, total);
+                        generarTicket(listaProductos, total);
                         dispose();
                     }
                 } else if (e.getKeyChar() == 27) {
@@ -149,6 +160,42 @@ public class FrameCobrar extends JFrame {
 
             }
         });
+    }
+
+    public void printPDF(String stringTicket) throws IOException {
+        PDDocument pdDocument = new PDDocument();
+        PDPage pdPage = new PDPage();
+        pdDocument.addPage(pdPage);
+        pdPage.setMediaBox(new PDRectangle(500, 700));
+
+        PDFont pdFont = PDType1Font.COURIER;
+
+        String nombrePDF = "1.pdf";
+
+        String[] lineas = stringTicket.split("\n");
+
+        PDPageContentStream contentStream = new PDPageContentStream(pdDocument, pdPage);
+        contentStream.beginText();
+        contentStream.setFont(pdFont, 14);
+        float nextLine = pdPage.getMediaBox().getHeight() - 32;
+        contentStream.newLineAtOffset(10, nextLine);
+
+        for (String line : lineas) {
+            contentStream.newLineAtOffset(0, -16);
+            contentStream.showText(line);
+
+        }
+
+        contentStream.endText();
+        contentStream.close();
+
+        pdDocument.save("ProyectoFarmacia/src/resources/tickets//" + nombrePDF);
+
+        pdDocument.close();
+
+        System.out.println("PDF creado");
+
+
     }
 
 
