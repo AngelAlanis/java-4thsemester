@@ -33,10 +33,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -366,7 +364,9 @@ public class VentanaPrincipal extends JFrame {
             }
             float total = Float.parseFloat(labelPrecioTotal.getText().replace("$", ""));
 
-            frameCobrar.pedirCantidad(productos, total);
+            if (frameCobrar != null) {
+                frameCobrar.pedirCantidad(productos, total);
+            }
 
             try {
                 descontarInventario(posiciones, numProductos);
@@ -401,7 +401,7 @@ public class VentanaPrincipal extends JFrame {
                     XSSFRow row = sheet.getRow(tableInventario.getSelectedRow() + 1);
                     if (sheet.getLastRowNum() > 0) {
                         sheet.removeRow(row);
-                        sheet.shiftRows(tableInventario.getSelectedRow() + 2, sheet.getLastRowNum(), -1 );
+                        sheet.shiftRows(tableInventario.getSelectedRow() + 2, sheet.getLastRowNum(), -1);
                     }
 
                     tableModelInventario.removeRow(tableInventario.getSelectedRow());
@@ -560,7 +560,6 @@ public class VentanaPrincipal extends JFrame {
         tableInventario.getColumnModel().getColumn(2).setCellRenderer(dtcr);
         tableInventario.getColumnModel().getColumn(3).setCellRenderer(dtcr);
         tableInventario.getColumnModel().getColumn(0).setMaxWidth(100);
-
     }
 
     public void cargarPanelVentas() {
@@ -637,14 +636,14 @@ public class VentanaPrincipal extends JFrame {
         panelPie.add(panelBuscar, BorderLayout.EAST);
     }
 
-    public void cargarPanelRegistro(){
+    public void cargarPanelRegistro() {
         getFiles("ProyectoFarmacia/src/resources/tickets");
 
         tableRegistro.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = tableRegistro.getSelectedRow();
-                if(row >= 0 && e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1 ){
+                if (row >= 0 && e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
                     String archivo = String.valueOf(tableRegistro.getValueAt(row, 2));
                     System.out.println(archivo);
                     try {
@@ -680,7 +679,7 @@ public class VentanaPrincipal extends JFrame {
         tableModelInventario.addRow(columnas);
     }
 
-    public List<ArchivoContenido> getFiles(String ruta){
+    public List<ArchivoContenido> getFiles(String ruta) {
         List<ArchivoContenido> list = new ArrayList<>();
         try (Stream<Path> pathStream = Files.walk(Paths.get(ruta))) {
             list = pathStream
@@ -750,6 +749,11 @@ public class VentanaPrincipal extends JFrame {
             XSSFCell cell = row.getCell(3);
             cell.setCellType(CellType.NUMERIC);
             cell.setCellValue(cell.getNumericCellValue() - numCompras.get(i));
+
+            int newStock = Integer.parseInt(String.valueOf(tableModelInventario.getValueAt(posiciones.get(i), 3)));
+            newStock -= numCompras.get(i);
+
+            tableModelInventario.setValueAt(newStock, posiciones.get(i), 3);
         }
 
         FileOutputStream outputStream = new FileOutputStream(file);

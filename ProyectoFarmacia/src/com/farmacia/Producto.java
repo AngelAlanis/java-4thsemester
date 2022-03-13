@@ -2,12 +2,12 @@ package com.farmacia;
 
 public class Producto {
 
-    private String folio;
-    private String descripcion;
-    private float precioVenta;
-    private float importe;
-    private int cantidad;
-    private int stock;
+    private final String folio;
+    private final String descripcion;
+    private final float precioVenta;
+    private final float importe;
+    private final int cantidad;
+    private final int stock;
 
     public Producto (String folio, String descripcion, float precioVenta, int cantidad, float importe, int stock) {
         this.folio = folio;
