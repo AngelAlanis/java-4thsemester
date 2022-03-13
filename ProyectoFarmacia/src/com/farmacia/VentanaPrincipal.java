@@ -1,35 +1,53 @@
 package com.farmacia;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -47,11 +65,11 @@ public class VentanaPrincipal extends JFrame {
     ImageIcon iconoCancelar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/cancelar.png")));
     ImageIcon imagenLogo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/logoFarmacia.png")));
 
-    JCheckBox checkBoxFiltro = new JCheckBox();
-
     JTabbedPane tabbedPane = new JTabbedPane();
 
     ArrayList<Producto> productos = new ArrayList<>();
+    ArrayList<Integer> posiciones = new ArrayList<>();
+    ArrayList<Integer> numProductos = new ArrayList<>();
 
     JPanel panelPrincipal = new JPanel();
     JPanel panelHora = new JPanel();
@@ -68,11 +86,10 @@ public class VentanaPrincipal extends JFrame {
 
     DefaultTableModel tableModelVentas = new DefaultTableModel();
     DefaultTableModel tableModelInventario = new DefaultTableModel();
-    DefaultTableModel tableModelRegistro = new DefaultTableModel();
 
     JTable tableVenta = new JTable(tableModelVentas);
     JTable tableInventario = new JTable(tableModelInventario);
-    JTable tableRegistro = new JTable(tableModelRegistro);
+    JTable tableRegistro = new JTable(new FileTestModel(getFiles("ProyectoFarmacia/src/resources/tickets")));
 
     JTextField tfBuscar = new JTextField(20);
 
@@ -209,11 +226,6 @@ public class VentanaPrincipal extends JFrame {
         tableModelInventario.addColumn("Precio de venta");
         tableModelInventario.addColumn("Existencia");
 
-        tableModelRegistro.addColumn("Num. Ticket");
-        tableModelRegistro.addColumn("Ticket");
-        tableModelRegistro.addColumn("Fecha");
-        tableModelRegistro.addColumn("Hora");
-
         panelTablaVentas.add(scrollVenta);
         panelTablaInventario.add(scrollInventario);
         panelTablaRegistro.add(scrollRegistro);
@@ -325,6 +337,9 @@ public class VentanaPrincipal extends JFrame {
                         float nuevoPrecio = Float.parseFloat(labelPrecioTotal.getText().replace("$", "")) + importe;
                         labelPrecioTotal.setText("$" + nuevoPrecio);
                         frameBusqueda.dispose();
+
+                        posiciones.add(tableInventario.getSelectedRow());
+                        numProductos.add(Integer.parseInt(tfCantidad.getText()));
                     }
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Solo se pueden introducir números.");
@@ -343,10 +358,23 @@ public class VentanaPrincipal extends JFrame {
         });
 
         btnCobrar.addActionListener(e -> {
-            FrameCobrar frameCobrar = new FrameCobrar();
+            FrameCobrar frameCobrar = null;
+            try {
+                frameCobrar = new FrameCobrar();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             float total = Float.parseFloat(labelPrecioTotal.getText().replace("$", ""));
 
             frameCobrar.pedirCantidad(productos, total);
+
+            try {
+                descontarInventario(posiciones, numProductos);
+                posiciones.clear();
+                numProductos.clear();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
 
         });
 
@@ -366,18 +394,15 @@ public class VentanaPrincipal extends JFrame {
         });
 
         btnEliminarInventario.addActionListener(e -> {
-            System.out.println("ping");
             if (tableInventario.getSelectedRow() >= 0) {
-                System.out.println("pong");
                 int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el producto del inventario?\nEsta acción no se puede deshacer", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (respuesta == 0) {
                     XSSFSheet sheet = workbook.getSheetAt(1);
                     XSSFRow row = sheet.getRow(tableInventario.getSelectedRow() + 1);
                     if (sheet.getLastRowNum() > 0) {
                         sheet.removeRow(row);
-                        //sheet.shiftRows(tableInventario.getSelectedRow() + 1, sheet.getLastRowNum(), -1 );
+                        sheet.shiftRows(tableInventario.getSelectedRow() + 2, sheet.getLastRowNum(), -1 );
                     }
-
 
                     tableModelInventario.removeRow(tableInventario.getSelectedRow());
 
@@ -517,6 +542,7 @@ public class VentanaPrincipal extends JFrame {
                     panelPie.removeAll();
                     panelPie.revalidate();
                     panelPie.repaint();
+                    cargarPanelRegistro();
                 }
             }
         });
@@ -611,6 +637,26 @@ public class VentanaPrincipal extends JFrame {
         panelPie.add(panelBuscar, BorderLayout.EAST);
     }
 
+    public void cargarPanelRegistro(){
+        getFiles("ProyectoFarmacia/src/resources/tickets");
+
+        tableRegistro.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = tableRegistro.getSelectedRow();
+                if(row >= 0 && e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1 ){
+                    String archivo = String.valueOf(tableRegistro.getValueAt(row, 2));
+                    System.out.println(archivo);
+                    try {
+                        Desktop.getDesktop().open(new File(archivo));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
     public void ingresarProductoVentas(String folio, String descripcion, float precioVenta, int cantidad, float importe, int stock) {
         String[] columnas = new String[6];
         columnas[0] = folio;
@@ -634,13 +680,19 @@ public class VentanaPrincipal extends JFrame {
         tableModelInventario.addRow(columnas);
     }
 
-    public void ingresarProductoRegistro(String numTicket, File ticket, String fecha, String hora) {
-        String[] columnas = new String[4];
-        columnas[0] = numTicket;
-        columnas[1] = ticket.getName();
-        columnas[2] = fecha;
-        columnas[3] = hora;
-        tableModelRegistro.addRow(columnas);
+    public List<ArchivoContenido> getFiles(String ruta){
+        List<ArchivoContenido> list = new ArrayList<>();
+        try (Stream<Path> pathStream = Files.walk(Paths.get(ruta))) {
+            list = pathStream
+                    .filter(Files::isRegularFile)
+                    .map(Path::toFile)
+                    .map(file -> new ArchivoContenido(file.getName(), new Date(file.lastModified()), file.getAbsolutePath()))
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
     public void escribirInventario(String folio, String descripcion, float precioVenta, int stock) throws IOException {
@@ -690,16 +742,26 @@ public class VentanaPrincipal extends JFrame {
         }
     }
 
-    public void leerRegistro(){
+    public void descontarInventario(ArrayList<Integer> posiciones, ArrayList<Integer> numCompras) throws IOException {
+        XSSFSheet sheet = workbook.getSheetAt(1);
 
+        for (int i = 0; i < posiciones.size(); i++) {
+            XSSFRow row = sheet.getRow(posiciones.get(i) + 1);
+            XSSFCell cell = row.getCell(3);
+            cell.setCellType(CellType.NUMERIC);
+            cell.setCellValue(cell.getNumericCellValue() - numCompras.get(i));
+        }
+
+        FileOutputStream outputStream = new FileOutputStream(file);
+        workbook.write(outputStream);
+        outputStream.close();
     }
 
-    public void filtrarLista(String busqueda, DefaultTableModel tableModel, JTable table){
+    public void filtrarLista(String busqueda, DefaultTableModel tableModel, JTable table) {
         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(tableModel);
         table.setRowSorter(trs);
 
-        trs.setRowFilter(RowFilter.regexFilter("(?i)" +busqueda));
-
+        trs.setRowFilter(RowFilter.regexFilter("(?i)" + busqueda));
     }
 
 }

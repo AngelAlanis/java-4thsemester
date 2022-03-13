@@ -22,11 +22,17 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Scanner;
 
 
 public class FrameCobrar extends JFrame {
@@ -35,11 +41,14 @@ public class FrameCobrar extends JFrame {
     JTextField tfCantidad = new JTextField();
     GridBagConstraints gbc = new GridBagConstraints();
     JTextPane tPRecibo = new JTextPane();
-    String stringTicket;
 
+    String fileRoute = "ProyectoFarmacia/src/resources/ticketnumber.txt";
+    FileInputStream fileInputStream = new FileInputStream(fileRoute);
+
+    String stringTicket;
     float cantidadIngresada;
 
-    public FrameCobrar() {
+    public FrameCobrar() throws FileNotFoundException {
         this.setLayout(new GridBagLayout());
         this.getRootPane().setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         this.setUndecorated(true);
@@ -62,7 +71,7 @@ public class FrameCobrar extends JFrame {
         definirActionListeners(listaProductos, total);
     }
 
-    public void generarTicket(ArrayList<Producto> listaProductos, float total) {
+    public void generarTicket(ArrayList<Producto> listaProductos, float total) throws Exception {
         if (cantidadIngresada < total) {
             JOptionPane.showMessageDialog(null, "La cantidad ingresada es menor a la del costo total.");
             return;
@@ -111,6 +120,8 @@ public class FrameCobrar extends JFrame {
 
         tpRecibo.setText(tpRecibo.getText() + (String.format("\n%15s %5s %10s %5s", "Hora:", horaActual, "Fecha:", fechaActual)));
 
+        tpRecibo.setText(tpRecibo.getText() + (String.format("\n%32s", "Venta # " + getTicketNumber())));
+
         tpRecibo.setText(tpRecibo.getText() + ("\n********************************************************"));
 
         tpRecibo.setText(tpRecibo.getText() + (String.format("\n%38s", "GRACIAS POR SU COMPRA")));
@@ -123,12 +134,11 @@ public class FrameCobrar extends JFrame {
 
         try {
             printPDF(stringTicket);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
             JOptionPane.showMessageDialog(null, "Venta realizada con éxito\nGracias por su compra!");
+            Launcher.loginScreen.ventanaPrincipal.tableModelVentas.setRowCount(0);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
     }
 
     public void definirActionListeners(ArrayList<Producto> listaProductos, float total) {
@@ -147,7 +157,11 @@ public class FrameCobrar extends JFrame {
 
                     } else {
                         cantidadIngresada = Float.parseFloat(tfCantidad.getText());
-                        generarTicket(listaProductos, total);
+                        try {
+                            generarTicket(listaProductos, total);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                         dispose();
                     }
                 } else if (e.getKeyChar() == 27) {
@@ -162,7 +176,7 @@ public class FrameCobrar extends JFrame {
         });
     }
 
-    public void printPDF(String stringTicket) throws IOException {
+    public void printPDF(String stringTicket) throws Exception {
         PDDocument pdDocument = new PDDocument();
         PDPage pdPage = new PDPage();
         pdDocument.addPage(pdPage);
@@ -170,7 +184,9 @@ public class FrameCobrar extends JFrame {
 
         PDFont pdFont = PDType1Font.COURIER;
 
-        String nombrePDF = "1.pdf";
+        int ticketNumber = getTicketNumber();
+
+        String nombrePDF =  ticketNumber +".pdf";
 
         String[] lineas = stringTicket.split("\n");
 
@@ -195,8 +211,21 @@ public class FrameCobrar extends JFrame {
 
         System.out.println("PDF creado");
 
-
+        int newTicketNumber = ticketNumber + 1;
+        setTicketNumber(newTicketNumber);
     }
 
+    public int getTicketNumber() throws Exception {
+        Scanner scanner = new Scanner(Paths.get(fileRoute));
 
+        return scanner.nextInt();
+    }
+
+    public void setTicketNumber(int ticketNumber) throws Exception {
+        FileOutputStream outputStream = new FileOutputStream(fileRoute);
+
+        byte[] bytes = String.valueOf(ticketNumber).getBytes();
+        outputStream.write(bytes);
+        outputStream.close();
+    }
 }
