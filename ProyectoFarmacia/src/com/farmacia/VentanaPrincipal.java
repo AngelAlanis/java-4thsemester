@@ -372,6 +372,8 @@ public class VentanaPrincipal extends JFrame {
                 descontarInventario(posiciones, numProductos);
                 posiciones.clear();
                 numProductos.clear();
+                labelNumProductos.setText("0 productos en la venta actual");
+                labelPrecioTotal.setText("$0");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
