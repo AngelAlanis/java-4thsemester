@@ -26,7 +26,15 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -87,7 +95,8 @@ public class VentanaPrincipal extends JFrame {
 
     JTable tableVenta = new JTable(tableModelVentas);
     JTable tableInventario = new JTable(tableModelInventario);
-    JTable tableRegistro = new JTable(new FileTestModel(getFiles("ProyectoFarmacia/src/resources/tickets")));
+    FileTestModel fileTestModelRegistro = new FileTestModel(getFiles("ProyectoFarmacia/src/resources/tickets"));
+    JTable tableRegistro = new JTable(fileTestModelRegistro);
 
     JTextField tfBuscar = new JTextField(20);
 
@@ -374,6 +383,7 @@ public class VentanaPrincipal extends JFrame {
                 numProductos.clear();
                 labelNumProductos.setText("0 productos en la venta actual");
                 labelPrecioTotal.setText("$0");
+
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

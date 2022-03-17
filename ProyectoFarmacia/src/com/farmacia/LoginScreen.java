@@ -2,6 +2,8 @@ package com.farmacia;
 
 import javax.swing.*;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Objects;
 
 public class LoginScreen extends JFrame {
@@ -35,6 +37,7 @@ public class LoginScreen extends JFrame {
         configurarComponentes();
         setContentPane(panelPrincipal);
         setVisible(true);
+        getRootPane().setDefaultButton(btnLogin);
     }
 
     public void configurarComponentes() {
@@ -59,6 +62,23 @@ public class LoginScreen extends JFrame {
         panelPrincipal.add(labelPassword);
         panelPrincipal.add(tfPassword);
         panelPrincipal.add(btnLogin);
+
+        tfPassword.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         btnLogin.addActionListener(e -> {
             int permisos = isLoginValid();
