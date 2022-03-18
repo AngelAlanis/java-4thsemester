@@ -11,5 +11,6 @@
     <orderEntry type="library" name="flatlaf-2.0.2" level="project" />
     <orderEntry type="library" name="MyLibrary" level="project" />
     <orderEntry type="library" name="fontbox-2.0.25" level="project" />
+    <orderEntry type="library" name="forms_rt" level="project" />
   </component>
 </module>
