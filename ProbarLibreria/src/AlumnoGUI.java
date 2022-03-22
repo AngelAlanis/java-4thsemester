@@ -5,30 +5,33 @@ import com.misael.Alumno;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AlumnoGUI extends JFrame {
     private JTextField tfNumControl;
     private JTextField tfNombre;
-    private JTextField tfSemestre;
-    private JTextField tfNumControl1;
-    private JTextField tfNombre1;
-    private JTextField tfSemestre1;
-    private JTextField tfEspecialidad1;
-    private JTextField tfEspecialidad;
+    private JTextField tfNumControlOut;
+    private JTextField tfNombreOut;
+    private JTextField tfSemestreOut;
+    private JTextField tfEspecialidadOut;
     private JButton btnGuardar;
     private JButton btnMostrar;
     private JLabel labelNumControl;
     private JLabel labelNombre;
     private JLabel labelSemestre;
-    private JLabel labelNumControl1;
-    private JLabel labelNombre1;
-    private JLabel labelSemestre1;
+    private JLabel labelNumControlOut;
+    private JLabel labelNombreOut;
+    private JLabel labelSemestreOut;
     private JLabel labelEspecialidad;
-    private JLabel labelEspecialidad1;
+    private JLabel labelEspecialidadOut;
     private JPanel panelPrincipal;
+
+    String[] listaEspecialidades = {"Ing. Sistemas", "Ing. Mecánica", "Ing. Civil", "Ing. Arquitectura", "Ing. Administración", "Ing. Química"};
+    String[] listaSemestres = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+
+    private JComboBox<String> cbEspecialidad;
+    private JComboBox<String> cbSemestre;
 
     ArrayList<Alumno> listaAlumnos = new ArrayList<>();
 
@@ -38,6 +41,8 @@ public class AlumnoGUI extends JFrame {
         this.setContentPane(panelPrincipal);
         this.pack();
         this.setResizable(false);
+        configurarComponentes();
+        initActionListeners();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -73,39 +78,43 @@ public class AlumnoGUI extends JFrame {
         labelSemestre = new JLabel();
         labelSemestre.setText("Semestre");
         panelPrincipal.add(labelSemestre, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfSemestre = new JTextField();
-        panelPrincipal.add(tfSemestre, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         btnGuardar = new JButton();
         btnGuardar.setText("Guardar");
         panelPrincipal.add(btnGuardar, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        labelNumControl1 = new JLabel();
-        labelNumControl1.setText("Número de Control");
-        panelPrincipal.add(labelNumControl1, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        labelNombre1 = new JLabel();
-        labelNombre1.setText("Nombre");
-        panelPrincipal.add(labelNombre1, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        labelSemestre1 = new JLabel();
-        labelSemestre1.setText("Semestre");
-        panelPrincipal.add(labelSemestre1, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfNumControl1 = new JTextField();
-        panelPrincipal.add(tfNumControl1, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        tfNombre1 = new JTextField();
-        panelPrincipal.add(tfNombre1, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        tfSemestre1 = new JTextField();
-        panelPrincipal.add(tfSemestre1, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        labelNumControlOut = new JLabel();
+        labelNumControlOut.setText("Número de Control");
+        panelPrincipal.add(labelNumControlOut, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        labelNombreOut = new JLabel();
+        labelNombreOut.setText("Nombre");
+        panelPrincipal.add(labelNombreOut, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        labelSemestreOut = new JLabel();
+        labelSemestreOut.setText("Semestre");
+        panelPrincipal.add(labelSemestreOut, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfNumControlOut = new JTextField();
+        tfNumControlOut.setEditable(false);
+        panelPrincipal.add(tfNumControlOut, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfNombreOut = new JTextField();
+        tfNombreOut.setEditable(false);
+        panelPrincipal.add(tfNombreOut, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfSemestreOut = new JTextField();
+        tfSemestreOut.setEditable(false);
+        panelPrincipal.add(tfSemestreOut, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         btnMostrar = new JButton();
         btnMostrar.setText("Mostrar");
         panelPrincipal.add(btnMostrar, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         labelEspecialidad = new JLabel();
         labelEspecialidad.setText("Especialidad");
         panelPrincipal.add(labelEspecialidad, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        labelEspecialidad1 = new JLabel();
-        labelEspecialidad1.setText("Especialidad");
-        panelPrincipal.add(labelEspecialidad1, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfEspecialidad1 = new JTextField();
-        panelPrincipal.add(tfEspecialidad1, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        tfEspecialidad = new JTextField();
-        panelPrincipal.add(tfEspecialidad, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        labelEspecialidadOut = new JLabel();
+        labelEspecialidadOut.setText("Especialidad");
+        panelPrincipal.add(labelEspecialidadOut, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfEspecialidadOut = new JTextField();
+        tfEspecialidadOut.setEditable(false);
+        panelPrincipal.add(tfEspecialidadOut, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        cbEspecialidad = new JComboBox();
+        panelPrincipal.add(cbEspecialidad, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbSemestre = new JComboBox();
+        panelPrincipal.add(cbSemestre, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -115,4 +124,28 @@ public class AlumnoGUI extends JFrame {
         return panelPrincipal;
     }
 
+    public void configurarComponentes() {
+        cbEspecialidad.setModel(new DefaultComboBoxModel<>(listaEspecialidades));
+        cbSemestre.setModel(new DefaultComboBoxModel<>(listaSemestres));
+    }
+
+    public void initActionListeners() {
+        btnGuardar.addActionListener(e -> {
+            String numControl = tfNumControl.getText();
+            String nombre = tfNombre.getText();
+            String especialidad = Objects.requireNonNull(cbEspecialidad.getSelectedItem()).toString();
+            String semestre = Objects.requireNonNull(cbSemestre.getSelectedItem()).toString();
+
+            listaAlumnos.add(new Alumno(numControl, nombre, especialidad, semestre));
+
+            JOptionPane.showMessageDialog(null, "Alumno registrado correctamente.");
+        });
+
+        btnMostrar.addActionListener(e -> {
+            tfNumControlOut.setText(listaAlumnos.get(0).getNumControl());
+            tfNombreOut.setText(listaAlumnos.get(0).getNombre());
+            tfEspecialidadOut.setText(listaAlumnos.get(0).getEspecialidad());
+            tfSemestreOut.setText(listaAlumnos.get(0).getSemestre());
+        });
+    }
 }

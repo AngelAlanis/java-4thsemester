@@ -50,14 +50,6 @@
           <text value="Semestre"/>
         </properties>
       </component>
-      <component id="7470e" class="javax.swing.JTextField" binding="tfSemestre">
-        <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="35cbf" class="javax.swing.JButton" binding="btnGuardar">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -66,7 +58,7 @@
           <text value="Guardar"/>
         </properties>
       </component>
-      <component id="4192c" class="javax.swing.JLabel" binding="labelNumControl1">
+      <component id="4192c" class="javax.swing.JLabel" binding="labelNumControlOut">
         <constraints>
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -74,7 +66,7 @@
           <text value="Número de Control"/>
         </properties>
       </component>
-      <component id="612f6" class="javax.swing.JLabel" binding="labelNombre1">
+      <component id="612f6" class="javax.swing.JLabel" binding="labelNombreOut">
         <constraints>
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -82,7 +74,7 @@
           <text value="Nombre"/>
         </properties>
       </component>
-      <component id="38536" class="javax.swing.JLabel" binding="labelSemestre1">
+      <component id="38536" class="javax.swing.JLabel" binding="labelSemestreOut">
         <constraints>
           <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -90,29 +82,35 @@
           <text value="Semestre"/>
         </properties>
       </component>
-      <component id="81c83" class="javax.swing.JTextField" binding="tfNumControl1">
+      <component id="81c83" class="javax.swing.JTextField" binding="tfNumControlOut">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+        </properties>
       </component>
-      <component id="25309" class="javax.swing.JTextField" binding="tfNombre1">
+      <component id="25309" class="javax.swing.JTextField" binding="tfNombreOut">
         <constraints>
           <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+        </properties>
       </component>
-      <component id="92f" class="javax.swing.JTextField" binding="tfSemestre1">
+      <component id="92f" class="javax.swing.JTextField" binding="tfSemestreOut">
         <constraints>
           <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="false"/>
+        </properties>
       </component>
       <component id="d10de" class="javax.swing.JButton" binding="btnMostrar">
         <constraints>
@@ -130,7 +128,7 @@
           <text value="Especialidad"/>
         </properties>
       </component>
-      <component id="7c85c" class="javax.swing.JLabel" binding="labelEspecialidad1">
+      <component id="7c85c" class="javax.swing.JLabel" binding="labelEspecialidadOut">
         <constraints>
           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -138,19 +136,25 @@
           <text value="Especialidad"/>
         </properties>
       </component>
-      <component id="d59bd" class="javax.swing.JTextField" binding="tfEspecialidad1">
+      <component id="d59bd" class="javax.swing.JTextField" binding="tfEspecialidadOut">
         <constraints>
           <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
+        <properties>
+          <editable value="false"/>
+        </properties>
+      </component>
+      <component id="420fc" class="javax.swing.JComboBox" binding="cbEspecialidad">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
         <properties/>
       </component>
-      <component id="e7e33" class="javax.swing.JTextField" binding="tfEspecialidad">
+      <component id="74938" class="javax.swing.JComboBox" binding="cbSemestre">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
