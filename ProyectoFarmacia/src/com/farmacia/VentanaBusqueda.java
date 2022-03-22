@@ -8,22 +8,22 @@ import java.util.Objects;
 
 public class VentanaBusqueda extends JFrame {
 
-    JPanel panelSuperior = new JPanel();
-    JPanel panelTabla = new JPanel();
-    JPanel panelBotones = new JPanel();
-    JTextField tfBusqueda = new JTextField();
-    JButton btnAgregar = new JButton("Agregar");
-    JButton btnCancelar = new JButton("Cancelar");
-    JTextField tfCantidad = new JTextField();
+    JPanel     panelSuperior = new JPanel();
+    JPanel     panelTabla    = new JPanel();
+    JPanel     panelBotones  = new JPanel();
+    JTextField tfBusqueda    = new JTextField();
+    JButton    btnAgregar    = new JButton("Agregar");
+    JButton    btnCancelar   = new JButton("Cancelar");
+    JTextField tfCantidad    = new JTextField();
 
-    ImageIcon iconoAgregar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/agregar.png")));
+    ImageIcon iconoAgregar  = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/agregar.png")));
     ImageIcon iconoCancelar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/cancelar.png")));
 
-    private final JTable tableInventario;
+    private final JTable      tableInventario;
     private final JScrollPane scrollInventario;
 
     public VentanaBusqueda(JTable tableInventario, JScrollPane scrollInventario) {
-        this.tableInventario = tableInventario;
+        this.tableInventario  = tableInventario;
         this.scrollInventario = scrollInventario;
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLayout(new BorderLayout());
@@ -38,14 +38,14 @@ public class VentanaBusqueda extends JFrame {
     public void initActionListeners() {
         btnAgregar.addActionListener(e1 -> {
             try {
-                String folio = tableInventario.getValueAt(tableInventario.getSelectedRow(), 0).toString();
+                String folio       = tableInventario.getValueAt(tableInventario.getSelectedRow(), 0).toString();
                 String descripcion = tableInventario.getValueAt(tableInventario.getSelectedRow(), 1).toString();
-                float precioVenta = Float.parseFloat(tableInventario.getValueAt(tableInventario.getSelectedRow(), 2).toString().replace("$", ""));
-                int stock = Integer.parseInt(tableInventario.getValueAt(tableInventario.getSelectedRow(), 3).toString().replace("$", ""));
+                float  precioVenta = Float.parseFloat(tableInventario.getValueAt(tableInventario.getSelectedRow(), 2).toString().replace("$", ""));
+                int    stock       = Integer.parseInt(tableInventario.getValueAt(tableInventario.getSelectedRow(), 3).toString().replace("$", ""));
 
                 if (isDataValid(stock)) {
-                    int cantidad = Integer.parseInt(tfCantidad.getText());
-                    float importe = (cantidad * precioVenta);
+                    int   cantidad = Integer.parseInt(tfCantidad.getText());
+                    float importe  = (cantidad * precioVenta);
                     Launcher.loginScreen.ventanaPrincipal.ingresarProductoVentas(folio, descripcion, precioVenta, cantidad, importe, stock);
                     float nuevoPrecio = Float.parseFloat(Launcher.loginScreen.ventanaPrincipal.labelPrecioTotal.getText().replace("$", "")) + importe;
                     Launcher.loginScreen.ventanaPrincipal.labelPrecioTotal.setText("$" + nuevoPrecio);
@@ -109,8 +109,8 @@ public class VentanaBusqueda extends JFrame {
         panelBotones.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.gridy = 0;
-        gbc.gridx = 0;
+        gbc.gridy  = 0;
+        gbc.gridx  = 0;
         panelBotones.add(new JLabel("Cantidad"), gbc);
         gbc.gridx = 1;
         tfCantidad.setPreferredSize(new Dimension(120, 30));

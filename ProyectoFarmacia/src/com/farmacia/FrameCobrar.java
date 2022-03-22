@@ -32,17 +32,17 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class FrameCobrar extends JFrame {
-    JLabel labelInformacion = new JLabel("Ingrese la cantidad del cliente recibida");
-    JPanel panelCobrar = new JPanel();
-    JTextField tfCantidad = new JTextField();
-    GridBagConstraints gbc = new GridBagConstraints();
-    JTextPane tPRecibo = new JTextPane();
+    JLabel             labelInformacion = new JLabel("Ingrese la cantidad del cliente recibida");
+    JPanel             panelCobrar      = new JPanel();
+    JTextField         tfCantidad       = new JTextField();
+    GridBagConstraints gbc              = new GridBagConstraints();
+    JTextPane          tPRecibo         = new JTextPane();
 
-    String fileRoute = "ProyectoFarmacia/src/resources/ticketnumber.txt";
+    String          fileRoute       = "ProyectoFarmacia/src/resources/ticketnumber.txt";
     FileInputStream fileInputStream = new FileInputStream(fileRoute);
 
     String stringTicket;
-    float cantidadIngresada;
+    float  cantidadIngresada;
 
     public FrameCobrar() throws FileNotFoundException {
         this.setLayout(new GridBagLayout());
@@ -77,13 +77,13 @@ public class FrameCobrar extends JFrame {
         tpRecibo.setEditable(false);
 
         DateTimeFormatter formatoFecha = DateTimeFormatter.ISO_DATE;
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        String horaActual = formatoHora.format(now);
-        String fechaActual = formatoFecha.format(now);
+        DateTimeFormatter formatoHora  = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime     now          = LocalDateTime.now();
+        String            horaActual   = formatoHora.format(now);
+        String            fechaActual  = formatoFecha.format(now);
 
-        ImageIcon logoByN = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/logoRecibo.png")));
-        JLabel labelLogo = new JLabel();
+        ImageIcon logoByN   = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/logoRecibo.png")));
+        JLabel    labelLogo = new JLabel();
         labelLogo.setIcon(logoByN);
 
         tpRecibo.setText(tpRecibo.getText() + ("--------------------------------------------------------"));
@@ -98,10 +98,10 @@ public class FrameCobrar extends JFrame {
 
         for (Producto listaProducto : listaProductos) {
             tpRecibo.setText(tpRecibo.getText() + (String.format("\n%-5s %-20.20s $%-12.2f $%-12.2f",
-                    listaProducto.getCantidad(),
-                    listaProducto.getDescripcion(),
-                    listaProducto.getPrecioVenta(),
-                    listaProducto.getImporte())));
+                                                                 listaProducto.getCantidad(),
+                                                                 listaProducto.getDescripcion(),
+                                                                 listaProducto.getPrecioVenta(),
+                                                                 listaProducto.getImporte())));
         }
 
         tpRecibo.setText(tpRecibo.getText() + ("\n--------------------------------------------------------"));
@@ -174,7 +174,7 @@ public class FrameCobrar extends JFrame {
 
     public void printPDF(String stringTicket) throws Exception {
         PDDocument pdDocument = new PDDocument();
-        PDPage pdPage = new PDPage();
+        PDPage     pdPage     = new PDPage();
         pdDocument.addPage(pdPage);
         pdPage.setMediaBox(new PDRectangle(500, 700));
 
@@ -182,7 +182,7 @@ public class FrameCobrar extends JFrame {
 
         int ticketNumber = getTicketNumber();
 
-        String nombrePDF =  ticketNumber +".pdf";
+        String nombrePDF = ticketNumber + ".pdf";
 
         String[] lineas = stringTicket.split("\n");
 

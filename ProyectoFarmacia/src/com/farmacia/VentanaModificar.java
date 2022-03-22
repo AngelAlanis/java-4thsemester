@@ -19,29 +19,29 @@ import java.util.Objects;
 
 public class VentanaModificar extends JFrame {
 
-    JTextField tfDescripcion = new JTextField();
-    JTextField tfPrecio = new JTextField();
-    JTextField tfStock = new JTextField();
-    JLabel labelTitulo = new JLabel("Modificar producto");
-    JLabel labelDescripcion = new JLabel("Descripción");
-    JLabel labelPrecio = new JLabel("Precio");
-    JLabel labelStock = new JLabel("Productos en existencia");
-    JButton btnAceptar = new JButton("Aceptar");
-    JButton btnCancelar = new JButton("Cancelar");
+    JTextField tfDescripcion    = new JTextField();
+    JTextField tfPrecio         = new JTextField();
+    JTextField tfStock          = new JTextField();
+    JLabel     labelTitulo      = new JLabel("Modificar producto");
+    JLabel     labelDescripcion = new JLabel("Descripción");
+    JLabel     labelPrecio      = new JLabel("Precio");
+    JLabel     labelStock       = new JLabel("Productos en existencia");
+    JButton    btnAceptar       = new JButton("Aceptar");
+    JButton    btnCancelar      = new JButton("Cancelar");
 
-    ImageIcon iconoAceptar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/aceptar.png")));
+    ImageIcon iconoAceptar  = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/aceptar.png")));
     ImageIcon iconoCancelar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/cancelar.png")));
 
     private final JTable tableInventario;
-    private final File fileRoute;
-    private final int selectedRow;
+    private final File   fileRoute;
+    private final int    selectedRow;
 
     String folio;
 
     public VentanaModificar(JTable tableInventario, File fileRoute) {
         this.tableInventario = tableInventario;
-        this.fileRoute = fileRoute;
-        this.selectedRow = tableInventario.getSelectedRow();
+        this.fileRoute       = fileRoute;
+        this.selectedRow     = tableInventario.getSelectedRow();
         this.setSize(450, 550);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setResizable(false);
@@ -90,8 +90,8 @@ public class VentanaModificar extends JFrame {
         btnAceptar.addActionListener(e -> {
 
             String descripcion = tfDescripcion.getText();
-            float precioVenta = Float.parseFloat(tfPrecio.getText());
-            int stock = Integer.parseInt(tfStock.getText());
+            float  precioVenta = Float.parseFloat(tfPrecio.getText());
+            int    stock       = Integer.parseInt(tfStock.getText());
 
             if (isDataValid(precioVenta, stock)) {
                 try {
@@ -126,7 +126,7 @@ public class VentanaModificar extends JFrame {
 
     public void writeDataInExcel(String folio, String descripcion, float precioVenta, int stock) throws IOException, InvalidFormatException {
         FileInputStream inputStream = new FileInputStream(fileRoute);
-        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+        XSSFWorkbook    workbook    = new XSSFWorkbook(inputStream);
 
         XSSFSheet sheet = workbook.getSheetAt(1);
 

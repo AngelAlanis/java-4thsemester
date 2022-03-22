@@ -57,72 +57,72 @@ import java.util.stream.Stream;
 public class VentanaPrincipal extends JFrame {
 
     ImageIcon iconoCambiarUsuario = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/usuario.png")));
-    ImageIcon iconoVentas = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/ventas.png")));
-    ImageIcon iconoInventario = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/inventario.png")));
-    ImageIcon iconoRegistro = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/registro.png")));
-    ImageIcon iconoBuscar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/buscar.png")));
-    ImageIcon iconoSalir = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/salir.png")));
-    ImageIcon iconoAgregar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/agregar.png")));
-    ImageIcon iconoEliminar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/eliminar.png")));
-    ImageIcon iconoModificar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/modificar.png")));
-    ImageIcon iconoCobrar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/cobrar.png")));
-    ImageIcon imagenLogo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/logoFarmacia.png")));
+    ImageIcon iconoVentas         = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/ventas.png")));
+    ImageIcon iconoInventario     = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/inventario.png")));
+    ImageIcon iconoRegistro       = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/registro.png")));
+    ImageIcon iconoBuscar         = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/buscar.png")));
+    ImageIcon iconoSalir          = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/salir.png")));
+    ImageIcon iconoAgregar        = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/agregar.png")));
+    ImageIcon iconoEliminar       = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/eliminar.png")));
+    ImageIcon iconoModificar      = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/modificar.png")));
+    ImageIcon iconoCobrar         = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/cobrar.png")));
+    ImageIcon imagenLogo          = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/logoFarmacia.png")));
 
     JTabbedPane tabbedPane = new JTabbedPane();
 
-    ArrayList<Producto> productos = new ArrayList<>();
-    ArrayList<Integer> posiciones = new ArrayList<>();
-    ArrayList<Integer> numProductos = new ArrayList<>();
+    ArrayList<Producto> productos    = new ArrayList<>();
+    ArrayList<Integer>  posiciones   = new ArrayList<>();
+    ArrayList<Integer>  numProductos = new ArrayList<>();
 
-    JPanel panelPrincipal = new JPanel();
-    JPanel panelHora = new JPanel();
-    JPanel panelUsuario = new JPanel();
-    JPanel panelEncabezado = new JPanel();
-    JPanel panelTablaVentas = new JPanel();
+    JPanel panelPrincipal       = new JPanel();
+    JPanel panelHora            = new JPanel();
+    JPanel panelUsuario         = new JPanel();
+    JPanel panelEncabezado      = new JPanel();
+    JPanel panelTablaVentas     = new JPanel();
     JPanel panelTablaInventario = new JPanel();
-    JPanel panelTablaRegistro = new JPanel();
-    JPanel panelPie = new JPanel();
+    JPanel panelTablaRegistro   = new JPanel();
+    JPanel panelPie             = new JPanel();
 
     int permisos;
 
     int productosActuales;
 
-    DefaultTableModel tableModelVentas = new DefaultTableModel();
+    DefaultTableModel tableModelVentas     = new DefaultTableModel();
     DefaultTableModel tableModelInventario = new DefaultTableModel();
 
-    JTable tableVenta = new JTable(tableModelVentas);
-    JTable tableInventario = new JTable(tableModelInventario);
+    JTable        tableVenta            = new JTable(tableModelVentas);
+    JTable        tableInventario       = new JTable(tableModelInventario);
     FileTestModel fileTestModelRegistro = new FileTestModel(getFiles("ProyectoFarmacia/src/resources/tickets"));
-    JTable tableRegistro = new JTable(fileTestModelRegistro);
+    JTable        tableRegistro         = new JTable(fileTestModelRegistro);
 
     JTextField tfBuscar = new JTextField(20);
 
-    JScrollPane scrollVenta = new JScrollPane(tableVenta);
+    JScrollPane scrollVenta      = new JScrollPane(tableVenta);
     JScrollPane scrollInventario = new JScrollPane(tableInventario);
-    JScrollPane scrollRegistro = new JScrollPane(tableRegistro);
+    JScrollPane scrollRegistro   = new JScrollPane(tableRegistro);
 
     String fechaActual = "03-03-2022";
-    String horaActual = "14:54:44";
+    String horaActual  = "14:54:44";
 
-    JLabel labelLogo = new JLabel(imagenLogo);
-    JLabel labelFecha = new JLabel(fechaActual);
-    JLabel labelHora = new JLabel(horaActual);
-    JLabel labelPrecioTotal = new JLabel("$0");
+    JLabel labelLogo         = new JLabel(imagenLogo);
+    JLabel labelFecha        = new JLabel(fechaActual);
+    JLabel labelHora         = new JLabel(horaActual);
+    JLabel labelPrecioTotal  = new JLabel("$0");
     JLabel labelNumProductos = new JLabel("0 productos en la venta actual");
 
-    JButton btnUsuario = new JButton("Cajero", iconoCambiarUsuario);
-    JButton btnBuscar = new JButton("Buscar");
-    JButton btnModificar = new JButton("Modificar");
-    JButton btnEliminarVenta = new JButton("Eliminar");
+    JButton btnUsuario            = new JButton("Cajero", iconoCambiarUsuario);
+    JButton btnBuscar             = new JButton("Buscar");
+    JButton btnModificar          = new JButton("Modificar");
+    JButton btnEliminarVenta      = new JButton("Eliminar");
     JButton btnEliminarInventario = new JButton("Eliminar");
-    JButton btnCobrar = new JButton("Cobrar");
-    JButton btnAgregar = new JButton("Agregar");
-    JButton btnSalir = new JButton("Salir");
+    JButton btnCobrar             = new JButton("Cobrar");
+    JButton btnAgregar            = new JButton("Agregar");
+    JButton btnSalir              = new JButton("Salir");
 
     File fileRoute = new File("ProyectoFarmacia/src/resources/vesa_pharmacy.xlsx");
 
     FileInputStream inputStream = new FileInputStream(fileRoute);
-    XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+    XSSFWorkbook    workbook    = new XSSFWorkbook(inputStream);
 
     public VentanaPrincipal(int permisos) throws Exception {
         this.permisos = permisos;
@@ -253,8 +253,8 @@ public class VentanaPrincipal extends JFrame {
     public void configurarComponentes() {
 
         DateTimeFormatter formatoFecha = DateTimeFormatter.ISO_DATE;
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatoHora  = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime     now          = LocalDateTime.now();
 
         labelHora.setText(formatoHora.format(now));
         labelFecha.setText(formatoFecha.format(now));
@@ -343,7 +343,7 @@ public class VentanaPrincipal extends JFrame {
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el producto del inventario?\nEsta acción no se puede deshacer", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (respuesta == 0) {
                 XSSFSheet sheet = workbook.getSheetAt(1);
-                XSSFRow row = sheet.getRow(tableInventario.getSelectedRow() + 1);
+                XSSFRow   row   = sheet.getRow(tableInventario.getSelectedRow() + 1);
                 if (sheet.getLastRowNum() > 0) {
                     sheet.removeRow(row);
                     sheet.shiftRows(tableInventario.getSelectedRow() + 2, sheet.getLastRowNum(), -1);
@@ -368,9 +368,9 @@ public class VentanaPrincipal extends JFrame {
         if (tableVenta.getSelectedRow() >= 0) {
             int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el producto de la venta actual?", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (respuesta == 0) {
-                float importe = Float.parseFloat(tableVenta.getValueAt(tableVenta.getSelectedRow(), 4).toString().replace("$", ""));
-                int productosMenos = Integer.parseInt(tableVenta.getValueAt(tableVenta.getSelectedRow(), 3).toString().replace("$", ""));
-                float nuevoPrecio = Float.parseFloat(labelPrecioTotal.getText().replace("$", "")) - importe;
+                float importe        = Float.parseFloat(tableVenta.getValueAt(tableVenta.getSelectedRow(), 4).toString().replace("$", ""));
+                int   productosMenos = Integer.parseInt(tableVenta.getValueAt(tableVenta.getSelectedRow(), 3).toString().replace("$", ""));
+                float nuevoPrecio    = Float.parseFloat(labelPrecioTotal.getText().replace("$", "")) - importe;
                 tableModelVentas.removeRow(tableVenta.getSelectedRow());
                 labelPrecioTotal.setText("$" + nuevoPrecio);
                 productosActuales -= productosMenos;
@@ -508,8 +508,8 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public void escribirInventario(String folio, String descripcion, float precioVenta, int stock) throws IOException {
-        XSSFSheet sheet = workbook.getSheetAt(1);
-        int rowsInFile = sheet.getLastRowNum();
+        XSSFSheet sheet      = workbook.getSheetAt(1);
+        int       rowsInFile = sheet.getLastRowNum();
 
         XSSFRow row = sheet.createRow(++rowsInFile);
 
@@ -535,8 +535,8 @@ public class VentanaPrincipal extends JFrame {
             int rowNum = sheet.getLastRowNum();
 
             String folio, descripcion;
-            float precioVenta;
-            int stock;
+            float  precioVenta;
+            int    stock;
 
             for (int r = 1; r <= rowNum; r++) {
                 XSSFRow rows = sheet.getRow(r);
@@ -558,7 +558,7 @@ public class VentanaPrincipal extends JFrame {
         XSSFSheet sheet = workbook.getSheetAt(1);
 
         for (int i = 0; i < posiciones.size(); i++) {
-            XSSFRow row = sheet.getRow(posiciones.get(i) + 1);
+            XSSFRow  row  = sheet.getRow(posiciones.get(i) + 1);
             XSSFCell cell = row.getCell(3);
             cell.setCellType(CellType.NUMERIC);
             cell.setCellValue(cell.getNumericCellValue() - numCompras.get(i));
@@ -575,8 +575,8 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public void filtrarLista(String busqueda, JTable table) {
-        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-        TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(tableModel);
+        DefaultTableModel                 tableModel = (DefaultTableModel) table.getModel();
+        TableRowSorter<DefaultTableModel> trs        = new TableRowSorter<>(tableModel);
         table.setRowSorter(trs);
 
         trs.setRowFilter(RowFilter.regexFilter("(?i)" + busqueda));

@@ -5,7 +5,7 @@ import java.util.Date;
 public class ArchivoContenido {
 
     private final String nombreArchivo;
-    private final Date fecha;
+    private final Date   fecha;
     private final String ubicacion;
 
     public ArchivoContenido(String nombreArchivo, Date fecha, String ubicacion) {
@@ -21,7 +21,6 @@ public class ArchivoContenido {
     public Date getFecha() {
         return fecha;
     }
-
 
 
     public String getUbicacion() {
