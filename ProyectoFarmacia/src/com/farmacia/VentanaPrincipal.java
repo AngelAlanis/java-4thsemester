@@ -34,7 +34,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -59,7 +58,6 @@ public class VentanaPrincipal extends JFrame {
 
     ImageIcon iconoCambiarUsuario = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/usuario.png")));
     ImageIcon iconoVentas = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/ventas.png")));
-    ImageIcon iconoAceptar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/aceptar.png")));
     ImageIcon iconoInventario = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/inventario.png")));
     ImageIcon iconoRegistro = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/registro.png")));
     ImageIcon iconoBuscar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/buscar.png")));
@@ -68,7 +66,6 @@ public class VentanaPrincipal extends JFrame {
     ImageIcon iconoEliminar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/eliminar.png")));
     ImageIcon iconoModificar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/modificar.png")));
     ImageIcon iconoCobrar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/cobrar.png")));
-    ImageIcon iconoCancelar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/cancelar.png")));
     ImageIcon imagenLogo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/logoFarmacia.png")));
 
     JTabbedPane tabbedPane = new JTabbedPane();
@@ -122,9 +119,9 @@ public class VentanaPrincipal extends JFrame {
     JButton btnAgregar = new JButton("Agregar");
     JButton btnSalir = new JButton("Salir");
 
-    File file = new File("ProyectoFarmacia/src/resources/vesa_pharmacy.xlsx");
+    File fileRoute = new File("ProyectoFarmacia/src/resources/vesa_pharmacy.xlsx");
 
-    FileInputStream inputStream = new FileInputStream(file);
+    FileInputStream inputStream = new FileInputStream(fileRoute);
     XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
 
     public VentanaPrincipal(int permisos) throws Exception {
@@ -138,6 +135,7 @@ public class VentanaPrincipal extends JFrame {
         setContentPane(panelPrincipal);
         configurarLayout();
         configurarComponentes();
+        initActionListeners();
         setVisible(true);
         leerInventario();
     }
@@ -254,287 +252,35 @@ public class VentanaPrincipal extends JFrame {
 
     public void configurarComponentes() {
 
-        btnSalir.addActionListener(e -> {
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            if (respuesta == 0) {
-                System.exit(0);
-            }
-        });
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ISO_DATE;
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        labelHora.setText(formatoHora.format(now));
+        labelFecha.setText(formatoFecha.format(now));
+
+        DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
+        dtcr.setHorizontalAlignment(SwingConstants.CENTER);
+        tableInventario.getColumnModel().getColumn(0).setCellRenderer(dtcr);
+        tableInventario.getColumnModel().getColumn(2).setCellRenderer(dtcr);
+        tableInventario.getColumnModel().getColumn(3).setCellRenderer(dtcr);
+        tableInventario.getColumnModel().getColumn(0).setMaxWidth(100);
+    }
+
+    public void initActionListeners() {
+        btnSalir.addActionListener(e -> salirDelPrograma());
 
         btnAgregar.addActionListener(e -> new VentanaAgregar());
 
-        btnBuscar.addActionListener(e -> {
-            JFrame frameBusqueda = new JFrame();
-            JPanel panelSuperior = new JPanel();
-            JPanel panelTabla = new JPanel();
-            JPanel panelBotones = new JPanel();
-            JTextField tfBusqueda = new JTextField();
-            JButton btnAgregar = new JButton("Agregar");
-            JButton btnCancelar = new JButton("Cancelar");
-            JTextField tfCantidad = new JTextField();
+        btnBuscar.addActionListener(e -> new VentanaBusqueda(tableInventario, scrollInventario));
 
-            filtrarLista("", tableModelInventario, tableInventario);
+        btnCobrar.addActionListener(e -> cobrarVenta());
 
-            tfBusqueda.addKeyListener(new KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent e) {
+        btnEliminarVenta.addActionListener(e -> eliminarVenta());
 
-                }
+        btnEliminarInventario.addActionListener(e -> eliminarDeInventario());
 
-                @Override
-                public void keyPressed(KeyEvent e) {
-
-                }
-
-                @Override
-                public void keyReleased(KeyEvent e) {
-                    filtrarLista(tfBusqueda.getText(), tableModelInventario, tableInventario);
-                }
-            });
-
-            frameBusqueda.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            frameBusqueda.setLayout(new BorderLayout());
-            frameBusqueda.setSize(500, 600);
-            frameBusqueda.setResizable(false);
-
-            panelSuperior.add(new JLabel("Búsqueda de productos"));
-            panelSuperior.add(tfBusqueda);
-            tfBusqueda.setPreferredSize(new Dimension(150, 30));
-
-            panelTabla.add(scrollInventario);
-            panelTabla.setLayout(new GridLayout());
-
-            panelBotones.setLayout(new GridBagLayout());
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(10, 10, 10, 10);
-            gbc.gridy = 0;
-            gbc.gridx = 0;
-            panelBotones.add(new JLabel("Cantidad"), gbc);
-            gbc.gridx = 1;
-            tfCantidad.setPreferredSize(new Dimension(120, 30));
-            panelBotones.add(tfCantidad, gbc);
-            btnAgregar.setIcon(iconoAgregar);
-            btnCancelar.setIcon(iconoCancelar);
-            btnAgregar.setPreferredSize(new Dimension(120, 70));
-            btnCancelar.setPreferredSize(new Dimension(120, 70));
-            gbc.gridy = 1;
-            gbc.gridx = 0;
-            panelBotones.add(btnAgregar, gbc);
-            gbc.gridx = 1;
-            panelBotones.add(btnCancelar, gbc);
-
-            frameBusqueda.add(panelSuperior, BorderLayout.NORTH);
-            frameBusqueda.add(panelTabla, BorderLayout.CENTER);
-            frameBusqueda.add(panelBotones, BorderLayout.SOUTH);
-
-            btnAgregar.addActionListener(e1 -> {
-                try {
-                    String folio = tableInventario.getValueAt(tableInventario.getSelectedRow(), 0).toString();
-                    String descripcion = tableInventario.getValueAt(tableInventario.getSelectedRow(), 1).toString();
-                    float precioVenta = Float.parseFloat(tableInventario.getValueAt(tableInventario.getSelectedRow(), 2).toString().replace("$", ""));
-                    int stock = Integer.parseInt(tableInventario.getValueAt(tableInventario.getSelectedRow(), 3).toString().replace("$", ""));
-                    if (Integer.parseInt(tfCantidad.getText()) > stock) {
-                        JOptionPane.showMessageDialog(null, "No se pueden agregar más productos de los que están disponibles");
-                    } else if (Integer.parseInt(tfCantidad.getText()) < 0) {
-                        JOptionPane.showMessageDialog(null, "No se pueden introducir números negativos.");
-                    } else {
-                        int cantidad = Integer.parseInt(tfCantidad.getText());
-                        float importe = (cantidad * precioVenta);
-                        ingresarProductoVentas(folio, descripcion, precioVenta, cantidad, importe, stock);
-                        float nuevoPrecio = Float.parseFloat(labelPrecioTotal.getText().replace("$", "")) + importe;
-                        labelPrecioTotal.setText("$" + nuevoPrecio);
-                        frameBusqueda.dispose();
-
-                        posiciones.add(tableInventario.getSelectedRow());
-                        numProductos.add(Integer.parseInt(tfCantidad.getText()));
-                    }
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Solo se pueden introducir números.");
-                }
-            });
-
-            btnCancelar.addActionListener(e13 -> {
-                int respuesta = JOptionPane.showConfirmDialog(null, "¿Seguro que desea cancelar?", "", JOptionPane.YES_NO_OPTION);
-                if (respuesta == 0) {
-                    frameBusqueda.dispose();
-                }
-            });
-
-            frameBusqueda.setLocationRelativeTo(null);
-            frameBusqueda.setVisible(true);
-        });
-
-        btnCobrar.addActionListener(e -> {
-            FrameCobrar frameCobrar = null;
-            try {
-                frameCobrar = new FrameCobrar();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            float total = Float.parseFloat(labelPrecioTotal.getText().replace("$", ""));
-
-            if (frameCobrar != null) {
-                frameCobrar.pedirCantidad(productos, total);
-            }
-
-            try {
-                descontarInventario(posiciones, numProductos);
-                posiciones.clear();
-                numProductos.clear();
-                labelNumProductos.setText("0 productos en la venta actual");
-                labelPrecioTotal.setText("$0");
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-        });
-
-        btnEliminarVenta.addActionListener(e -> {
-            if (tableVenta.getSelectedRow() >= 0) {
-                int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el producto de la venta actual?", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                if (respuesta == 0) {
-                    float importe = Float.parseFloat(tableVenta.getValueAt(tableVenta.getSelectedRow(), 4).toString().replace("$", ""));
-                    int productosMenos = Integer.parseInt(tableVenta.getValueAt(tableVenta.getSelectedRow(), 3).toString().replace("$", ""));
-                    float nuevoPrecio = Float.parseFloat(labelPrecioTotal.getText().replace("$", "")) - importe;
-                    tableModelVentas.removeRow(tableVenta.getSelectedRow());
-                    labelPrecioTotal.setText("$" + nuevoPrecio);
-                    productosActuales -= productosMenos;
-                    labelNumProductos.setText(productosActuales + " productos en la venta actual.");
-                }
-            }
-        });
-
-        btnEliminarInventario.addActionListener(e -> {
-            if (tableInventario.getSelectedRow() >= 0) {
-                int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el producto del inventario?\nEsta acción no se puede deshacer", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                if (respuesta == 0) {
-                    XSSFSheet sheet = workbook.getSheetAt(1);
-                    XSSFRow row = sheet.getRow(tableInventario.getSelectedRow() + 1);
-                    if (sheet.getLastRowNum() > 0) {
-                        sheet.removeRow(row);
-                        sheet.shiftRows(tableInventario.getSelectedRow() + 2, sheet.getLastRowNum(), -1);
-                    }
-
-                    tableModelInventario.removeRow(tableInventario.getSelectedRow());
-
-                    try {
-                        FileOutputStream outputStream = new FileOutputStream(file);
-                        workbook.write(outputStream);
-                        outputStream.close();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-
-                    JOptionPane.showMessageDialog(null, "Producto eliminado del inventario");
-                }
-            }
-        });
-
-        btnModificar.addActionListener(e -> {
-            JFrame frameModificar = new JFrame();
-            JTextField tfDescripcion = new JTextField();
-            JTextField tfPrecio = new JTextField();
-            JTextField tfStock = new JTextField();
-            JLabel labelTitulo = new JLabel("Modificar producto");
-            JLabel labelDescripcion = new JLabel("Descripción");
-            JLabel labelPrecio = new JLabel("Precio");
-            JLabel labelStock = new JLabel("Productos en existencia");
-            JButton btnAceptar = new JButton("Aceptar");
-            JButton btnCancelar = new JButton("Cancelar");
-
-            frameModificar.setSize(450, 550);
-            frameModificar.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            frameModificar.setResizable(false);
-            frameModificar.setLocationRelativeTo(null);
-            frameModificar.setLayout(null);
-
-            btnAceptar.setIcon(iconoAceptar);
-            btnCancelar.setIcon(iconoCancelar);
-
-            labelTitulo.setFont(new Font("Myriad Pro", Font.BOLD, 20));
-            tfDescripcion.setText(tableInventario.getValueAt(tableInventario.getSelectedRow(), 1).toString());
-            tfPrecio.setText(tableInventario.getValueAt(tableInventario.getSelectedRow(), 2).toString().replace("$", ""));
-            tfStock.setText(tableInventario.getValueAt(tableInventario.getSelectedRow(), 3).toString());
-            String folio = tableInventario.getValueAt(tableInventario.getSelectedRow(), 0).toString();
-            int selectedRow = tableInventario.getSelectedRow();
-
-
-            labelTitulo.setBounds(60, 50, 200, 30);
-            labelDescripcion.setBounds(60, 100, 300, 30);
-            tfDescripcion.setBounds(60, 140, 300, 30);
-            labelPrecio.setBounds(60, 180, 300, 30);
-            tfPrecio.setBounds(60, 220, 300, 30);
-            labelStock.setBounds(60, 260, 300, 30);
-            tfStock.setBounds(60, 300, 300, 30);
-            btnAceptar.setBounds(60, 380, 150, 30);
-            btnCancelar.setBounds(240, 380, 150, 30);
-
-            frameModificar.add(labelTitulo);
-            frameModificar.add(tfDescripcion);
-            frameModificar.add(tfPrecio);
-            frameModificar.add(tfStock);
-            frameModificar.add(btnAceptar);
-            frameModificar.add(btnCancelar);
-            frameModificar.add(labelDescripcion);
-            frameModificar.add(labelPrecio);
-            frameModificar.add(labelStock);
-
-            frameModificar.setVisible(true);
-
-            btnAceptar.addActionListener(e15 -> {
-                String descripcion = tfDescripcion.getText();
-                float precioVenta = Float.parseFloat(tfPrecio.getText());
-                int stock = Integer.parseInt(tfStock.getText());
-
-                if (precioVenta == 0) {
-                    int confirmacion = JOptionPane.showConfirmDialog(null, "Está a punto de poner el precio del producto en $0, ¿Está seguro?", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                    if (confirmacion == 1) {
-                        return;
-                    }
-                } else if (precioVenta < 0 || stock < 0) {
-                    JOptionPane.showMessageDialog(null, "No se pueden ingresar valores negativos", "", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-
-                XSSFSheet sheet = workbook.getSheetAt(1);
-
-                XSSFRow row = sheet.getRow(selectedRow + 1);
-
-                XSSFCell cell = row.createCell(0, CellType.STRING);
-                cell.setCellValue(folio);
-                cell = row.createCell(1, CellType.STRING);
-                cell.setCellValue(descripcion);
-                cell = row.createCell(2, CellType.NUMERIC);
-                cell.setCellValue(precioVenta);
-                cell = row.createCell(3, CellType.NUMERIC);
-                cell.setCellValue(stock);
-
-                try {
-                    FileOutputStream outputStream = new FileOutputStream(file);
-                    workbook.write(outputStream);
-                    outputStream.close();
-                    frameModificar.dispose();
-                    JOptionPane.showMessageDialog(null, "Dato actualizado correctamente!");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                    return;
-                }
-
-                tableModelInventario.setValueAt(descripcion, selectedRow, 1);
-                tableModelInventario.setValueAt("$" + precioVenta, selectedRow, 2);
-                tableModelInventario.setValueAt(stock, selectedRow, 3);
-
-
-            });
-
-            btnCancelar.addActionListener(e13 -> {
-                int respuesta = JOptionPane.showConfirmDialog(null, "¿Seguro que desea cancelar?", "", JOptionPane.YES_NO_OPTION);
-                if (respuesta == 0) {
-                    frameModificar.dispose();
-                }
-            });
-        });
+        btnModificar.addActionListener(e -> new VentanaModificar(tableInventario, fileRoute));
 
         tabbedPane.addChangeListener(e -> {
             switch (tabbedPane.getSelectedIndex()) {
@@ -558,20 +304,79 @@ public class VentanaPrincipal extends JFrame {
                 }
             }
         });
+    }
 
-        DateTimeFormatter formatoFecha = DateTimeFormatter.ISO_DATE;
-        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
+    private void salirDelPrograma() {
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        if (respuesta == 0) {
+            System.exit(0);
+        }
+    }
 
-        labelHora.setText(formatoHora.format(now));
-        labelFecha.setText(formatoFecha.format(now));
+    private void cobrarVenta() {
+        FrameCobrar frameCobrar = null;
+        try {
+            frameCobrar = new FrameCobrar();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        float total = Float.parseFloat(labelPrecioTotal.getText().replace("$", ""));
 
-        DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer();
-        dtcr.setHorizontalAlignment(SwingConstants.CENTER);
-        tableInventario.getColumnModel().getColumn(0).setCellRenderer(dtcr);
-        tableInventario.getColumnModel().getColumn(2).setCellRenderer(dtcr);
-        tableInventario.getColumnModel().getColumn(3).setCellRenderer(dtcr);
-        tableInventario.getColumnModel().getColumn(0).setMaxWidth(100);
+        if (frameCobrar != null) {
+            frameCobrar.pedirCantidad(productos, total);
+        }
+
+        try {
+            descontarInventario(posiciones, numProductos);
+            posiciones.clear();
+            numProductos.clear();
+            labelNumProductos.setText("0 productos en la venta actual");
+            labelPrecioTotal.setText("$0");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void eliminarDeInventario() {
+        if (tableInventario.getSelectedRow() >= 0) {
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el producto del inventario?\nEsta acción no se puede deshacer", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (respuesta == 0) {
+                XSSFSheet sheet = workbook.getSheetAt(1);
+                XSSFRow row = sheet.getRow(tableInventario.getSelectedRow() + 1);
+                if (sheet.getLastRowNum() > 0) {
+                    sheet.removeRow(row);
+                    sheet.shiftRows(tableInventario.getSelectedRow() + 2, sheet.getLastRowNum(), -1);
+                }
+
+                tableModelInventario.removeRow(tableInventario.getSelectedRow());
+
+                try {
+                    FileOutputStream outputStream = new FileOutputStream(fileRoute);
+                    workbook.write(outputStream);
+                    outputStream.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                JOptionPane.showMessageDialog(null, "Producto eliminado del inventario");
+            }
+        }
+    }
+
+    private void eliminarVenta() {
+        if (tableVenta.getSelectedRow() >= 0) {
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el producto de la venta actual?", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (respuesta == 0) {
+                float importe = Float.parseFloat(tableVenta.getValueAt(tableVenta.getSelectedRow(), 4).toString().replace("$", ""));
+                int productosMenos = Integer.parseInt(tableVenta.getValueAt(tableVenta.getSelectedRow(), 3).toString().replace("$", ""));
+                float nuevoPrecio = Float.parseFloat(labelPrecioTotal.getText().replace("$", "")) - importe;
+                tableModelVentas.removeRow(tableVenta.getSelectedRow());
+                labelPrecioTotal.setText("$" + nuevoPrecio);
+                productosActuales -= productosMenos;
+                labelNumProductos.setText(productosActuales + " productos en la venta actual.");
+            }
+        }
     }
 
     public void cargarPanelVentas() {
@@ -623,11 +428,11 @@ public class VentanaPrincipal extends JFrame {
             @Override
             public void keyReleased(KeyEvent e) {
                 String query = tfBuscar.getText();
-                filtrarLista(query, tableModelInventario, tableInventario);
+                filtrarLista(query, tableInventario);
             }
         });
 
-        filtrarLista("", tableModelInventario, tableInventario);
+        filtrarLista("", tableInventario);
 
         panelTablaInventario.add(scrollInventario);
 
@@ -694,11 +499,7 @@ public class VentanaPrincipal extends JFrame {
     public List<ArchivoContenido> getFiles(String ruta) {
         List<ArchivoContenido> list = new ArrayList<>();
         try (Stream<Path> pathStream = Files.walk(Paths.get(ruta))) {
-            list = pathStream
-                    .filter(Files::isRegularFile)
-                    .map(Path::toFile)
-                    .map(file -> new ArchivoContenido(file.getName(), new Date(file.lastModified()), file.getAbsolutePath()))
-                    .collect(Collectors.toList());
+            list = pathStream.filter(Files::isRegularFile).map(Path::toFile).map(file -> new ArchivoContenido(file.getName(), new Date(file.lastModified()), file.getAbsolutePath())).collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -721,7 +522,7 @@ public class VentanaPrincipal extends JFrame {
         cell = row.createCell(3, CellType.NUMERIC);
         cell.setCellValue(stock);
 
-        FileOutputStream outputStream = new FileOutputStream(file);
+        FileOutputStream outputStream = new FileOutputStream(fileRoute);
         workbook.write(outputStream);
         outputStream.close();
 
@@ -768,12 +569,13 @@ public class VentanaPrincipal extends JFrame {
             tableModelInventario.setValueAt(newStock, posiciones.get(i), 3);
         }
 
-        FileOutputStream outputStream = new FileOutputStream(file);
+        FileOutputStream outputStream = new FileOutputStream(fileRoute);
         workbook.write(outputStream);
         outputStream.close();
     }
 
-    public void filtrarLista(String busqueda, DefaultTableModel tableModel, JTable table) {
+    public void filtrarLista(String busqueda, JTable table) {
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(tableModel);
         table.setRowSorter(trs);
 
