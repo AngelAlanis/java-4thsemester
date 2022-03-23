@@ -26,28 +26,28 @@ public class TelefonoGUI extends JFrame {
     private JTextField tfMarcaOut;
     private JTextField tfPantallaOut;
     private JTextField tfMemoriaOut;
-    private JButton btnGuardar;
-    private JButton btnMostrar;
-    private JLabel labelNumSerie;
-    private JLabel labelMarca;
-    private JLabel labelPantalla;
-    private JLabel labelNumSerieOut;
-    private JLabel labelMarcaOut;
-    private JLabel labelPantallaOut;
-    private JLabel labelMemoria;
-    private JLabel labelMemoriaOut;
-    private JPanel panelPrincipal;
+    private JButton    btnGuardar;
+    private JButton    btnMostrar;
+    private JLabel     labelNumSerie;
+    private JLabel     labelMarca;
+    private JLabel     labelPantalla;
+    private JLabel     labelNumSerieOut;
+    private JLabel     labelMarcaOut;
+    private JLabel     labelPantallaOut;
+    private JLabel     labelMemoria;
+    private JLabel     labelMemoriaOut;
+    private JPanel     panelPrincipal;
 
     private final String[] listaPantallas = {"14 inch", "15 inch", "17 inch"};
-    private final String[] listaMemorias = {"4GB", "8GB", "16GB", "32GB", "64GB", "128GB"};
-    private final String[] listaMarcas = {"Samsung", "Xiaomi", "Apple", "Huawei"};
+    private final String[] listaMemorias  = {"4GB", "8GB", "16GB", "32GB", "64GB", "128GB"};
+    private final String[] listaMarcas    = {"Samsung", "Xiaomi", "Apple", "Huawei"};
 
     private JComboBox<String> cbMemoria;
     private JComboBox<String> cbPantalla;
-    private JButton btnSiguiente;
-    private JButton btnAnterior;
-    private JPanel panelBotonesMostrar;
-    private JPanel panelBotonGuardar;
+    private JButton           btnSiguiente;
+    private JButton           btnAnterior;
+    private JPanel            panelBotonesMostrar;
+    private JPanel            panelBotonGuardar;
     private JComboBox<String> cbMarca;
 
     int currentTelefono = 0;
@@ -91,7 +91,7 @@ public class TelefonoGUI extends JFrame {
         panelPrincipal.add(tfNumSerie, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         labelMarca = new JLabel();
         labelMarca.setText("Marca");
-        panelPrincipal.add(labelMarca, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(labelMarca, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
         labelPantalla = new JLabel();
         labelPantalla.setText("Pantalla");
         panelPrincipal.add(labelPantalla, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -168,8 +168,8 @@ public class TelefonoGUI extends JFrame {
     public void initActionListeners() {
         btnGuardar.addActionListener(e -> {
             String numSerie = tfNumSerie.getText();
-            String marca = Objects.requireNonNull(cbMarca.getSelectedItem()).toString();
-            String memoria = Objects.requireNonNull(cbMemoria.getSelectedItem()).toString();
+            String marca    = Objects.requireNonNull(cbMarca.getSelectedItem()).toString();
+            String memoria  = Objects.requireNonNull(cbMemoria.getSelectedItem()).toString();
             String pantalla = Objects.requireNonNull(cbPantalla.getSelectedItem()).toString();
 
             listaTelefonos.add(new Telefono(numSerie, marca, memoria, pantalla));
@@ -180,9 +180,7 @@ public class TelefonoGUI extends JFrame {
 
         });
 
-        btnMostrar.addActionListener(e -> {
-            printCurrentAlumno();
-        });
+        btnMostrar.addActionListener(e -> printCurrentAlumno());
 
 
         btnSiguiente.addActionListener(e1 -> {
