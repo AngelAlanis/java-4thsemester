@@ -12,20 +12,20 @@ public class LoginScreen extends JFrame {
     static boolean loginIsValid = false;
     JPanel panelPrincipal = new JPanel();
 
-    JLabel labelIngreso = new JLabel("Ingreso");
-    JLabel labelInstrucciones = new JLabel("Ingrese su usuario y contraseña para continuar");
-    JLabel labelUser = new JLabel("Usuario");
-    JTextField tfUser = new JTextField(20);
-    JLabel labelPassword = new JLabel("Contraseña");
-    JPasswordField tfPassword = new JPasswordField(20);
-    ImageIcon imagenLogo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/logoSinTexto.png")));
+    JLabel         labelIngreso       = new JLabel("Ingreso");
+    JLabel         labelInstrucciones = new JLabel("Ingrese su usuario y contraseña para continuar");
+    JLabel         labelUser          = new JLabel("Usuario");
+    JTextField     tfUser             = new JTextField(20);
+    JLabel         labelPassword      = new JLabel("Contraseña");
+    JPasswordField tfPassword         = new JPasswordField(20);
+    ImageIcon      imagenLogo         = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/logoSinTexto.png")));
 
-    JLabel labelLogo = new JLabel(imagenLogo);
-    JButton btnLogin = new JButton("Ingresar");
+    JLabel  labelLogo = new JLabel(imagenLogo);
+    JButton btnLogin  = new JButton("Ingresar");
 
-    String userAdmin = "admin";
-    String passwordAdmin = "admin";
-    String userEmpleado = "cajero";
+    String userAdmin        = "admin";
+    String passwordAdmin    = "admin";
+    String userEmpleado     = "cajero";
     String passwordEmpleado = "cajero";
 
     public LoginScreen() {
@@ -70,7 +70,7 @@ public class LoginScreen extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 }
             }
 

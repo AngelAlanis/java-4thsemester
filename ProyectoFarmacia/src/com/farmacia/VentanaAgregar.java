@@ -14,19 +14,19 @@ import java.util.Random;
 
 public class VentanaAgregar extends JFrame {
 
-    JPanel panelPrincipal = new JPanel();
-    ImageIcon iconoAceptar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/aceptar.png")));
-    ImageIcon iconoCancelar = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/cancelar.png")));
-    JLabel labelTitulo = new JLabel("Nuevo producto");
-    JLabel labelDescripcion = new JLabel("Descripción del producto");
-    JLabel labelPrecio = new JLabel("Precio de venta");
-    JLabel labelStock = new JLabel("Productos en existencia");
+    JPanel    panelPrincipal   = new JPanel();
+    ImageIcon iconoAceptar     = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/aceptar.png")));
+    ImageIcon iconoCancelar    = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/icons/cancelar.png")));
+    JLabel    labelTitulo      = new JLabel("Nuevo producto");
+    JLabel    labelDescripcion = new JLabel("Descripción del producto");
+    JLabel    labelPrecio      = new JLabel("Precio de venta");
+    JLabel    labelStock       = new JLabel("Productos en existencia");
 
     JTextField tfDescripcion = new JTextField();
-    JTextField tfPrecio = new JTextField();
-    JTextField tfStock = new JTextField();
+    JTextField tfPrecio      = new JTextField();
+    JTextField tfStock       = new JTextField();
 
-    JButton btnAceptar = new JButton("Aceptar");
+    JButton btnAceptar  = new JButton("Aceptar");
     JButton btnCancelar = new JButton("Cancelar");
 
     public VentanaAgregar() {
@@ -91,7 +91,7 @@ public class VentanaAgregar extends JFrame {
     }
 
     public String generarFolio() {
-        int folio;
+        int    folio;
         Random rnd = new Random();
         folio = rnd.nextInt(10000);
         return String.valueOf(folio);

@@ -5,7 +5,7 @@ import java.util.List;
 
 class FileTestModel extends AbstractTableModel {
 
-    private static final String[] COLUMNS = { "Num. Ticket", "Fecha", "Ubicación" };
+    private static final String[] COLUMNS = {"Num. Ticket", "Fecha", "Ubicación"};
 
     private final List<ArchivoContenido> contents;
 
@@ -14,10 +14,14 @@ class FileTestModel extends AbstractTableModel {
     }
 
     @Override
-    public int getRowCount() { return contents.size(); }
+    public int getRowCount() {
+        return contents.size();
+    }
 
     @Override
-    public int getColumnCount() { return COLUMNS.length; }
+    public int getColumnCount() {
+        return COLUMNS.length;
+    }
 
     @Override
     public String getColumnName(int column) {
