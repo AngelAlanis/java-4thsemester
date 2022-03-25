@@ -17,7 +17,7 @@ public class Mathematics {
             return resultado;
         }
 
-        if(exponente < 0){
+        if (exponente < 0) {
             double resultado = numero;
             for (double i = exponente - 1; i < 0; i++) {
                 resultado = resultado / numero;
@@ -26,22 +26,39 @@ public class Mathematics {
             return resultado;
         }
 
-        return -1;
+        return Double.NaN;
 
     }
 
-    public static double raiz(double numero){
-        if (numero > 0) {
-            int resultado = 1;
-            int i;
+    public static double raiz(double numero) {
 
-            for (i = 1; resultado < numero; i++) {
-                resultado = i * i;
-            }
+        double temp;
+        double resultado = numero / 2;
 
-            return  i - 1;
+        do {
+            temp      = resultado;
+            resultado = (temp + (numero / temp)) / 2;
+        } while ((temp - resultado) != 0);
+
+        return resultado;
+    }
+
+    public static double absoluto(double numero) {
+        if (numero >= 0) {
+            return numero;
         }
 
-        return -1;
+        if (numero < 0) {
+            return numero * -1;
+        }
+
+        return Double.NaN;
     }
+
+    public static double error(double a, double b) {
+        return absoluto((a - b) / a);
+    }
+
+
+
 }
