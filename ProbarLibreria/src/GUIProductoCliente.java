@@ -1,6 +1,8 @@
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import java.lang.Math;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -60,6 +62,14 @@ public class GUIProductoCliente extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        listaClientes.add(new Cliente("4328432", "Juanito", "732473232849"));
+        listaClientes.add(new Cliente("5443543", "Pepe", "32948723234"));
+        listaClientes.add(new Cliente("9080909", "Martín", "73247353229"));
+        listaProductos.add(new Producto("34298432", "Jabón", 23));
+        listaProductos.add(new Producto("23478632", "Papel", 14));
+        listaProductos.add(new Producto("3432432", "Cartón", 34));
+
     }
 
     {
@@ -222,7 +232,7 @@ public class GUIProductoCliente extends JFrame {
     }
 
     public static void main(String[] args) {
-        FlatLightLaf.setup();
+        FlatDarkLaf.setup();
         new GUIProductoCliente();
     }
 
