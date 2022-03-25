@@ -29,4 +29,19 @@ public class Mathematics {
         return -1;
 
     }
+
+    public static double raiz(double numero){
+        if (numero > 0) {
+            int resultado = 1;
+            int i;
+
+            for (i = 1; resultado < numero; i++) {
+                resultado = i * i;
+            }
+
+            return  i - 1;
+        }
+
+        return -1;
+    }
 }

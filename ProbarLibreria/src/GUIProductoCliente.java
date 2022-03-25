@@ -2,7 +2,6 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import java.lang.Math;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;

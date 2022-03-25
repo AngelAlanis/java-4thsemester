@@ -31,4 +31,23 @@ public class MathematicsTest {
         Assert.assertEquals(0.001371742112, Mathematics.potencia(9, -3), 0.00001);
     }
 
+    @Test
+    public void RaizDeNueveDebeRegresarTres(){
+        Assert.assertEquals(3, Mathematics.raiz(9), 0.00001);
+    }
+
+    @Test
+    public void RaizDe25DebeRegresar5(){
+        Assert.assertEquals(5, Mathematics.raiz(25), 0.00001);
+    }
+
+    @Test
+    public void RaizDe9855DebeRegresar100(){
+        Assert.assertEquals(100, Mathematics.raiz(9855), 0.00001);
+    }
+
+    @Test
+    public void RaizDe85DebeDar9(){
+        Assert.assertEquals(9, Mathematics.raiz(85), 0.00001);
+    }
 }
