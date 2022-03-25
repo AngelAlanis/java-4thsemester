@@ -1,0 +1,2 @@
+public class MathematicsPruebas {
+}

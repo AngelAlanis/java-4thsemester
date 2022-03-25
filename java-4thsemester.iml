@@ -12,5 +12,6 @@
     <orderEntry type="library" name="MyLibrary" level="project" />
     <orderEntry type="library" name="fontbox-2.0.25" level="project" />
     <orderEntry type="library" name="forms_rt" level="project" />
+    <orderEntry type="library" name="exp4j-0.4.8" level="project" />
   </component>
 </module>

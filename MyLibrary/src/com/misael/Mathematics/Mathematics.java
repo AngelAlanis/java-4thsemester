@@ -1,6 +1,12 @@
 package com.misael.Mathematics;
 
+import net.objecthunter.exp4j.ExpressionBuilder;
+
+import java.util.ArrayList;
+
 public class Mathematics {
+
+    ArrayList<ArrayList<Double>> solucionesReglaFalsa = new ArrayList<>();
 
     public static double potencia(double numero, double exponente) {
 
@@ -59,6 +65,47 @@ public class Mathematics {
         return absoluto((a - b) / a);
     }
 
+    public static double nextSolucionBiseccion(double a, double b) {
+        return (a + b) / 2;
+    }
+
+    public static double nextSolucionReglaFalsa(double a, double b, double fa, double fb) {
+        return (((a * fb) - (b * fa))
+                / (fb - fa));
+    }
+
+    public static double evaluarExpresion(String expresion, double x) {
+        return new ExpressionBuilder(expresion)
+                .variables("x")
+                .build()
+                .setVariable("x", x)
+                .evaluate();
+    }
+
+    public static double metodoReglaFalsa() {
+
+        return Double.NaN;
+    }
+
+    public static double[] busquedaIncremental(String expresion) {
+        double[] resultados = new double[2];
+
+        double fx  = 0;
+        double fx1 = 0;
+        int    i   = 0;
+
+        do {
+            fx = evaluarExpresion(expresion, i);
+            i++;
+            fx1 = evaluarExpresion(expresion, i);
+            i++;
+        } while ((fx * fx1) > 0);
+
+        resultados[0] = i - 1;
+        resultados[1] = 1;
+
+        return resultados;
+    }
 
 
 }
