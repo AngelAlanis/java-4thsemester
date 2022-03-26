@@ -82,12 +82,17 @@ public class MathematicsTest {
     }
 
     @Test
+    public void BusquedaIncremental_Test1(){
+        Assert.assertArrayEquals(new double[]{5,6}, Mathematics.busquedaIncremental("x^4-5x^3-4"), 0.00001);
+    }
+
+    @Test
     public void ReglaFalsa_Test1() {
-        Assert.assertEquals(1.18182, Mathematics.metodoReglaFalsa("x^4-5x^3-4", 0.0001), 0.0001);
+        Assert.assertEquals(5.0312595, Mathematics.metodoReglaFalsa("x^4-5x^3-4", 0.0001), 0.0001);
     }
 
     @Test
     public void ReglaFalsa_Test2() {
-        Assert.assertEquals(1.22222, Mathematics.metodoReglaFalsa("x^6-3x^4-2", 0.0001), 0.0001);
+        Assert.assertEquals(1.787584, Mathematics.metodoReglaFalsa("x^6-3x^4-2", 0.0001), 0.0001);
     }
 }

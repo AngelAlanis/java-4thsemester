@@ -2,11 +2,12 @@ package com.misael.Mathematics;
 
 import net.objecthunter.exp4j.ExpressionBuilder;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Mathematics {
 
-    ArrayList<ArrayList<Double>> solucionesReglaFalsa = new ArrayList<>();
+    public static double euler = 2.71828182845904523536;
 
     public static double potencia(double numero, double exponente) {
 
@@ -72,6 +73,17 @@ public class Mathematics {
     public static double nextSolucionReglaFalsa(double a, double b, double fa, double fb) {
         return (((a * fb) - (b * fa))
                 / (fb - fa));
+    }
+
+    public static double nextSolucionSecante(int i, ArrayList<Double> xi, ArrayList<Double> fxi) {
+        return new ExpressionBuilder("_x2 - (_fx2 *((_x2 - _x1) / (_fx2 - _fx1)))")
+                .variables("_x1", "_x2", "_fx1", "_fx2")
+                .build()
+                .setVariable("_x1", xi.get(i))
+                .setVariable("_x2", xi.get(i - 1))
+                .setVariable("_fx1", fxi.get(i))
+                .setVariable("_fx2", fxi.get(i - 1))
+                .evaluate();
     }
 
     public static double evaluarExpresion(String expresion, double x) {
@@ -168,11 +180,11 @@ public class Mathematics {
 
             //Se evalua si fa * fb es menor que 0
             if ((fa.get(i - 1) * fxi.get(i - 1)) < 0) {
-                b.add(i, xi.get(i - 1));
-                a.add(i, a.get(i - 1));
+                b.add(i, xi.get(i - 1)); //En b se pone el valor de xi
+                a.add(i, a.get(i - 1)); // a se queda igual
             } else {
-                a.add(i, xi.get(i - 1));
-                b.add(i, b.get(i - 1));
+                a.add(i, xi.get(i - 1)); //En a se pone el valor de xi
+                b.add(i, b.get(i - 1)); //b se queda igual
             }
 
         } while (i <= 1 && error.get(i - 1) == 0 || absoluto(error.get(i - 1)) > tolerancia);
@@ -180,6 +192,22 @@ public class Mathematics {
         System.out.println(xi.toString());
 
         return xi.get(i - 1);
+    }
+
+    public static double metodoSecante(String expresion, double tolerancia) {
+        double[] intervaloInicial = busquedaIncremental(expresion);
+
+        double xm1 = evaluarExpresion(expresion, intervaloInicial[0]);
+        double x0  = evaluarExpresion(expresion, intervaloInicial[1]);
+
+        if (absoluto(xm1) < absoluto(x0)) {
+            double temp = x0;
+            x0  = xm1;
+            xm1 = temp;
+        }
+
+
+        return Double.NaN;
     }
 
     public static double[] busquedaIncremental(String expresion) {
@@ -200,37 +228,4 @@ public class Mathematics {
         return resultados;
     }
 
-    public static String imprimirTabla(ArrayList<Double> a, ArrayList<Double> b, ArrayList<Double> fa, ArrayList<Double> fb, ArrayList<Double> xi, ArrayList<Double> fxi, ArrayList<Double> error) {
-
-        String respuesta = "";
-
-        System.out.println("a");
-        System.out.println(a.toString());
-        System.out.println("fa");
-        System.out.println(fa.toString());
-        System.out.println("b");
-        System.out.println(b.toString());
-        System.out.println("fb");
-        System.out.println(fb.toString());
-        System.out.println("xi");
-        System.out.println(xi.toString());
-        System.out.println("fxi");
-        System.out.println(fxi.toString());
-        System.out.println("error");
-        System.out.println(error.toString());
-
-
-//        for(int i = 0; i < a.size(); i++){
-//            respuesta += "  " + i;
-//            respuesta += "  " + a.get(i);
-//            respuesta += "  " + fa.get(i);
-//            respuesta += "  " + b.get(i);
-//            respuesta += "  " + fb.get(i);
-//            respuesta += "  " + xi.get(i);
-//            respuesta += "  " + error.get(i);
-//            respuesta += "  " + fxi.get(i);
-//            respuesta += "\n";
-//        }
-        return "";
-    }
 }
