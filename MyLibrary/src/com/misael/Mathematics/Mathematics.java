@@ -1,9 +1,12 @@
 package com.misael.Mathematics;
 
 import net.objecthunter.exp4j.ExpressionBuilder;
+
 import java.util.ArrayList;
 
 public class Mathematics {
+
+    static ArrayList<ArrayList<Double>> tablaReglaFalsa = new ArrayList<ArrayList<Double>>();
 
     public static final double EULER = 2.71828182845904523536;
 
@@ -141,6 +144,7 @@ public class Mathematics {
         } while (i <= 1 || absoluto(error.get(i - 1)) > tolerancia);
 
         System.out.println(xi);
+        setTablaReglaFalsa(a, b, fa, fb, xi, fxi, error);
         return xi.get(i - 1);
     }
 
@@ -253,6 +257,20 @@ public class Mathematics {
         resultados[1] = i;
 
         return resultados;
+    }
+
+    public ArrayList<ArrayList<Double>> getTablaReglaFalsa() {
+        return tablaReglaFalsa;
+    }
+
+    public static void setTablaReglaFalsa(ArrayList<Double> a, ArrayList<Double> b, ArrayList<Double> fa, ArrayList<Double> fb, ArrayList<Double> xi, ArrayList<Double> fxi, ArrayList<Double> error) {
+        tablaReglaFalsa.add(a);
+        tablaReglaFalsa.add(b);
+        tablaReglaFalsa.add(fa);
+        tablaReglaFalsa.add(fb);
+        tablaReglaFalsa.add(xi);
+        tablaReglaFalsa.add(error);
+        tablaReglaFalsa.add(fxi);
     }
 
 }
