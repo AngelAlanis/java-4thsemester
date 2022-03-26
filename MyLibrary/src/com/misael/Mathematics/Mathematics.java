@@ -106,7 +106,6 @@ public class Mathematics {
 
             //Se calcula xi con la fórmula de xi+1
             xi.add(i, nextSolucionReglaFalsa(a.get(i), b.get(i), fa.get(i), fb.get(i)));
-            System.out.println(nextSolucionReglaFalsa(a.get(i), b.get(i), fa.get(i), fb.get(i)));
 
             //Si es la primera iteración el error se pone en 0
             if (i == 0) {
@@ -128,7 +127,50 @@ public class Mathematics {
 
         } while (error.get(i - 1) > tolerancia);
 
-        String xd = (imprimirTabla(a, b, fa, fb, xi, fxi, error));
+        return xi.get(i - 1);
+    }
+
+    public static double metodoBiseccion(String expresion, double tolerancia) {
+        double[] intervaloInicial = busquedaIncremental(expresion);
+
+        ArrayList<Double> a     = new ArrayList<>();
+        ArrayList<Double> b     = new ArrayList<>();
+        ArrayList<Double> xi    = new ArrayList<>();
+        ArrayList<Double> error = new ArrayList<>();
+        ArrayList<Double> fa    = new ArrayList<>();
+        ArrayList<Double> fxi   = new ArrayList<>();
+
+        int i = 0;
+
+        a.add(i, intervaloInicial[0]);
+        b.add(i, intervaloInicial[1]);
+
+        do {
+            //Se calcula fa y fb según el valor actual de a
+            fa.add(i, evaluarExpresion(expresion, a.get(i)));
+
+            //Se calcula xi con la fórmula de xi+1
+            xi.add(i, nextSolucionBiseccion(a.get(i), b.get(i)));
+
+            //Si es la primera iteración el error se pone en 0
+            if (i == 0) {
+                error.add(i, 0.0);
+            } else {
+                error.add(i, error(xi.get(i), xi.get(i - 1)));
+            }
+
+            fxi.add(i, evaluarExpresion(expresion, xi.get(i)));
+
+            i++;
+
+            //Se evalua si fa * fb es menor que 0
+            if ((fa.get(i - 1) * fxi.get(i - 1)) < 0) {
+                b.add(i, fxi.get(i - 1));
+            }
+
+            a.add(i, fxi.get(i - 1));
+
+        } while (error.get(i - 1) > tolerancia);
 
         return xi.get(i - 1);
     }
