@@ -185,24 +185,17 @@ public class Mathematics {
     public static double[] busquedaIncremental(String expresion) {
         double[] resultados = new double[2];
 
-        double fx;
-        double fx1 = 0;
-        int    i   = 0;
+        ArrayList<Double> fx = new ArrayList<>();
+
+        int i = -1;
 
         do {
-            fx = evaluarExpresion(expresion, i);
             i++;
-
-            if ((fx * fx1) < 0) {
-                break;
-            }
-
-            fx1 = evaluarExpresion(expresion, i);
-            i++;
-        } while ((fx * fx1) > 0);
+            fx.add(evaluarExpresion(expresion, i));
+        } while (i <= 1 || (fx.get(i) * fx.get(i - 1)) >= 0);
 
         resultados[0] = i - 1;
-        resultados[1] = 1;
+        resultados[1] = i;
 
         return resultados;
     }
