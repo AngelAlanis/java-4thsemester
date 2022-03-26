@@ -75,13 +75,13 @@ public class Mathematics {
 
     public static double nextSolucionSecante(ArrayList<Double> xi, ArrayList<Double> fxi) {
         int i = xi.size() - 1;
-        return new ExpressionBuilder("_x2 - (_fx2 *((_x2 - _x1) / (_fx2 - _fx1)))")
+        return new ExpressionBuilder(" _x2 - (((_x2 - _x1) / (_fx2 - _fx1)) * _fx2) ")
                 .variables("_x1", "_x2", "_fx1", "_fx2")
                 .build()
-                .setVariable("_x1", xi.get(i))
-                .setVariable("_x2", xi.get(i - 1))
-                .setVariable("_fx1", fxi.get(i))
-                .setVariable("_fx2", fxi.get(i - 1))
+                .setVariable("_x1", xi.get(i - 1))
+                .setVariable("_x2", xi.get(i))
+                .setVariable("_fx1", fxi.get(i - 1))
+                .setVariable("_fx2", fxi.get(i))
                 .evaluate();
     }
 

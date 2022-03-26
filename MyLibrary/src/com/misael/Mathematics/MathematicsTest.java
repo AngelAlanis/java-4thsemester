@@ -88,11 +88,46 @@ public class MathematicsTest {
 
     @Test
     public void ReglaFalsa_Test1() {
-        Assert.assertEquals(5.0312595, Mathematics.metodoReglaFalsa("x^4-5x^3-4", 0.0001), 0.0001);
+        Assert.assertEquals(5.0312595, Mathematics.metodoReglaFalsa("x^4-5x^3-4", 0.0001), 0.01);
     }
 
     @Test
     public void ReglaFalsa_Test2() {
-        Assert.assertEquals(1.787584, Mathematics.metodoReglaFalsa("x^6-3x^4-2", 0.0001), 0.0001);
+        Assert.assertEquals(1.4405, Mathematics.metodoReglaFalsa("x^5-5x+1", 0.0001), 0.01);
+    }
+
+    @Test
+    public void ReglaFalsa_Test3(){
+        Assert.assertEquals(2.0476, Mathematics.metodoReglaFalsa("3x^2-x^4+5", 0.0001), 0.01);
+    }
+
+    @Test
+    public void Biseccion_Test1(){
+        Assert.assertEquals(5.0312595, Mathematics.metodoBiseccion("x^4-5x^3-4", 0.0001), 0.01);
+    }
+
+    @Test
+    public void Biseccion_Test2() {
+        Assert.assertEquals(1.4405, Mathematics.metodoBiseccion("x^5-5x+1", 0.0001), 0.01);
+    }
+
+    @Test
+    public void Biseccion_Test3(){
+        Assert.assertEquals(2.0476, Mathematics.metodoBiseccion("3x^2-x^4+5", 0.0001), 0.01);
+    }
+
+    @Test
+    public void Secante_Test1(){
+        Assert.assertEquals(5.0312595, Mathematics.metodoSecante("x^4-5x^3-4", 0.0001), 0.01);
+    }
+
+    @Test
+    public void Secante_Test2() {
+        Assert.assertEquals(1.4405, Mathematics.metodoSecante("x^5-5x+1", 0.0001), 0.01);
+    }
+
+    @Test
+    public void Secante_Test3(){
+        Assert.assertEquals(2.0476, Mathematics.metodoSecante("3x^2-x^4+5", 0.0001), 0.01);
     }
 }
