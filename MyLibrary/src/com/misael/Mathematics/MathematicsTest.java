@@ -22,42 +22,42 @@ public class MathematicsTest {
     }
 
     @Test
-    public void Potencia_10ALaMenos2_DebeRegresar0p01 () {
+    public void Potencia_10ALaMenos2_DebeRegresar0p01() {
         Assert.assertEquals(0.01, Mathematics.potencia(10, -2), 0.00001);
     }
 
     @Test
-    public void Potencia_9ALaMenos3_DebeRegresar1p37Por10ALaMenos3 () {
+    public void Potencia_9ALaMenos3_DebeRegresar1p37Por10ALaMenos3() {
         Assert.assertEquals(0.001371742112, Mathematics.potencia(9, -3), 0.00001);
     }
 
     @Test
-    public void Raiz_DeNueve_DebeRegresarTres(){
+    public void Raiz_DeNueve_DebeRegresarTres() {
         Assert.assertEquals(3, Mathematics.raiz(9), 0.00001);
     }
 
     @Test
-    public void Raiz_De25_DebeRegresar5(){
+    public void Raiz_De25_DebeRegresar5() {
         Assert.assertEquals(5, Mathematics.raiz(25), 0.00001);
     }
 
     @Test
-    public void Raiz_De9855_DebeRegresar100(){
+    public void Raiz_De9855_DebeRegresar100() {
         Assert.assertEquals(99.27235265, Mathematics.raiz(9855), 0.00001);
     }
 
     @Test
-    public void Raiz_De85_DebeRegresar9(){
+    public void Raiz_De85_DebeRegresar9() {
         Assert.assertEquals(9.219544457, Mathematics.raiz(85), 0.00001);
     }
 
     @Test
-    public void Absoluto_DeMenos90_DebeRegresar90(){
+    public void Absoluto_DeMenos90_DebeRegresar90() {
         Assert.assertEquals(90, Mathematics.absoluto(-90), 0.00001);
     }
 
     @Test
-    public void Absoluto_De50_DebeRegresar50(){
+    public void Absoluto_De50_DebeRegresar50() {
         Assert.assertEquals(50, Mathematics.absoluto(50), 0.00001);
     }
 
@@ -67,15 +67,27 @@ public class MathematicsTest {
     }
 
     @Test
-    public void Error_De1p4843y1p4687_DebeRegresar0p0105(){
+    public void Error_De1p4843y1p4687_DebeRegresar0p0105() {
         Assert.assertEquals(0.010510004, Mathematics.error(1.4843, 1.4687), 0.000001);
     }
 
-    @Test public void NextSolucionReglaFalsaTest() {
+    @Test
+    public void NextSolucionReglaFalsaTest() {
         Assert.assertEquals(1.6057, Mathematics.nextSolucionReglaFalsa(1, 2, 2.5403, -1.6536), 0.0001);
     }
 
-    @Test public void NextSolucionReglaFalsaTest2() {
+    @Test
+    public void NextSolucionReglaFalsaTest2() {
         Assert.assertEquals(1.4762, Mathematics.nextSolucionReglaFalsa(1.4761, 1.4804, 0.0004, -0.0229), 0.0001);
+    }
+
+    @Test
+    public void ReglaFalsa_Test1() {
+        Assert.assertEquals(1.18182, Mathematics.metodoReglaFalsa("x^4-5x^3-4", 0.0001), 0.0001);
+    }
+
+    @Test
+    public void ReglaFalsa_Test2() {
+        Assert.assertEquals(1.22222, Mathematics.metodoReglaFalsa("x^6-3x^4-2", 0.0001), 0.0001);
     }
 }

@@ -82,21 +82,72 @@ public class Mathematics {
                 .evaluate();
     }
 
-    public static double metodoReglaFalsa() {
+    public static double metodoReglaFalsa(String expresion, double tolerancia) {
+        double[] intervaloInicial = busquedaIncremental(expresion);
 
-        return Double.NaN;
+        ArrayList<Double> a     = new ArrayList<>();
+        ArrayList<Double> b     = new ArrayList<>();
+        ArrayList<Double> fa    = new ArrayList<>();
+        ArrayList<Double> fb    = new ArrayList<>();
+        ArrayList<Double> xi    = new ArrayList<>();
+        ArrayList<Double> fxi   = new ArrayList<>();
+        ArrayList<Double> error = new ArrayList<>();
+
+        int i = 0;
+
+        //Se añaden los valores iniciales de a y b según el intervalo
+        a.add(i, intervaloInicial[0]);
+        b.add(i, intervaloInicial[1]);
+
+        do {
+            //Se calcula fa y fb según el valor actual de a y b
+            fa.add(i, evaluarExpresion(expresion, a.get(i)));
+            fb.add(i, evaluarExpresion(expresion, b.get(i)));
+
+            //Se calcula xi con la fórmula de xi+1
+            xi.add(i, nextSolucionReglaFalsa(a.get(i), b.get(i), fa.get(i), fb.get(i)));
+            System.out.println(nextSolucionReglaFalsa(a.get(i), b.get(i), fa.get(i), fb.get(i)));
+
+            //Si es la primera iteración el error se pone en 0
+            if (i == 0) {
+                error.add(i, 0.0);
+            } else {
+                error.add(i, error(xi.get(i), xi.get(i - 1)));
+            }
+
+            fxi.add(i, evaluarExpresion(expresion, xi.get(i)));
+
+            i++;
+
+            //Se evalua si fa * fb es menor que 0
+            if ((fa.get(i - 1) * fxi.get(i - 1)) < 0) {
+                b.add(i, fxi.get(i - 1));
+            }
+
+            a.add(i, fxi.get(i - 1));
+
+        } while (error.get(i - 1) > tolerancia);
+
+        String xd = (imprimirTabla(a, b, fa, fb, xi, fxi, error));
+
+        return xi.get(i - 1);
     }
 
     public static double[] busquedaIncremental(String expresion) {
         double[] resultados = new double[2];
 
-        double fx  = 0;
+        double fx;
         double fx1 = 0;
         int    i   = 0;
 
         do {
             fx = evaluarExpresion(expresion, i);
             i++;
+
+            if ((fx * fx1) < 0) {
+                break;
+            }
+
             fx1 = evaluarExpresion(expresion, i);
             i++;
         } while ((fx * fx1) > 0);
@@ -107,5 +158,37 @@ public class Mathematics {
         return resultados;
     }
 
+    public static String imprimirTabla(ArrayList<Double> a, ArrayList<Double> b, ArrayList<Double> fa, ArrayList<Double> fb, ArrayList<Double> xi, ArrayList<Double> fxi, ArrayList<Double> error) {
 
+        String respuesta = "";
+
+        System.out.println("a");
+        System.out.println(a.toString());
+        System.out.println("fa");
+        System.out.println(fa.toString());
+        System.out.println("b");
+        System.out.println(b.toString());
+        System.out.println("fb");
+        System.out.println(fb.toString());
+        System.out.println("xi");
+        System.out.println(xi.toString());
+        System.out.println("fxi");
+        System.out.println(fxi.toString());
+        System.out.println("error");
+        System.out.println(error.toString());
+
+
+//        for(int i = 0; i < a.size(); i++){
+//            respuesta += "  " + i;
+//            respuesta += "  " + a.get(i);
+//            respuesta += "  " + fa.get(i);
+//            respuesta += "  " + b.get(i);
+//            respuesta += "  " + fb.get(i);
+//            respuesta += "  " + xi.get(i);
+//            respuesta += "  " + error.get(i);
+//            respuesta += "  " + fxi.get(i);
+//            respuesta += "\n";
+//        }
+        return "";
+    }
 }
