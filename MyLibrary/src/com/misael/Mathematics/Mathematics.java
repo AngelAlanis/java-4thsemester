@@ -1,13 +1,11 @@
 package com.misael.Mathematics;
 
 import net.objecthunter.exp4j.ExpressionBuilder;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Mathematics {
 
-    public static double euler = 2.71828182845904523536;
+    public static final double EULER = 2.71828182845904523536;
 
     public static double potencia(double numero, double exponente) {
 
@@ -75,7 +73,8 @@ public class Mathematics {
                 / (fb - fa));
     }
 
-    public static double nextSolucionSecante(int i, ArrayList<Double> xi, ArrayList<Double> fxi) {
+    public static double nextSolucionSecante(ArrayList<Double> xi, ArrayList<Double> fxi) {
+        int i = xi.size() - 1;
         return new ExpressionBuilder("_x2 - (_fx2 *((_x2 - _x1) / (_fx2 - _fx1)))")
                 .variables("_x1", "_x2", "_fx1", "_fx2")
                 .build()
@@ -139,9 +138,9 @@ public class Mathematics {
                 b.add(i, b.get(i - 1));
             }
 
-        } while (i <= 1 && error.get(i - 1) == 0 || absoluto(error.get(i - 1)) > tolerancia);
+        } while (i <= 1 || absoluto(error.get(i - 1)) > tolerancia);
 
-        System.out.println(xi.toString());
+        System.out.println(xi);
         return xi.get(i - 1);
     }
 
@@ -187,9 +186,9 @@ public class Mathematics {
                 b.add(i, b.get(i - 1)); //b se queda igual
             }
 
-        } while (i <= 1 && error.get(i - 1) == 0 || absoluto(error.get(i - 1)) > tolerancia);
+        } while (i <= 1 || absoluto(error.get(i - 1)) > tolerancia);
 
-        System.out.println(xi.toString());
+        System.out.println(xi);
 
         return xi.get(i - 1);
     }
@@ -197,17 +196,45 @@ public class Mathematics {
     public static double metodoSecante(String expresion, double tolerancia) {
         double[] intervaloInicial = busquedaIncremental(expresion);
 
-        double xm1 = evaluarExpresion(expresion, intervaloInicial[0]);
-        double x0  = evaluarExpresion(expresion, intervaloInicial[1]);
+        double xm1 = intervaloInicial[0];
+        double x0  = intervaloInicial[1];
 
-        if (absoluto(xm1) < absoluto(x0)) {
-            double temp = x0;
-            x0  = xm1;
-            xm1 = temp;
+        double fxm1 = evaluarExpresion(expresion, xm1);
+        double fx0  = evaluarExpresion(expresion, x0);
+
+        if (absoluto(fxm1) < absoluto(fx0)) {
+            double temp  = x0;
+            double ftemp = fx0;
+            x0   = xm1;
+            fx0  = fxm1;
+            xm1  = temp;
+            fxm1 = ftemp;
         }
+        int i = 1;
+
+        ArrayList<Double> xi    = new ArrayList<>();
+        ArrayList<Double> error = new ArrayList<>();
+        ArrayList<Double> fxi   = new ArrayList<>();
+
+        xi.add(0, xm1);
+        xi.add(1, x0);
+        fxi.add(0, fxm1);
+        fxi.add(1, fx0);
+        error.add(0, 0.0);
+        error.add(1, 0.0);
+
+        do {
+            i++;
+
+            xi.add(nextSolucionSecante(xi, fxi));
+            fxi.add(evaluarExpresion(expresion, xi.get(i)));
+            error.add(i, error(xi.get(i), xi.get(i - 1)));
+
+        } while (absoluto(error.get(i)) > tolerancia);
 
 
-        return Double.NaN;
+        System.out.println(xi);
+        return xi.get(i);
     }
 
     public static double[] busquedaIncremental(String expresion) {
