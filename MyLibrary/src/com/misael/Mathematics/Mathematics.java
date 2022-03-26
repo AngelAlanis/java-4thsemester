@@ -120,13 +120,16 @@ public class Mathematics {
 
             //Se evalua si fa * fb es menor que 0
             if ((fa.get(i - 1) * fxi.get(i - 1)) < 0) {
-                b.add(i, fxi.get(i - 1));
+                b.add(i, xi.get(i - 1));
+                a.add(i, a.get(i - 1));
+            } else {
+                a.add(i, xi.get(i - 1));
+                b.add(i, b.get(i - 1));
             }
 
-            a.add(i, fxi.get(i - 1));
+        } while (i <= 1 && error.get(i - 1) == 0 || absoluto(error.get(i - 1)) > tolerancia);
 
-        } while (error.get(i - 1) > tolerancia);
-
+        System.out.println(xi.toString());
         return xi.get(i - 1);
     }
 
@@ -165,12 +168,16 @@ public class Mathematics {
 
             //Se evalua si fa * fb es menor que 0
             if ((fa.get(i - 1) * fxi.get(i - 1)) < 0) {
-                b.add(i, fxi.get(i - 1));
+                b.add(i, xi.get(i - 1));
+                a.add(i, a.get(i - 1));
+            } else {
+                a.add(i, xi.get(i - 1));
+                b.add(i, b.get(i - 1));
             }
 
-            a.add(i, fxi.get(i - 1));
+        } while (i <= 1 && error.get(i - 1) == 0 || absoluto(error.get(i - 1)) > tolerancia);
 
-        } while (error.get(i - 1) > tolerancia);
+        System.out.println(xi.toString());
 
         return xi.get(i - 1);
     }

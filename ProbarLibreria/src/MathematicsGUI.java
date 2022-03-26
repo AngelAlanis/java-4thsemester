@@ -26,8 +26,10 @@ public class MathematicsGUI extends JFrame {
     private void $$$setupUI$$$() {
         panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        panel1.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         table1 = new JTable();
-        panel1.add(table1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        scrollPane1.setViewportView(table1);
     }
 
     /**
@@ -37,7 +39,7 @@ public class MathematicsGUI extends JFrame {
         return panel1;
     }
 
-    public void configurarComponentes(){
+    public void configurarComponentes() {
         var defaultTableModel = new DefaultTableModel();
         table1.setModel(defaultTableModel);
         defaultTableModel.addColumn("i");
@@ -48,7 +50,6 @@ public class MathematicsGUI extends JFrame {
         defaultTableModel.addColumn("xi");
         defaultTableModel.addColumn("error");
         defaultTableModel.addColumn("f(xi)");
-
 
 
     }
