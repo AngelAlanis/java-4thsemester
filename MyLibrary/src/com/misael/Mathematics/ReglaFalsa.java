@@ -2,20 +2,19 @@ package com.misael.Mathematics;
 
 public class ReglaFalsa {
 
+    private int i;
     private double a, b, fa, fb, xi, error, fxi;
-
-    public ReglaFalsa(double a, double b, double fa, double fb, double xi, double error, double fxi) {
-        this.a     = a;
-        this.b     = b;
-        this.fa    = fa;
-        this.fb    = fb;
-        this.xi    = xi;
-        this.error = error;
-        this.fxi   = fxi;
-    }
 
     public ReglaFalsa() {
 
+    }
+
+    public int getI() {
+        return i;
+    }
+
+    public void setI(int i) {
+        this.i = i;
     }
 
     public double getA() {

@@ -1,13 +1,15 @@
 package com.misael.Mathematics;
 
-import jdk.swing.interop.SwingInterOpUtils;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Mathematics {
 
-    static ArrayList<ArrayList<Double>> tablaReglaFalsa = new ArrayList<ArrayList<Double>>();
+    static ArrayList<ReglaFalsa> tablaReglaFalsa = new ArrayList<>();
+
+    private static final DecimalFormat df = new DecimalFormat("0.0000");
 
     public static double potencia(double numero, double exponente) {
 
@@ -131,6 +133,8 @@ public class Mathematics {
 
             filas.get(i).setFxi(evaluarExpresion(expresion, filas.get(i).getXi()));
 
+            filas.get(i).setI(i);
+
             i++;
 
             filas.add(new ReglaFalsa());
@@ -146,6 +150,8 @@ public class Mathematics {
             }
 
         } while (i <= 1 || absoluto(filas.get(i - 1).getError()) > tolerancia);
+
+        setTablaReglaFalsa(filas);
 
         return filas.get(i - 1).getXi();
     }
@@ -261,18 +267,12 @@ public class Mathematics {
         return resultados;
     }
 
-    public ArrayList<ArrayList<Double>> getTablaReglaFalsa() {
+    public ArrayList<ReglaFalsa> getTablaReglaFalsa() {
         return tablaReglaFalsa;
     }
 
-    public static void setTablaReglaFalsa(ArrayList<Double> a, ArrayList<Double> b, ArrayList<Double> fa, ArrayList<Double> fb, ArrayList<Double> xi, ArrayList<Double> fxi, ArrayList<Double> error) {
-        tablaReglaFalsa.add(a);
-        tablaReglaFalsa.add(b);
-        tablaReglaFalsa.add(fa);
-        tablaReglaFalsa.add(fb);
-        tablaReglaFalsa.add(xi);
-        tablaReglaFalsa.add(error);
-        tablaReglaFalsa.add(fxi);
+    public static void setTablaReglaFalsa(ArrayList<ReglaFalsa> tablaReglaFalsa) {
+        Mathematics.tablaReglaFalsa = tablaReglaFalsa;
     }
 
 }

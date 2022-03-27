@@ -67,6 +67,7 @@
                   <component id="8d8c1" class="javax.swing.JTable" binding="tablaReglaFalsa">
                     <constraints/>
                     <properties>
+                      <preferredScrollableViewportSize width="900" height="700"/>
                       <selectionBackground color="-13619152"/>
                     </properties>
                   </component>

@@ -43,7 +43,8 @@ public class Interfaz extends JFrame {
         this.setResizable(false);
         this.setContentPane(panelPrincipal);
         configurarComponentes();
-        this.pack();
+        initActionListeners();
+        this.setSize(1280, 720);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -55,8 +56,10 @@ public class Interfaz extends JFrame {
 
     public void initActionListeners() {
         btnResolver.addActionListener(e -> {
-            String input  = tfFx.getText();
-            double result = Mathematics.metodoReglaFalsa(input, 0.0001);
+            String      input      = tfFx.getText();
+            Mathematics reglaFalsa = new Mathematics();
+            double      result     = reglaFalsa.metodoReglaFalsa(input, 0.0001);
+            tablaReglaFalsa.setModel(new ReglaFalsaModel(reglaFalsa.getTablaReglaFalsa()));
         });
     }
 
@@ -92,6 +95,7 @@ public class Interfaz extends JFrame {
         final JScrollPane scrollPane1 = new JScrollPane();
         panelTabla.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         tablaReglaFalsa = new JTable();
+        tablaReglaFalsa.setPreferredScrollableViewportSize(new Dimension(900, 700));
         tablaReglaFalsa.setSelectionBackground(new Color(-13619152));
         scrollPane1.setViewportView(tablaReglaFalsa);
         panelInputs = new JPanel();

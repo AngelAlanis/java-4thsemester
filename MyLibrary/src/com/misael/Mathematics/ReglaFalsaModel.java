@@ -17,13 +17,13 @@ public class ReglaFalsaModel extends AbstractTableModel {
             "f(xi)"
     };
 
-    private List<ReglaFalsa> values;
+    private ArrayList<ReglaFalsa> values;
 
     public ReglaFalsaModel() {
         values = new ArrayList<ReglaFalsa>();
     }
 
-    public ReglaFalsaModel(List<ReglaFalsa> values) {
+    public ReglaFalsaModel(ArrayList<ReglaFalsa> values) {
         this.values = values;
     }
 
@@ -48,24 +48,27 @@ public class ReglaFalsaModel extends AbstractTableModel {
 
         switch (columnIndex) {
             case 0 -> {
-                return reglaFalsa.getA();
+                return reglaFalsa.getI();
             }
             case 1 -> {
-                return reglaFalsa.getB();
+                return reglaFalsa.getA();
             }
             case 2 -> {
-                return reglaFalsa.getFa();
+                return reglaFalsa.getB();
             }
             case 3 -> {
-                return reglaFalsa.getFb();
+                return reglaFalsa.getFa();
             }
             case 4 -> {
-                return reglaFalsa.getXi();
+                return reglaFalsa.getFb();
             }
             case 5 -> {
-                return reglaFalsa.getError();
+                return reglaFalsa.getXi();
             }
             case 6 -> {
+                return reglaFalsa.getError();
+            }
+            case 7 -> {
                 return reglaFalsa.getFxi();
             }
             default -> {
@@ -75,17 +78,18 @@ public class ReglaFalsaModel extends AbstractTableModel {
     }
 
     @Override
-    public void setValueAt(Object value, int rowIndex, int columnIndex){
+    public void setValueAt(Object value, int rowIndex, int columnIndex) {
         ReglaFalsa reglaFalsa = getReglaFalsa(rowIndex);
 
         switch (columnIndex) {
-            case 0 -> reglaFalsa.setA((Double) value);
-            case 1 -> reglaFalsa.setB((Double) value);
-            case 2 -> reglaFalsa.setFa((Double) value);
-            case 3 -> reglaFalsa.setFb((Double) value);
-            case 4 -> reglaFalsa.setXi((Double) value);
-            case 5 -> reglaFalsa.setError((Double) value);
-            case 6 -> reglaFalsa.setFxi((Double) value);
+            case 0 -> reglaFalsa.setI((Integer) value);
+            case 1 -> reglaFalsa.setA((Double) value);
+            case 2 -> reglaFalsa.setB((Double) value);
+            case 3 -> reglaFalsa.setFa((Double) value);
+            case 4 -> reglaFalsa.setFb((Double) value);
+            case 5 -> reglaFalsa.setXi((Double) value);
+            case 6 -> reglaFalsa.setError((Double) value);
+            case 7 -> reglaFalsa.setFxi((Double) value);
         }
 
         fireTableCellUpdated(rowIndex, columnIndex);
