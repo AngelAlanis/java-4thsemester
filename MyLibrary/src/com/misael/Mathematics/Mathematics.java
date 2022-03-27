@@ -159,50 +159,49 @@ public class Mathematics {
     public static double metodoBiseccion(String expresion, double tolerancia) {
         double[] intervaloInicial = busquedaIncremental(expresion);
 
-        ArrayList<Double> a     = new ArrayList<>();
-        ArrayList<Double> b     = new ArrayList<>();
-        ArrayList<Double> xi    = new ArrayList<>();
-        ArrayList<Double> error = new ArrayList<>();
-        ArrayList<Double> fa    = new ArrayList<>();
-        ArrayList<Double> fxi   = new ArrayList<>();
+        ArrayList<Biseccion> filas = new ArrayList<>();
+
+        filas.add(new Biseccion());
 
         int i = 0;
 
-        a.add(i, intervaloInicial[0]);
-        b.add(i, intervaloInicial[1]);
+        filas.get(i).setA(intervaloInicial[0]);
+        filas.get(i).setB(intervaloInicial[1]);
 
         do {
             //Se calcula fa y fb según el valor actual de a
-            fa.add(i, evaluarExpresion(expresion, a.get(i)));
+            filas.get(i).setFa(evaluarExpresion(expresion, filas.get(i).getA()));
 
             //Se calcula xi con la fórmula de xi+1
-            xi.add(i, nextSolucionBiseccion(a.get(i), b.get(i)));
+            filas.get(i).setXi(nextSolucionBiseccion(filas.get(i).getA(), filas.get(i).getB()));
 
             //Si es la primera iteración el error se pone en 0
             if (i == 0) {
-                error.add(i, 0.0);
+                filas.get(i).setError(0.0);
             } else {
-                error.add(i, error(xi.get(i), xi.get(i - 1)));
+                filas.get(i).setError(error(filas.get(i).getXi(), filas.get(i - 1).getA()));
             }
 
-            fxi.add(i, evaluarExpresion(expresion, xi.get(i)));
+            filas.get(i).setFxi(evaluarExpresion(expresion, filas.get(i).getXi()));
+
+            filas.get(i).setI(i);
 
             i++;
 
+            filas.add(new Biseccion());
+
             //Se evalua si fa * fb es menor que 0
-            if ((fa.get(i - 1) * fxi.get(i - 1)) < 0) {
-                b.add(i, xi.get(i - 1)); //En b se pone el valor de xi
-                a.add(i, a.get(i - 1)); // a se queda igual
+            if ((filas.get(i - 1).getFa() * filas.get(i - 1).getFxi()) < 0) {
+                filas.get(i).setB(filas.get(i - 1).getXi()); //En b se pone el valor de xi
+                filas.get(i).setA(filas.get(i - 1).getA()); // a se queda igual
             } else {
-                a.add(i, xi.get(i - 1)); //En a se pone el valor de xi
-                b.add(i, b.get(i - 1)); //b se queda igual
+                filas.get(i).setA(filas.get(i - 1).getXi()); //En a se pone el valor de xi
+                filas.get(i).setB(filas.get(i - 1).getB()); //b se queda igual
             }
 
-        } while (i <= 1 || absoluto(error.get(i - 1)) > tolerancia);
+        } while (i <= 1 || absoluto(filas.get(i - 1).getError()) > tolerancia);
 
-        System.out.println(xi);
-
-        return xi.get(i - 1);
+        return filas.get(i - 1).getXi();
     }
 
     public static double metodoSecante(String expresion, double tolerancia) {
