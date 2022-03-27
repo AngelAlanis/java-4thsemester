@@ -2,17 +2,14 @@ package com.misael.Mathematics;
 
 import net.objecthunter.exp4j.ExpressionBuilder;
 
-import java.lang.reflect.Array;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Mathematics {
 
     static ArrayList<ReglaFalsa> tablaReglaFalsa = new ArrayList<>();
     static ArrayList<Biseccion>  tablaBiseccion  = new ArrayList<>();
-//    static ArrayList<ReglaFalsa> tablaSecante = new ArrayList<>();
+    static ArrayList<Secante>    tablaSecante    = new ArrayList<>();
 
-    private static final DecimalFormat df = new DecimalFormat("0.0000");
 
     public static double potencia(double numero, double exponente) {
 
@@ -204,6 +201,7 @@ public class Mathematics {
 
         } while (i <= 1 || absoluto(filas.get(i - 1).getError()) > tolerancia);
 
+        setTablaBiseccion(filas);
         return filas.get(i - 1).getXi();
     }
 
@@ -251,6 +249,7 @@ public class Mathematics {
 
         } while (absoluto(filas.get(i).getError()) > tolerancia);
 
+        setTablaSecante(filas);
         return filas.get(i - 1).getXi();
     }
 
@@ -286,6 +285,14 @@ public class Mathematics {
 
     public static void setTablaBiseccion(ArrayList<Biseccion> tablaBiseccion) {
         Mathematics.tablaBiseccion = tablaBiseccion;
+    }
+
+    public ArrayList<Secante> getTablaSecante() {
+        return tablaSecante;
+    }
+
+    public static void setTablaSecante(ArrayList<Secante> tablaSecante) {
+        Mathematics.tablaSecante = tablaSecante;
     }
 
 }
