@@ -2,13 +2,14 @@ package com.misael.Mathematics;
 
 import net.objecthunter.exp4j.ExpressionBuilder;
 
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Mathematics {
 
     static ArrayList<ReglaFalsa> tablaReglaFalsa = new ArrayList<>();
-    static ArrayList<Biseccion> tablaBiseccion = new ArrayList<>();
+    static ArrayList<Biseccion>  tablaBiseccion  = new ArrayList<>();
 //    static ArrayList<ReglaFalsa> tablaSecante = new ArrayList<>();
 
     private static final DecimalFormat df = new DecimalFormat("0.0000");
@@ -79,15 +80,15 @@ public class Mathematics {
                 / (fb - fa));
     }
 
-    public static double nextSolucionSecante(ArrayList<Double> xi, ArrayList<Double> fxi) {
-        int i = xi.size() - 1;
+    public static double nextSolucionSecante(ArrayList<Secante> filas) {
+        int i = filas.size() - 1;
         return new ExpressionBuilder(" _x2 - (((_x2 - _x1) / (_fx2 - _fx1)) * _fx2) ")
                 .variables("_x1", "_x2", "_fx1", "_fx2")
                 .build()
-                .setVariable("_x1", xi.get(i - 1))
-                .setVariable("_x2", xi.get(i))
-                .setVariable("_fx1", fxi.get(i - 1))
-                .setVariable("_fx2", fxi.get(i))
+                .setVariable("_x1", filas.get(i - 2).getXi())
+                .setVariable("_x2", filas.get(i - 1).getXi())
+                .setVariable("_fx1", filas.get(i - 2).getFxi())
+                .setVariable("_fx2", filas.get(i - 1).getFxi())
                 .evaluate();
     }
 
@@ -223,31 +224,34 @@ public class Mathematics {
             xm1  = temp;
             fxm1 = ftemp;
         }
+
+
+        ArrayList<Secante> filas = new ArrayList<>();
+
+        filas.add(new Secante());
+        filas.add(new Secante());
+
+        filas.get(0).setXi(xm1);
+        filas.get(0).setFxi(fxm1);
+        filas.get(0).setError(0.0);
+
+        filas.get(1).setXi(x0);
+        filas.get(1).setFxi(fx0);
+        filas.get(1).setError(0.0);
+
         int i = 1;
 
-        ArrayList<Double> xi    = new ArrayList<>();
-        ArrayList<Double> error = new ArrayList<>();
-        ArrayList<Double> fxi   = new ArrayList<>();
-
-        xi.add(0, xm1);
-        xi.add(1, x0);
-        fxi.add(0, fxm1);
-        fxi.add(1, fx0);
-        error.add(0, 0.0);
-        error.add(1, 0.0);
-
         do {
+            filas.add(new Secante());
             i++;
 
-            xi.add(nextSolucionSecante(xi, fxi));
-            fxi.add(evaluarExpresion(expresion, xi.get(i)));
-            error.add(i, error(xi.get(i), xi.get(i - 1)));
+            filas.get(i).setXi(nextSolucionSecante(filas));
+            filas.get(i).setFxi((evaluarExpresion(expresion, filas.get(i).getXi())));
+            filas.get(i).setError(error(filas.get(i).getXi(), filas.get(i - 1).getXi()));
 
-        } while (absoluto(error.get(i)) > tolerancia);
+        } while (absoluto(filas.get(i).getError()) > tolerancia);
 
-
-        System.out.println(xi);
-        return xi.get(i);
+        return filas.get(i - 1).getXi();
     }
 
     public static double[] busquedaIncremental(String expresion) {

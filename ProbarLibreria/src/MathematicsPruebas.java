@@ -1,6 +1,5 @@
 import com.misael.Mathematics.Mathematics;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MathematicsPruebas {
