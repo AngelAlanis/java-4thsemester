@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class Mathematics {
 
     static ArrayList<ReglaFalsa> tablaReglaFalsa = new ArrayList<>();
+    static ArrayList<Biseccion> tablaBiseccion = new ArrayList<>();
+//    static ArrayList<ReglaFalsa> tablaSecante = new ArrayList<>();
 
     private static final DecimalFormat df = new DecimalFormat("0.0000");
 
@@ -272,6 +274,14 @@ public class Mathematics {
 
     public static void setTablaReglaFalsa(ArrayList<ReglaFalsa> tablaReglaFalsa) {
         Mathematics.tablaReglaFalsa = tablaReglaFalsa;
+    }
+
+    public ArrayList<Biseccion> getTablaBiseccion() {
+        return tablaBiseccion;
+    }
+
+    public static void setTablaBiseccion(ArrayList<Biseccion> tablaBiseccion) {
+        Mathematics.tablaBiseccion = tablaBiseccion;
     }
 
 }
