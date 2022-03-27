@@ -2,7 +2,6 @@ package com.misael.Mathematics;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BiseccionModel extends AbstractTableModel {
 
