@@ -1,5 +1,6 @@
 package com.misael.Mathematics;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
 import java.util.ArrayList;
@@ -7,8 +8,6 @@ import java.util.ArrayList;
 public class Mathematics {
 
     static ArrayList<ArrayList<Double>> tablaReglaFalsa = new ArrayList<ArrayList<Double>>();
-
-    public static final double EULER = 2.71828182845904523536;
 
     public static double potencia(double numero, double exponente) {
 
@@ -99,53 +98,56 @@ public class Mathematics {
     public static double metodoReglaFalsa(String expresion, double tolerancia) {
         double[] intervaloInicial = busquedaIncremental(expresion);
 
-        ArrayList<Double> a     = new ArrayList<>();
-        ArrayList<Double> b     = new ArrayList<>();
-        ArrayList<Double> fa    = new ArrayList<>();
-        ArrayList<Double> fb    = new ArrayList<>();
-        ArrayList<Double> xi    = new ArrayList<>();
-        ArrayList<Double> fxi   = new ArrayList<>();
-        ArrayList<Double> error = new ArrayList<>();
+        ArrayList<ReglaFalsa> filas = new ArrayList<>();
+
+        filas.add(new ReglaFalsa());
 
         int i = 0;
 
         //Se añaden los valores iniciales de a y b según el intervalo
-        a.add(i, intervaloInicial[0]);
-        b.add(i, intervaloInicial[1]);
+        filas.get(i).setA(intervaloInicial[0]);
+        filas.get(i).setB(intervaloInicial[1]);
 
         do {
             //Se calcula fa y fb según el valor actual de a y b
-            fa.add(i, evaluarExpresion(expresion, a.get(i)));
-            fb.add(i, evaluarExpresion(expresion, b.get(i)));
+            filas.get(i).setFa(evaluarExpresion(expresion, filas.get(i).getA()));
+            filas.get(i).setFb(evaluarExpresion(expresion, filas.get(i).getB()));
 
             //Se calcula xi con la fórmula de xi+1
-            xi.add(i, nextSolucionReglaFalsa(a.get(i), b.get(i), fa.get(i), fb.get(i)));
+            filas.get(i).setXi(nextSolucionReglaFalsa(
+                    filas.get(i).getA(),
+                    filas.get(i).getB(),
+                    filas.get(i).getFa(),
+                    filas.get(i).getFb()));
 
             //Si es la primera iteración el error se pone en 0
             if (i == 0) {
-                error.add(i, 0.0);
+                filas.get(i).setError(0.0);
             } else {
-                error.add(i, error(xi.get(i), xi.get(i - 1)));
+                filas.get(i).setError(error(
+                        filas.get(i).getXi(),
+                        filas.get(i - 1).getXi()));
             }
 
-            fxi.add(i, evaluarExpresion(expresion, xi.get(i)));
+            filas.get(i).setFxi(evaluarExpresion(expresion, filas.get(i).getXi()));
 
             i++;
 
-            //Se evalua si fa * fb es menor que 0
-            if ((fa.get(i - 1) * fxi.get(i - 1)) < 0) {
-                b.add(i, xi.get(i - 1));
-                a.add(i, a.get(i - 1));
+            filas.add(new ReglaFalsa());
+
+            //Se evalúa si fa * fb es menor que 0
+            if ((filas.get(i - 1).getFa() * (filas.get(i - 1).getFxi()) < 0)) {
+
+                filas.get(i).setB(filas.get(i - 1).getXi());
+                filas.get(i).setA(filas.get(i - 1).getA());
             } else {
-                a.add(i, xi.get(i - 1));
-                b.add(i, b.get(i - 1));
+                filas.get(i).setA(filas.get(i - 1).getXi());
+                filas.get(i).setB(filas.get(i - 1).getB());
             }
 
-        } while (i <= 1 || absoluto(error.get(i - 1)) > tolerancia);
+        } while (i <= 1 || absoluto(filas.get(i - 1).getError()) > tolerancia);
 
-        System.out.println(xi);
-        setTablaReglaFalsa(a, b, fa, fb, xi, fxi, error);
-        return xi.get(i - 1);
+        return filas.get(i - 1).getXi();
     }
 
     public static double metodoBiseccion(String expresion, double tolerancia) {

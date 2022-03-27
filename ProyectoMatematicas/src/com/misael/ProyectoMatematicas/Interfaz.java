@@ -6,9 +6,10 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+
 import com.misael.Mathematics.Mathematics;
+import com.misael.Mathematics.ReglaFalsaModel;
 
 public class Interfaz extends JFrame {
     private JPanel     panelPrincipal;
@@ -48,25 +49,14 @@ public class Interfaz extends JFrame {
     }
 
     public void configurarComponentes() {
-        var tableModelReglaFalsa = new DefaultTableModel();
-        tableModelReglaFalsa.addColumn("i");
-        tableModelReglaFalsa.addColumn("a");
-        tableModelReglaFalsa.addColumn("b");
-        tableModelReglaFalsa.addColumn("f(a)");
-        tableModelReglaFalsa.addColumn("f(b)");
-        tableModelReglaFalsa.addColumn("xi");
-        tableModelReglaFalsa.addColumn("error");
-        tableModelReglaFalsa.addColumn("f(xi)");
+        var tableModelReglaFalsa = new ReglaFalsaModel();
         tablaReglaFalsa.setModel(tableModelReglaFalsa);
     }
 
     public void initActionListeners() {
         btnResolver.addActionListener(e -> {
-            var math = new Mathematics();
-            String input = tfFx.getText();
-            Mathematics.metodoReglaFalsa(input, 0.0001);
-
-
+            String input  = tfFx.getText();
+            double result = Mathematics.metodoReglaFalsa(input, 0.0001);
         });
     }
 
@@ -78,7 +68,6 @@ public class Interfaz extends JFrame {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        createUIComponents();
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         panelPrincipal.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
@@ -105,6 +94,7 @@ public class Interfaz extends JFrame {
         tablaReglaFalsa = new JTable();
         tablaReglaFalsa.setSelectionBackground(new Color(-13619152));
         scrollPane1.setViewportView(tablaReglaFalsa);
+        panelInputs = new JPanel();
         panelInputs.setLayout(new GridLayoutManager(5, 2, new Insets(0, 0, 0, 0), -1, -1));
         panelInferior.add(panelInputs, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         labelfx = new JLabel();
