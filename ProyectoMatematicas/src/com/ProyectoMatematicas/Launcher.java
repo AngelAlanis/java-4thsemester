@@ -1,4 +1,4 @@
-package com.misael.ProyectoMatematicas;
+package com.ProyectoMatematicas;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
