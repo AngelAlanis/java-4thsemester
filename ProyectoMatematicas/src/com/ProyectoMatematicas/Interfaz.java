@@ -81,7 +81,7 @@ public class Interfaz extends JFrame {
     }
 
     public void configurarComponentes() {
-        labelBiseccion.setIcon(iconoBiseccionOFF);
+        labelBiseccion.setIcon(iconoBiseccionON);
         labelSecante.setIcon(iconoSecanteOFF);
         labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
         labelLogo.setIcon(iconoLogo);
@@ -263,7 +263,7 @@ public class Interfaz extends JFrame {
      */
     private void $$$setupUI$$$() {
         panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panelPrincipal.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panelEncabezado = new JPanel();
         panelEncabezado.setLayout(new GridLayoutManager(1, 9, new Insets(0, 0, 0, 0), -1, -1));
         panelEncabezado.setBackground(new Color(-5131346));
@@ -294,7 +294,7 @@ public class Interfaz extends JFrame {
         panelEncabezado.add(spacer4, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, 1, null, new Dimension(25, -1), null, 0, false));
         panelInferior = new JPanel();
         panelInferior.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panelPrincipal.add(panelInferior, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panelPrincipal.add(panelInferior, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panelTabla = new JPanel();
         panelTabla.setLayout(new CardLayout(0, 0));
         panelInferior.add(panelTabla, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -341,8 +341,6 @@ public class Interfaz extends JFrame {
         labelErrorInfo = new JLabel();
         labelErrorInfo.setText("Error = ");
         panelInputs.add(labelErrorInfo, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JSeparator separator1 = new JSeparator();
-        panelPrincipal.add(separator1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
     }
 
     /**

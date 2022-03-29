@@ -1,9 +1,9 @@
 package EjemploHilos;
 
-public class EjemploHilos1 {
+public class Secuencia {
 
     public static void main(String[] args) {
-        var secuencia = new EjemploHilos1();
+        var secuencia = new Secuencia();
         secuencia.ciclo(10);
         secuencia.dormir();
         secuencia.ciclo(20);
