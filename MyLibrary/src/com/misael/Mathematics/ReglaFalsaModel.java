@@ -96,6 +96,11 @@ public class ReglaFalsaModel extends AbstractTableModel {
 
     }
 
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return Double.class;
+    }
+
     public ReglaFalsa getReglaFalsa(int row) {
         return values.get(row);
     }

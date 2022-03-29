@@ -73,6 +73,11 @@ public class BiseccionModel extends AbstractTableModel {
     }
 
     @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return Double.class;
+    }
+
+    @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         Biseccion biseccion = getBiseccion(rowIndex);
 

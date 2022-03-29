@@ -78,6 +78,11 @@ public class SecanteModel extends AbstractTableModel {
 
     }
 
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return Double.class;
+    }
+
     public Secante getSecante(int row) {
         return values.get(row);
     }

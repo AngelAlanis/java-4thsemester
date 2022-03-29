@@ -89,8 +89,15 @@ public class Interfaz extends JFrame {
         tableReglaFalsa.setModel(new ReglaFalsaModel());
         tableSecante.setModel(new SecanteModel());
 
+        DefaultTableCellRenderer rendererBiseccion = (DefaultTableCellRenderer) tableBiseccion.getDefaultRenderer(Double.class);
+        DefaultTableCellRenderer rendererReglaFalsa = (DefaultTableCellRenderer) tableReglaFalsa.getDefaultRenderer(Double.class);
+        DefaultTableCellRenderer rendererSecante = (DefaultTableCellRenderer) tableSecante.getDefaultRenderer(Double.class);
+        rendererBiseccion.setHorizontalAlignment(SwingConstants.CENTER);
+        rendererReglaFalsa.setHorizontalAlignment(SwingConstants.CENTER);
+        rendererSecante.setHorizontalAlignment(SwingConstants.CENTER);
 
     }
+
 
     private void crearIconos() {
         try {
@@ -177,9 +184,6 @@ public class Interfaz extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                labelSecante.setIcon(iconoSecanteOFF);
-                labelBiseccion.setIcon(iconoBiseccionOFF);
-                labelReglaFalsa.setIcon(iconoReglaFalsaON);
                 cargarPanelReglaFalsa();
             }
 
@@ -213,6 +217,7 @@ public class Interfaz extends JFrame {
         panelTabla.add(panelSecante);
         panelTabla.repaint();
         panelTabla.revalidate();
+        labelSecante.setIcon(iconoSecanteON);
     }
 
     private void cargarPanelReglaFalsa() {
@@ -220,6 +225,7 @@ public class Interfaz extends JFrame {
         panelTabla.add(panelReglaFalsa);
         panelTabla.repaint();
         panelTabla.revalidate();
+        labelReglaFalsa.setIcon(iconoReglaFalsaON);
     }
 
     private void cargarPanelBiseccion() {

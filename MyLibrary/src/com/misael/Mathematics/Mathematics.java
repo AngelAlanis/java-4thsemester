@@ -10,7 +10,6 @@ public class Mathematics {
     static ArrayList<Biseccion>  tablaBiseccion  = new ArrayList<>();
     static ArrayList<Secante>    tablaSecante    = new ArrayList<>();
 
-
     public static double potencia(double numero, double exponente) {
 
         if (exponente == 0.0) {
@@ -231,17 +230,20 @@ public class Mathematics {
         ArrayList<Secante> filas = new ArrayList<>();
 
         filas.add(new Secante());
-        filas.add(new Secante());
 
+        filas.get(0).setI(0);
         filas.get(0).setXi(xm1);
         filas.get(0).setFxi(fxm1);
         filas.get(0).setError(0.0);
 
+        int i = 1;
+
+        filas.add(new Secante());
+
+        filas.get(1).setI(1);
         filas.get(1).setXi(x0);
         filas.get(1).setFxi(fx0);
         filas.get(1).setError(0.0);
-
-        int i = 1;
 
         do {
             filas.add(new Secante());
