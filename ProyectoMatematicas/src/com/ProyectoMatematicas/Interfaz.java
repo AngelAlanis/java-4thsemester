@@ -7,6 +7,7 @@ import com.intellij.uiDesigner.core.Spacer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -87,6 +88,8 @@ public class Interfaz extends JFrame {
         tableBiseccion.setModel(new BiseccionModel());
         tableReglaFalsa.setModel(new ReglaFalsaModel());
         tableSecante.setModel(new SecanteModel());
+
+
     }
 
     private void crearIconos() {
@@ -124,19 +127,18 @@ public class Interfaz extends JFrame {
         btnResolver.addActionListener(e -> {
             String input = tfFx.getText();
 
-            Mathematics biseccion = new Mathematics();
-            double      resultBiseccion    = Mathematics.metodoBiseccion(input, 0.0001);
+            Mathematics biseccion       = new Mathematics();
+            double      resultBiseccion = Mathematics.metodoBiseccion(input, 0.0001);
             tableBiseccion.setModel(new BiseccionModel(biseccion.getTablaBiseccion()));
 
-            Mathematics reglaFalsa = new Mathematics();
-            double      resultReglaFalsa     = Mathematics.metodoReglaFalsa(input, 0.0001);
+            Mathematics reglaFalsa       = new Mathematics();
+            double      resultReglaFalsa = Mathematics.metodoReglaFalsa(input, 0.0001);
             tableReglaFalsa.setModel(new ReglaFalsaModel(reglaFalsa.getTablaReglaFalsa()));
 
 
-            Mathematics secante = new Mathematics();
-            double      resultSecante  = Mathematics.metodoSecante(input, 0.0001);
+            Mathematics secante       = new Mathematics();
+            double      resultSecante = Mathematics.metodoSecante(input, 0.0001);
             tableSecante.setModel(new SecanteModel(secante.getTablaSecante()));
-
 
 
         });
@@ -305,6 +307,8 @@ public class Interfaz extends JFrame {
         tfFx = new JTextField();
         panelInputs.add(tfFx, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         btnResolver = new JButton();
+        btnResolver.setBackground(new Color(-15236482));
+        btnResolver.setForeground(new Color(-1));
         btnResolver.setText("Resolver");
         panelInputs.add(btnResolver, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         labelSolucionInfo = new JLabel();

@@ -151,6 +151,8 @@ public class Mathematics {
 
         } while (i <= 1 || absoluto(filas.get(i - 1).getError()) > tolerancia);
 
+        filas.remove(i);
+
         setTablaReglaFalsa(filas);
 
         return filas.get(i - 1).getXi();
@@ -201,6 +203,8 @@ public class Mathematics {
 
         } while (i <= 1 || absoluto(filas.get(i - 1).getError()) > tolerancia);
 
+        filas.remove(i);
+
         setTablaBiseccion(filas);
         return filas.get(i - 1).getXi();
     }
@@ -243,11 +247,14 @@ public class Mathematics {
             filas.add(new Secante());
             i++;
 
+            filas.get(i).setI(i);
             filas.get(i).setXi(nextSolucionSecante(filas));
             filas.get(i).setFxi((evaluarExpresion(expresion, filas.get(i).getXi())));
             filas.get(i).setError(error(filas.get(i).getXi(), filas.get(i - 1).getXi()));
 
         } while (absoluto(filas.get(i).getError()) > tolerancia);
+
+        filas.remove(i);
 
         setTablaSecante(filas);
         return filas.get(i - 1).getXi();

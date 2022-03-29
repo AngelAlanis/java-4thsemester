@@ -1,6 +1,9 @@
 package com.misael.Mathematics;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import java.util.ArrayList;
 
 public class SecanteModel extends AbstractTableModel {
@@ -78,4 +81,7 @@ public class SecanteModel extends AbstractTableModel {
     public Secante getSecante(int row) {
         return values.get(row);
     }
+
+
+
 }
