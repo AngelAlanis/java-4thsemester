@@ -1,9 +1,13 @@
 package com.misael.Mathematics;
 
+import java.text.DecimalFormat;
+
 public class Biseccion {
 
     private int    i;
     private double a, b, xi, error, fa, fxi;
+
+    DecimalFormat df = new DecimalFormat("#.####");
 
     public Biseccion() {
 
@@ -22,7 +26,7 @@ public class Biseccion {
     }
 
     public void setA(double a) {
-        this.a = a;
+        this.a = Double.parseDouble(df.format(a));
     }
 
     public double getB() {
@@ -30,7 +34,7 @@ public class Biseccion {
     }
 
     public void setB(double b) {
-        this.b = b;
+        this.b = Double.parseDouble(df.format(b));
     }
 
     public double getXi() {
@@ -38,7 +42,7 @@ public class Biseccion {
     }
 
     public void setXi(double xi) {
-        this.xi = xi;
+        this.xi = Double.parseDouble(df.format(xi));
     }
 
     public double getError() {
@@ -46,7 +50,7 @@ public class Biseccion {
     }
 
     public void setError(double error) {
-        this.error = error;
+        this.error = Double.parseDouble(df.format(error));
     }
 
     public double getFa() {
@@ -54,7 +58,7 @@ public class Biseccion {
     }
 
     public void setFa(double fa) {
-        this.fa = fa;
+        this.fa = Double.parseDouble(df.format(fa));
     }
 
     public double getFxi() {
@@ -62,6 +66,6 @@ public class Biseccion {
     }
 
     public void setFxi(double fxi) {
-        this.fxi = fxi;
+        this.fxi = Double.parseDouble(df.format(fxi));
     }
 }

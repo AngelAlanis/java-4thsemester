@@ -1,9 +1,14 @@
 package com.misael.Mathematics;
 
+import java.text.DecimalFormat;
+
 public class ReglaFalsa {
 
     private int i;
     private double a, b, fa, fb, xi, error, fxi;
+
+    DecimalFormat df = new DecimalFormat("#.####");
+
 
     public ReglaFalsa() {
 
@@ -22,7 +27,7 @@ public class ReglaFalsa {
     }
 
     public void setA(double a) {
-        this.a = a;
+        this.a = Double.parseDouble(df.format(a));
     }
 
     public double getB() {
@@ -30,7 +35,7 @@ public class ReglaFalsa {
     }
 
     public void setB(double b) {
-        this.b = b;
+        this.b = Double.parseDouble(df.format(b));
     }
 
     public double getFa() {
@@ -38,7 +43,7 @@ public class ReglaFalsa {
     }
 
     public void setFa(double fa) {
-        this.fa = fa;
+        this.fa = Double.parseDouble(df.format(fa));
     }
 
     public double getFb() {
@@ -46,7 +51,7 @@ public class ReglaFalsa {
     }
 
     public void setFb(double fb) {
-        this.fb = fb;
+        this.fb = Double.parseDouble(df.format(fb));
     }
 
     public double getXi() {
@@ -54,7 +59,7 @@ public class ReglaFalsa {
     }
 
     public void setXi(double xi) {
-        this.xi = xi;
+        this.xi = Double.parseDouble(df.format(xi));
     }
 
     public double getError() {
@@ -62,7 +67,7 @@ public class ReglaFalsa {
     }
 
     public void setError(double error) {
-        this.error = error;
+        this.error = Double.parseDouble(df.format(error));
     }
 
     public double getFxi() {
@@ -70,6 +75,6 @@ public class ReglaFalsa {
     }
 
     public void setFxi(double fxi) {
-        this.fxi = fxi;
+        this.fxi = Double.parseDouble(df.format(fxi));
     }
 }

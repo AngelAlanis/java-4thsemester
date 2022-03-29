@@ -1,9 +1,13 @@
 package com.misael.Mathematics;
 
+import java.text.DecimalFormat;
+
 public class Secante {
 
     private int i;
     private double xi, error, fxi;
+
+    DecimalFormat df = new DecimalFormat("#.####");
 
     public Secante(){
 
@@ -22,7 +26,7 @@ public class Secante {
     }
 
     public void setXi(double xi) {
-        this.xi = xi;
+        this.xi = Double.parseDouble(df.format(xi));
     }
 
     public double getError() {
@@ -30,7 +34,7 @@ public class Secante {
     }
 
     public void setError(double error) {
-        this.error = error;
+        this.error = Double.parseDouble(df.format(error));
     }
 
     public double getFxi() {
@@ -38,6 +42,6 @@ public class Secante {
     }
 
     public void setFxi(double fxi) {
-        this.fxi = fxi;
+        this.fxi = Double.parseDouble(df.format(fxi));
     }
 }
