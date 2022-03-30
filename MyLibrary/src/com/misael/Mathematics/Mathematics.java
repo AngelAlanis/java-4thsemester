@@ -206,7 +206,7 @@ public class Mathematics {
             if (i == 0) {
                 filas.get(i).setError(0.0);
             } else {
-                filas.get(i).setError(error(filas.get(i).getXi(), filas.get(i - 1).getA()));
+                filas.get(i).setError(error(filas.get(i).getXi(), filas.get(i - 1).getXi()));
             }
 
             filas.get(i).setFxi(evaluarExpresion(expresion, filas.get(i).getXi()));
@@ -217,7 +217,7 @@ public class Mathematics {
 
             filas.add(new Biseccion());
 
-            //Se evalua si fa * fb es menor que 0
+            //Se evalua si fa * fxi es menor que 0
             if ((filas.get(i - 1).getFa() * filas.get(i - 1).getFxi()) < 0) {
                 filas.get(i).setB(filas.get(i - 1).getXi()); //En b se pone el valor de xi
                 filas.get(i).setA(filas.get(i - 1).getA()); // a se queda igual

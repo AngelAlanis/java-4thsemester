@@ -20,8 +20,14 @@ public class UnHilo implements Runnable {
     }
 
     public static void main(String[] args) {
-        Thread hilo = new Thread(new UnHilo());
+        Thread hilo  = new Thread(new UnHilo());
+        Thread hilo2 = new Thread(new UnHilo());
+        Thread hilo3 = new Thread(new UnHilo());
+
         hilo.start();
+        hilo2.start();
+        hilo3.start();
+
         System.out.println("Se manda a llamar el subproceso hilo");
         System.out.println("Proceso main");
         for (int i = 0; i < 10; i++) {

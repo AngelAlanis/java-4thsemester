@@ -228,48 +228,63 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
-            <border type="none"/>
+            <border type="empty">
+              <size top="0" left="15" bottom="0" right="15"/>
+            </border>
             <children>
               <component id="9c1cf" class="javax.swing.JLabel" binding="labelfx">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="6" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <font name="JetBrains Mono" size="28" style="1"/>
+                  <foreground color="-15236482"/>
                   <text value="f(x) = "/>
                 </properties>
               </component>
               <component id="bd0ab" class="javax.swing.JTextField" binding="tfFx">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="10" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="35"/>
                   </grid>
                 </constraints>
                 <properties/>
               </component>
               <component id="4c33c" class="javax.swing.JButton" binding="btnResolver">
                 <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="35"/>
+                  </grid>
                 </constraints>
                 <properties>
                   <background color="-15236482"/>
+                  <font name="JetBrains Mono" size="20"/>
                   <foreground color="-1"/>
                   <text value="Resolver"/>
                 </properties>
               </component>
               <component id="6dfcd" class="javax.swing.JLabel" binding="labelSolucionInfo">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <font name="JetBrains Mono" size="24" style="1"/>
+                  <foreground color="-15236482"/>
                   <text value="Solución ="/>
+                  <verticalAlignment value="0"/>
+                  <verticalTextPosition value="0"/>
                 </properties>
               </component>
               <component id="4fd3d" class="javax.swing.JLabel" binding="labelErrorInfo">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <font name="JetBrains Mono" size="24" style="1"/>
+                  <foreground color="-15236482"/>
                   <text value="Error = "/>
+                  <verticalAlignment value="0"/>
+                  <verticalTextPosition value="0"/>
                 </properties>
               </component>
             </children>
