@@ -96,10 +96,7 @@ public class Interfaz extends JFrame {
     }
 
     public void configurarComponentes() {
-        labelBiseccion.setIcon(iconoBiseccionON);
-        labelSecante.setIcon(iconoSecanteOFF);
-        labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
-        labelNewtonRaphson.setIcon(iconoNewtonOFF);
+        actualizarIconos();
         labelLogo.setIcon(iconoLogo);
 
         tableBiseccion.setModel(new BiseccionModel());
@@ -116,6 +113,21 @@ public class Interfaz extends JFrame {
         rendererReglaFalsa.setHorizontalAlignment(SwingConstants.CENTER);
         rendererSecante.setHorizontalAlignment(SwingConstants.CENTER);
         rendererNewtonRaphson.setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
+    private void actualizarIconos() {
+        labelBiseccion.setIcon(iconoBiseccionOFF);
+        labelSecante.setIcon(iconoSecanteOFF);
+        labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
+        labelNewtonRaphson.setIcon(iconoNewtonOFF);
+
+        switch (selectedCardLayout) {
+            case 0 -> labelBiseccion.setIcon(iconoBiseccionON);
+            case 1 -> labelReglaFalsa.setIcon(iconoReglaFalsaON);
+            case 2 -> labelSecante.setIcon(iconoSecanteON);
+            case 3 -> labelNewtonRaphson.setIcon(iconoNewtonON);
+
+        }
     }
 
     private void crearIconos() {
@@ -287,62 +299,50 @@ public class Interfaz extends JFrame {
     }
 
     private void cargarPanelBiseccion() {
+        selectedCardLayout = 0;
+
         panelTabla.removeAll();
         panelTabla.add(panelBiseccion);
         panelTabla.repaint();
         panelTabla.revalidate();
 
-        labelBiseccion.setIcon(iconoBiseccionON);
-        labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
-        labelSecante.setIcon(iconoSecanteOFF);
-        labelNewtonRaphson.setIcon(iconoNewtonOFF);
-
-        selectedCardLayout = 0;
+        actualizarIconos();
         actualizarLabelsInfo();
     }
 
     private void cargarPanelReglaFalsa() {
+        selectedCardLayout = 1;
+
         panelTabla.removeAll();
         panelTabla.add(panelReglaFalsa);
         panelTabla.repaint();
         panelTabla.revalidate();
 
-        labelBiseccion.setIcon(iconoBiseccionOFF);
-        labelReglaFalsa.setIcon(iconoReglaFalsaON);
-        labelSecante.setIcon(iconoSecanteOFF);
-        labelNewtonRaphson.setIcon(iconoNewtonOFF);
-
-        selectedCardLayout = 1;
+        actualizarIconos();
         actualizarLabelsInfo();
     }
 
     private void cargarPanelSecante() {
+        selectedCardLayout = 2;
+
         panelTabla.removeAll();
         panelTabla.add(panelSecante);
         panelTabla.repaint();
         panelTabla.revalidate();
 
-        labelBiseccion.setIcon(iconoBiseccionOFF);
-        labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
-        labelSecante.setIcon(iconoSecanteON);
-        labelNewtonRaphson.setIcon(iconoNewtonOFF);
-
-        selectedCardLayout = 2;
+        actualizarIconos();
         actualizarLabelsInfo();
     }
 
     private void cargarPanelNewton() {
+        selectedCardLayout = 3;
+
         panelTabla.removeAll();
         panelTabla.add(panelNewtonRaphson);
         panelTabla.repaint();
         panelTabla.revalidate();
 
-        labelBiseccion.setIcon(iconoBiseccionOFF);
-        labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
-        labelSecante.setIcon(iconoSecanteOFF);
-        labelNewtonRaphson.setIcon(iconoNewtonON);
-
-        selectedCardLayout = 3;
+        actualizarIconos();
         actualizarLabelsInfo();
     }
 
