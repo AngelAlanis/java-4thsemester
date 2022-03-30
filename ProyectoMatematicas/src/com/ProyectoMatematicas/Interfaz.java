@@ -53,6 +53,7 @@ public class Interfaz extends JFrame {
     private JScrollPane scrollNewtonRaphson;
     private JTable      tableNewtonRaphson;
     private JLabel      labelNewtonRaphson;
+    private JButton     btnLimpiar;
     private ImageIcon   iconoBiseccionOFF;
     private ImageIcon   iconoReglaFalsaOFF;
     private ImageIcon   iconoSecanteOFF;
@@ -166,34 +167,48 @@ public class Interfaz extends JFrame {
         }
     }
 
+    private void limpiarInterfaz() {
+        tableBiseccion.setModel(new BiseccionModel());
+        tableReglaFalsa.setModel(new ReglaFalsaModel());
+        tableSecante.setModel(new SecanteModel());
+        tableNewtonRaphson.setModel(new NewtonRaphsonModel());
+        tfFx.setText("");
+        labelErrorInfo.setText("Error = 0.0");
+        labelSolucionInfo.setText("Solución = 0.0");
+    }
+
     public void initActionListeners() {
 
         btnResolver.addActionListener(e -> {
+
             String input = tfFx.getText();
 
-            Mathematics biseccion = new Mathematics();
-            resultBiseccion = Mathematics.metodoBiseccion(input, 0.0001);
-            tableBiseccion.setModel(new BiseccionModel(biseccion.getTablaBiseccion()));
-            errorBiseccion = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
+            if (!input.trim().isEmpty()) {
+                Mathematics biseccion = new Mathematics();
+                resultBiseccion = Mathematics.metodoBiseccion(input, 0.0001);
+                tableBiseccion.setModel(new BiseccionModel(biseccion.getTablaBiseccion()));
+                errorBiseccion = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
 
-            Mathematics reglaFalsa = new Mathematics();
-            resultReglaFalsa = Mathematics.metodoReglaFalsa(input, 0.0001);
-            tableReglaFalsa.setModel(new ReglaFalsaModel(reglaFalsa.getTablaReglaFalsa()));
-            errorReglaFalsa = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
+                Mathematics reglaFalsa = new Mathematics();
+                resultReglaFalsa = Mathematics.metodoReglaFalsa(input, 0.0001);
+                tableReglaFalsa.setModel(new ReglaFalsaModel(reglaFalsa.getTablaReglaFalsa()));
+                errorReglaFalsa = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
 
-            Mathematics secante = new Mathematics();
-            resultSecante = Mathematics.metodoSecante(input, 0.0001);
-            tableSecante.setModel(new SecanteModel(secante.getTablaSecante()));
-            errorSecante = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
+                Mathematics secante = new Mathematics();
+                resultSecante = Mathematics.metodoSecante(input, 0.0001);
+                tableSecante.setModel(new SecanteModel(secante.getTablaSecante()));
+                errorSecante = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
 
-            Mathematics newton = new Mathematics();
-            resultNewton = Mathematics.metodoNewtonRaphson(input, "2x-5", 0.0001);
-            tableNewtonRaphson.setModel(new NewtonRaphsonModel(newton.getTablaNewtonRaphson()));
-            errorNewton = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
+                Mathematics newton = new Mathematics();
+                resultNewton = Mathematics.metodoNewtonRaphson(input, "2x-5", 0.0001);
+                tableNewtonRaphson.setModel(new NewtonRaphsonModel(newton.getTablaNewtonRaphson()));
+                errorNewton = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
 
-            actualizarLabelsInfo();
-
+                actualizarLabelsInfo();
+            }
         });
+
+        btnLimpiar.addActionListener(e -> limpiarInterfaz());
 
         labelBiseccion.addMouseListener(new MouseAdapter() {
             @Override
@@ -429,7 +444,7 @@ public class Interfaz extends JFrame {
         tableNewtonRaphson.setPreferredScrollableViewportSize(new Dimension(700, 600));
         scrollNewtonRaphson.setViewportView(tableNewtonRaphson);
         panelInputs = new JPanel();
-        panelInputs.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panelInputs.setLayout(new GridLayoutManager(5, 2, new Insets(0, 0, 0, 0), -1, -1));
         panelInferior.add(panelInputs, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panelInputs.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         labelfx = new JLabel();
@@ -446,12 +461,12 @@ public class Interfaz extends JFrame {
         if (btnResolverFont != null) btnResolver.setFont(btnResolverFont);
         btnResolver.setForeground(new Color(-1));
         btnResolver.setText("Resolver");
-        panelInputs.add(btnResolver, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 35), null, 0, false));
+        panelInputs.add(btnResolver, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(130, 17), null, 0, false));
         labelSolucionInfo = new JLabel();
         Font labelSolucionInfoFont = this.$$$getFont$$$("JetBrains Mono", Font.BOLD, 24, labelSolucionInfo.getFont());
         if (labelSolucionInfoFont != null) labelSolucionInfo.setFont(labelSolucionInfoFont);
         labelSolucionInfo.setForeground(new Color(-15236482));
-        labelSolucionInfo.setText("Solución =");
+        labelSolucionInfo.setText("Solución = 0.0");
         labelSolucionInfo.setVerticalAlignment(0);
         labelSolucionInfo.setVerticalTextPosition(0);
         panelInputs.add(labelSolucionInfo, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -459,10 +474,17 @@ public class Interfaz extends JFrame {
         Font labelErrorInfoFont = this.$$$getFont$$$("JetBrains Mono", Font.BOLD, 24, labelErrorInfo.getFont());
         if (labelErrorInfoFont != null) labelErrorInfo.setFont(labelErrorInfoFont);
         labelErrorInfo.setForeground(new Color(-15236482));
-        labelErrorInfo.setText("Error = ");
+        labelErrorInfo.setText("Error = 0.0");
         labelErrorInfo.setVerticalAlignment(0);
         labelErrorInfo.setVerticalTextPosition(0);
         panelInputs.add(labelErrorInfo, new GridConstraints(3, 0, 1, 2, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnLimpiar = new JButton();
+        btnLimpiar.setBackground(new Color(-15236482));
+        Font btnLimpiarFont = this.$$$getFont$$$("JetBrains Mono", -1, 20, btnLimpiar.getFont());
+        if (btnLimpiarFont != null) btnLimpiar.setFont(btnLimpiarFont);
+        btnLimpiar.setForeground(new Color(-1));
+        btnLimpiar.setText("Limpiar");
+        panelInputs.add(btnLimpiar, new GridConstraints(4, 0, 1, 2, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(130, 17), null, 0, false));
     }
 
     /**

@@ -222,7 +222,7 @@
               </grid>
             </children>
           </grid>
-          <grid id="b79d9" binding="panelInputs" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="b79d9" binding="panelInputs" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -253,7 +253,7 @@
               <component id="4c33c" class="javax.swing.JButton" binding="btnResolver">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="-1" height="35"/>
+                    <preferred-size width="130" height="17"/>
                   </grid>
                 </constraints>
                 <properties>
@@ -270,7 +270,7 @@
                 <properties>
                   <font name="JetBrains Mono" size="24" style="1"/>
                   <foreground color="-15236482"/>
-                  <text value="Solución ="/>
+                  <text value="Solución = 0.0"/>
                   <verticalAlignment value="0"/>
                   <verticalTextPosition value="0"/>
                 </properties>
@@ -282,9 +282,22 @@
                 <properties>
                   <font name="JetBrains Mono" size="24" style="1"/>
                   <foreground color="-15236482"/>
-                  <text value="Error = "/>
+                  <text value="Error = 0.0"/>
                   <verticalAlignment value="0"/>
                   <verticalTextPosition value="0"/>
+                </properties>
+              </component>
+              <component id="fb226" class="javax.swing.JButton" binding="btnLimpiar">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="130" height="17"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-15236482"/>
+                  <font name="JetBrains Mono" size="20"/>
+                  <foreground color="-1"/>
+                  <text value="Limpiar"/>
                 </properties>
               </component>
             </children>
