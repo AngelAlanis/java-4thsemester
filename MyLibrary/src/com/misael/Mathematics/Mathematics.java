@@ -1,14 +1,17 @@
 package com.misael.Mathematics;
 
+import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Mathematics {
 
-    static ArrayList<ReglaFalsa> tablaReglaFalsa = new ArrayList<>();
-    static ArrayList<Biseccion>  tablaBiseccion  = new ArrayList<>();
-    static ArrayList<Secante>    tablaSecante    = new ArrayList<>();
+    static ArrayList<ReglaFalsa>    tablaReglaFalsa    = new ArrayList<>();
+    static ArrayList<Biseccion>     tablaBiseccion     = new ArrayList<>();
+    static ArrayList<Secante>       tablaSecante       = new ArrayList<>();
+    static ArrayList<NewtonRaphson> tablaNewtonRaphson = new ArrayList<>();
 
     public static double potencia(double numero, double exponente) {
 
@@ -63,6 +66,10 @@ public class Mathematics {
         return Double.NaN;
     }
 
+    public static double promedio(double numero1, double numero2) {
+        return ((numero1 + numero2) / 2);
+    }
+
     public static double error(double a, double b) {
         return absoluto((a - b) / a);
     }
@@ -87,6 +94,25 @@ public class Mathematics {
                 .setVariable("_fx2", filas.get(i - 1).getFxi())
                 .evaluate();
     }
+
+    public static double nextSolucionNewtonRapson(String expresion, String derivada, double x) {
+
+        double evaluacionExpresion = new ExpressionBuilder(expresion)
+                .variables("x")
+                .build()
+                .setVariable("x", x)
+                .evaluate();
+
+        double evaluacionDerivada = new ExpressionBuilder(derivada)
+                .variables("x")
+                .build()
+                .setVariable("x", x)
+                .evaluate();
+
+        return (x - (evaluacionExpresion / evaluacionDerivada));
+
+    }
+
 
     public static double evaluarExpresion(String expresion, double x) {
         return new ExpressionBuilder(expresion)
@@ -261,6 +287,51 @@ public class Mathematics {
         setTablaSecante(filas);
         return filas.get(i - 1).getXi();
     }
+
+    public static double metodoNewtonRaphson(String expresion, String derivada, double tolerancia) {
+        double[] intervaloInicial = busquedaIncremental(expresion);
+        double   solucionInicial  = promedio(intervaloInicial[0], intervaloInicial[1]);
+
+        ArrayList<NewtonRaphson> filas = new ArrayList<>();
+
+        int i = 0;
+
+        filas.add(new NewtonRaphson());
+
+        filas.get(i).setI(i);
+        filas.get(i).setXi(solucionInicial);
+        filas.get(i).setError(0.0);
+        filas.get(i).setFxi(evaluarExpresion(expresion, filas.get(i).getXi()));
+        filas.get(i).setDfxi(evaluarExpresion(derivada, filas.get(i).getXi()));
+
+        do {
+            filas.add(new NewtonRaphson());
+            i++;
+
+            filas.get(i).setI(i);
+            filas.get(i).setXi(nextSolucionNewtonRapson(expresion, derivada, filas.get(i - 1).getXi()));
+            filas.get(i).setError(error(filas.get(i).getXi(), filas.get(i - 1).getXi()));
+            filas.get(i).setFxi(evaluarExpresion(expresion, filas.get(i).getXi()));
+            filas.get(i).setDfxi(evaluarExpresion(derivada, filas.get(i).getXi()));
+
+
+        } while (absoluto(filas.get(i).getError()) > tolerancia);
+
+        filas.remove(i);
+
+        setTablaNewtonRaphson(filas);
+        return filas.get(i - 1).getXi();
+
+    }
+
+    public static void setTablaNewtonRaphson(ArrayList<NewtonRaphson> tablaNewtonRaphson) {
+        Mathematics.tablaNewtonRaphson = tablaNewtonRaphson;
+    }
+
+    public ArrayList<NewtonRaphson> getTablaNewtonRaphson() {
+        return tablaNewtonRaphson;
+    }
+
 
     public static double[] busquedaIncremental(String expresion) {
         double[] resultados = new double[2];

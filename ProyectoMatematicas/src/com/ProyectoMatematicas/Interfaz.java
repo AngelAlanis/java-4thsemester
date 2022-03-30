@@ -11,15 +11,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 import com.misael.Mathematics.BiseccionModel;
 import com.misael.Mathematics.Mathematics;
+import com.misael.Mathematics.NewtonRaphsonModel;
 import com.misael.Mathematics.ReglaFalsaModel;
 import com.misael.Mathematics.SecanteModel;
 
@@ -30,7 +28,6 @@ public class Interfaz extends JFrame {
     private JPanel            panelTabla;
     private JPanel            panelInputs;
     private JTextField        tfFx;
-    private JComboBox<String> cbMetodos;
     private JButton           btnResolver;
     private JLabel            labelLogo;
     private JLabel            labelfx;
@@ -49,12 +46,18 @@ public class Interfaz extends JFrame {
     private JLabel            labelReglaFalsa;
     private JLabel            labelSecante;
     private JLabel            sideNavLabel;
+    private JPanel            panelNewtonRaphson;
+    private JScrollPane       scrollNewtonRaphson;
+    private JTable            tableNewtonRaphson;
+    private JLabel            labelNewtonRaphson;
     private ImageIcon         iconoBiseccionOFF;
     private ImageIcon         iconoReglaFalsaOFF;
     private ImageIcon         iconoSecanteOFF;
     private ImageIcon         iconoBiseccionON;
     private ImageIcon         iconoReglaFalsaON;
     private ImageIcon         iconoSecanteON;
+    private ImageIcon         iconoNewtonON;
+    private ImageIcon         iconoNewtonOFF;
     private ImageIcon         iconoLogo;
     private int               selectedCardLayout = 0;
 
@@ -84,19 +87,23 @@ public class Interfaz extends JFrame {
         labelBiseccion.setIcon(iconoBiseccionON);
         labelSecante.setIcon(iconoSecanteOFF);
         labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
+        labelNewtonRaphson.setIcon(iconoNewtonOFF);
         labelLogo.setIcon(iconoLogo);
 
         tableBiseccion.setModel(new BiseccionModel());
         tableReglaFalsa.setModel(new ReglaFalsaModel());
         tableSecante.setModel(new SecanteModel());
+        tableNewtonRaphson.setModel(new NewtonRaphsonModel());
 
-        DefaultTableCellRenderer rendererBiseccion  = (DefaultTableCellRenderer) tableBiseccion.getDefaultRenderer(Double.class);
-        DefaultTableCellRenderer rendererReglaFalsa = (DefaultTableCellRenderer) tableReglaFalsa.getDefaultRenderer(Double.class);
-        DefaultTableCellRenderer rendererSecante    = (DefaultTableCellRenderer) tableSecante.getDefaultRenderer(Double.class);
+        DefaultTableCellRenderer rendererBiseccion     = (DefaultTableCellRenderer) tableBiseccion.getDefaultRenderer(Double.class);
+        DefaultTableCellRenderer rendererReglaFalsa    = (DefaultTableCellRenderer) tableReglaFalsa.getDefaultRenderer(Double.class);
+        DefaultTableCellRenderer rendererSecante       = (DefaultTableCellRenderer) tableSecante.getDefaultRenderer(Double.class);
+        DefaultTableCellRenderer rendererNewtonRaphson = (DefaultTableCellRenderer) tableNewtonRaphson.getDefaultRenderer(Double.class);
+
         rendererBiseccion.setHorizontalAlignment(SwingConstants.CENTER);
         rendererReglaFalsa.setHorizontalAlignment(SwingConstants.CENTER);
         rendererSecante.setHorizontalAlignment(SwingConstants.CENTER);
-
+        rendererNewtonRaphson.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
 
@@ -113,6 +120,9 @@ public class Interfaz extends JFrame {
             BufferedImage imagenReglaFalsaOFF = ImageIO.read(new File("ProyectoMatematicas/src/resources/icons/ReglaFalsa_OFF.png"));
             iconoReglaFalsaOFF = new ImageIcon(imagenReglaFalsaOFF.getScaledInstance(70, 70, Image.SCALE_SMOOTH));
 
+            BufferedImage imagenNewtonOFF = ImageIO.read(new File("ProyectoMatematicas/src/resources/icons/Newton_OFF.png"));
+            iconoNewtonOFF = new ImageIcon(imagenNewtonOFF.getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+
             BufferedImage imagenBiseccionON = ImageIO.read(new File("ProyectoMatematicas/src/resources/icons/Biseccion_ON.png"));
             iconoBiseccionON = new ImageIcon(imagenBiseccionON.getScaledInstance(70, 70, Image.SCALE_SMOOTH));
 
@@ -121,6 +131,9 @@ public class Interfaz extends JFrame {
 
             BufferedImage imagenReglaFalsaON = ImageIO.read(new File("ProyectoMatematicas/src/resources/icons/ReglaFalsa_ON.png"));
             iconoReglaFalsaON = new ImageIcon(imagenReglaFalsaON.getScaledInstance(70, 70, Image.SCALE_SMOOTH));
+
+            BufferedImage imagenNewtonON = ImageIO.read(new File("ProyectoMatematicas/src/resources/icons/Newton_ON.png"));
+            iconoNewtonON = new ImageIcon(imagenNewtonON.getScaledInstance(70, 70, Image.SCALE_SMOOTH));
 
             BufferedImage imagenLogo = ImageIO.read(new File("ProyectoMatematicas/src/resources/icons/logoMathematics.png"));
             iconoLogo = new ImageIcon(imagenLogo.getScaledInstance(237, 60, Image.SCALE_SMOOTH));
@@ -148,6 +161,9 @@ public class Interfaz extends JFrame {
             double      resultSecante = Mathematics.metodoSecante(input, 0.0001);
             tableSecante.setModel(new SecanteModel(secante.getTablaSecante()));
 
+            Mathematics newton       = new Mathematics();
+            double      resultNewton = Mathematics.metodoNewtonRaphson(input, "2x-5", 0.0001);
+            tableNewtonRaphson.setModel(new NewtonRaphsonModel(newton.getTablaNewtonRaphson()));
 
         });
 
@@ -166,9 +182,6 @@ public class Interfaz extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                labelSecante.setIcon(iconoSecanteOFF);
-                labelBiseccion.setIcon(iconoBiseccionON);
-                labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
                 cargarPanelBiseccion();
             }
 
@@ -209,25 +222,45 @@ public class Interfaz extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                labelSecante.setIcon(iconoSecanteON);
-                labelBiseccion.setIcon(iconoBiseccionOFF);
-                labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
                 cargarPanelSecante();
+            }
+
+        });
+
+        labelNewtonRaphson.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                labelNewtonRaphson.setIcon(iconoNewtonON);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (selectedCardLayout != 3) {
+                    labelNewtonRaphson.setIcon(iconoNewtonOFF);
+                }
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                cargarPanelNewton();
             }
 
         });
 
     }
 
-    private void cargarPanelSecante() {
+    private void cargarPanelBiseccion() {
         panelTabla.removeAll();
-        panelTabla.add(panelSecante);
+        panelTabla.add(panelBiseccion);
         panelTabla.repaint();
         panelTabla.revalidate();
-        labelBiseccion.setIcon(iconoBiseccionOFF);
+
+        labelBiseccion.setIcon(iconoBiseccionON);
         labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
-        labelSecante.setIcon(iconoSecanteON);
-        selectedCardLayout = 2;
+        labelSecante.setIcon(iconoSecanteOFF);
+        labelNewtonRaphson.setIcon(iconoNewtonOFF);
+
+        selectedCardLayout = 0;
     }
 
     private void cargarPanelReglaFalsa() {
@@ -239,18 +272,36 @@ public class Interfaz extends JFrame {
         labelBiseccion.setIcon(iconoBiseccionOFF);
         labelReglaFalsa.setIcon(iconoReglaFalsaON);
         labelSecante.setIcon(iconoSecanteOFF);
+        labelNewtonRaphson.setIcon(iconoNewtonOFF);
         selectedCardLayout = 1;
     }
 
-    private void cargarPanelBiseccion() {
+    private void cargarPanelSecante() {
         panelTabla.removeAll();
-        panelTabla.add(panelBiseccion);
+        panelTabla.add(panelSecante);
         panelTabla.repaint();
         panelTabla.revalidate();
-        labelBiseccion.setIcon(iconoBiseccionON);
+
+        labelBiseccion.setIcon(iconoBiseccionOFF);
+        labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
+        labelSecante.setIcon(iconoSecanteON);
+        labelNewtonRaphson.setIcon(iconoNewtonOFF);
+
+        selectedCardLayout = 2;
+    }
+
+    private void cargarPanelNewton() {
+        panelTabla.removeAll();
+        panelTabla.add(panelNewtonRaphson);
+        panelTabla.repaint();
+        panelTabla.revalidate();
+
+        labelBiseccion.setIcon(iconoBiseccionOFF);
         labelReglaFalsa.setIcon(iconoReglaFalsaOFF);
         labelSecante.setIcon(iconoSecanteOFF);
-        selectedCardLayout = 0;
+        labelNewtonRaphson.setIcon(iconoNewtonON);
+
+        selectedCardLayout = 3;
     }
 
 
@@ -265,15 +316,15 @@ public class Interfaz extends JFrame {
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panelEncabezado = new JPanel();
-        panelEncabezado.setLayout(new GridLayoutManager(1, 9, new Insets(0, 0, 0, 0), -1, -1));
+        panelEncabezado.setLayout(new GridLayoutManager(1, 11, new Insets(0, 0, 0, 0), -1, -1));
         panelEncabezado.setBackground(new Color(-5131346));
         panelPrincipal.add(panelEncabezado, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panelEncabezado.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final Spacer spacer1 = new Spacer();
-        panelEncabezado.add(spacer1, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        panelEncabezado.add(spacer1, new GridConstraints(0, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         labelLogo = new JLabel();
         labelLogo.setText("");
-        panelEncabezado.add(labelLogo, new GridConstraints(0, 8, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelEncabezado.add(labelLogo, new GridConstraints(0, 10, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         labelBiseccion = new JLabel();
         labelBiseccion.setText("");
         panelEncabezado.add(labelBiseccion, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -292,6 +343,11 @@ public class Interfaz extends JFrame {
         panelEncabezado.add(spacer3, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, 1, null, new Dimension(25, -1), null, 0, false));
         final Spacer spacer4 = new Spacer();
         panelEncabezado.add(spacer4, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, 1, null, new Dimension(25, -1), null, 0, false));
+        labelNewtonRaphson = new JLabel();
+        labelNewtonRaphson.setText("");
+        panelEncabezado.add(labelNewtonRaphson, new GridConstraints(0, 8, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer5 = new Spacer();
+        panelEncabezado.add(spacer5, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, 1, null, new Dimension(25, -1), null, 0, false));
         panelInferior = new JPanel();
         panelInferior.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         panelPrincipal.add(panelInferior, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -322,6 +378,14 @@ public class Interfaz extends JFrame {
         tableSecante = new JTable();
         tableSecante.setPreferredScrollableViewportSize(new Dimension(700, 600));
         scrollSecante.setViewportView(tableSecante);
+        panelNewtonRaphson = new JPanel();
+        panelNewtonRaphson.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panelTabla.add(panelNewtonRaphson, "Card4");
+        scrollNewtonRaphson = new JScrollPane();
+        panelNewtonRaphson.add(scrollNewtonRaphson, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        tableNewtonRaphson = new JTable();
+        tableNewtonRaphson.setPreferredScrollableViewportSize(new Dimension(700, 600));
+        scrollNewtonRaphson.setViewportView(tableNewtonRaphson);
         panelInputs = new JPanel();
         panelInputs.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
         panelInferior.add(panelInputs, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
