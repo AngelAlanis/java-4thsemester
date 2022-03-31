@@ -9,7 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="poi-5.2.0" level="project" />
     <orderEntry type="library" name="flatlaf-2.0.2" level="project" />
-    <orderEntry type="library" name="MyLibrary" level="project" />
     <orderEntry type="library" name="fontbox-2.0.25" level="project" />
     <orderEntry type="library" name="forms_rt" level="project" />
     <orderEntry type="library" name="exp4j-0.4.8" level="project" />

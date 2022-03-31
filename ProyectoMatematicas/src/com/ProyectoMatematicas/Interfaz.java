@@ -200,7 +200,7 @@ public class Interfaz extends JFrame {
                 errorSecante = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
 
                 Mathematics newton = new Mathematics();
-                resultNewton = Mathematics.metodoNewtonRaphson(input, "2x-5", 0.0001);
+                resultNewton = Mathematics.metodoNewtonRaphson(input, 0.0001);
                 tableNewtonRaphson.setModel(new NewtonRaphsonModel(newton.getTablaNewtonRaphson()));
                 errorNewton = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
 

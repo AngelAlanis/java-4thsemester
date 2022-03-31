@@ -1,10 +1,12 @@
 package com.misael.Mathematics;
 
-import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import org.lsmp.djep.djep.DJep;
+import org.nfunk.jep.Node;
+import org.nfunk.jep.ParseException;
 
 public class Mathematics {
 
@@ -112,7 +114,6 @@ public class Mathematics {
         return (x - (evaluacionExpresion / evaluacionDerivada));
 
     }
-
 
     public static double evaluarExpresion(String expresion, double x) {
         return new ExpressionBuilder(expresion)
@@ -288,9 +289,10 @@ public class Mathematics {
         return filas.get(i - 1).getXi();
     }
 
-    public static double metodoNewtonRaphson(String expresion, String derivada, double tolerancia) {
+    public static double metodoNewtonRaphson(String expresion, double tolerancia) {
         double[] intervaloInicial = busquedaIncremental(expresion);
         double   solucionInicial  = promedio(intervaloInicial[0], intervaloInicial[1]);
+        String derivada = derivar(expresion);
 
         ArrayList<NewtonRaphson> filas = new ArrayList<>();
 
@@ -324,6 +326,35 @@ public class Mathematics {
 
     }
 
+    public static String derivar(String expresion) {
+        Node nodoFuncion;
+        Node nodoDerivada;
+        DJep djep;
+
+        try {
+            djep = new DJep();
+            djep.addStandardFunctions();
+            djep.addStandardConstants();
+            djep.addComplex();
+            djep.setAllowAssignment(true);
+            djep.setAllowUndeclared(true);
+            djep.setImplicitMul(true);
+            djep.addStandardDiffRules();
+
+            nodoFuncion  = djep.parse(expresion);
+            nodoDerivada = djep.differentiate(nodoFuncion, "x");
+            nodoDerivada = djep.simplify(nodoDerivada);
+
+            return djep.toString(nodoDerivada);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
     public static void setTablaNewtonRaphson(ArrayList<NewtonRaphson> tablaNewtonRaphson) {
         Mathematics.tablaNewtonRaphson = tablaNewtonRaphson;
     }
@@ -331,7 +362,6 @@ public class Mathematics {
     public ArrayList<NewtonRaphson> getTablaNewtonRaphson() {
         return tablaNewtonRaphson;
     }
-
 
     public static double[] busquedaIncremental(String expresion) {
         double[] resultados = new double[2];
