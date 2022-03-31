@@ -177,15 +177,15 @@ public class Interfaz extends JFrame {
         tableSecante.setModel(new SecanteModel());
         tableNewtonRaphson.setModel(new NewtonRaphsonModel());
 
-        resultBiseccion  = 0;
+        resultBiseccion = 0;
         resultReglaFalsa = 0;
-        resultSecante    = 0;
-        resultNewton     = 0;
+        resultSecante = 0;
+        resultNewton = 0;
 
-        errorBiseccion  = 0;
+        errorBiseccion = 0;
         errorReglaFalsa = 0;
-        errorSecante    = 0;
-        errorNewton     = 0;
+        errorSecante = 0;
+        errorNewton = 0;
 
         tfFx.setText("");
         labelErrorInfo.setText("Error = 0.0");
@@ -205,10 +205,10 @@ public class Interfaz extends JFrame {
                 Mathematics secante    = new Mathematics();
                 Mathematics newton     = new Mathematics();
 
-                resultBiseccion  = Mathematics.metodoBiseccion(input, 0.0001);
+                resultBiseccion = Mathematics.metodoBiseccion(input, 0.0001);
                 resultReglaFalsa = Mathematics.metodoReglaFalsa(input, 0.0001);
-                resultSecante    = Mathematics.metodoSecante(input, 0.0001);
-                resultNewton     = Mathematics.metodoNewtonRaphson(input, 0.0001);
+                resultSecante = Mathematics.metodoSecante(input, 0.0001);
+                resultNewton = Mathematics.metodoNewtonRaphson(input, 0.0001);
 
 
                 if (!Double.isNaN(resultBiseccion)) {
@@ -218,10 +218,10 @@ public class Interfaz extends JFrame {
                     tableSecante.setModel(new SecanteModel(secante.getTablaSecante()));
                     tableNewtonRaphson.setModel(new NewtonRaphsonModel(newton.getTablaNewtonRaphson()));
 
-                    errorBiseccion  = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
+                    errorBiseccion = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
                     errorReglaFalsa = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
-                    errorSecante    = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
-                    errorNewton     = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
+                    errorSecante = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
+                    errorNewton = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
                 } else {
                     limpiarInterfaz();
                     labelTeoremaBolzano.setVisible(true);
