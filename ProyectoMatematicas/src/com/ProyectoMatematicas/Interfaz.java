@@ -172,6 +172,17 @@ public class Interfaz extends JFrame {
         tableReglaFalsa.setModel(new ReglaFalsaModel());
         tableSecante.setModel(new SecanteModel());
         tableNewtonRaphson.setModel(new NewtonRaphsonModel());
+
+        resultBiseccion  = 0;
+        resultReglaFalsa = 0;
+        resultSecante    = 0;
+        resultNewton     = 0;
+
+        errorBiseccion  = 0;
+        errorReglaFalsa = 0;
+        errorSecante    = 0;
+        errorNewton     = 0;
+
         tfFx.setText("");
         labelErrorInfo.setText("Error = 0.0");
         labelSolucionInfo.setText("Solución = 0.0");
