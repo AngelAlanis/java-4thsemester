@@ -13,6 +13,7 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -55,6 +56,7 @@ public class Interfaz extends JFrame {
     private JLabel      labelNewtonRaphson;
     private JButton     btnLimpiar;
     private JLabel      labelTeoremaBolzano;
+    private JLabel      labelSalir;
     private ImageIcon   iconoBiseccionOFF;
     private ImageIcon   iconoReglaFalsaOFF;
     private ImageIcon   iconoSecanteOFF;
@@ -64,6 +66,7 @@ public class Interfaz extends JFrame {
     private ImageIcon   iconoNewtonON;
     private ImageIcon   iconoNewtonOFF;
     private ImageIcon   iconoLogo;
+    private ImageIcon   iconoSalir;
     private int         selectedCardLayout = 0;
     private double      resultBiseccion;
     private double      resultReglaFalsa;
@@ -92,7 +95,8 @@ public class Interfaz extends JFrame {
         configurarComponentes();
         initActionListeners();
         this.setSize(1280, 720);
-        this.setUndecorated(false);
+        this.setUndecorated(true);
+        this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -100,7 +104,7 @@ public class Interfaz extends JFrame {
     public void configurarComponentes() {
         actualizarIconos();
         labelLogo.setIcon(iconoLogo);
-
+        labelSalir.setIcon(iconoSalir);
         labelTeoremaBolzano.setVisible(false);
         labelTeoremaBolzano.setText("<html><p style=\"width:250px\">" + "La ecuación no cumple con el teorema de Bolzano" + "</p></html>");
 
@@ -138,6 +142,9 @@ public class Interfaz extends JFrame {
     private void crearIconos() {
         try {
             sideNavLabel.setIcon(new ImageIcon(ImageIO.read(new File("ProyectoMatematicas/src/resources/icons/sidenav.png"))));
+
+            BufferedImage imagenSalir = ImageIO.read(new File("ProyectoMatematicas/src/resources/icons/salir.png"));
+            iconoSalir = new ImageIcon(imagenSalir);
 
             BufferedImage imagenBiseccionOFF = ImageIO.read(new File("ProyectoMatematicas/src/resources/icons/Biseccion_OFF.png"));
             iconoBiseccionOFF = new ImageIcon(imagenBiseccionOFF.getScaledInstance(70, 70, Image.SCALE_SMOOTH));
@@ -194,6 +201,15 @@ public class Interfaz extends JFrame {
     }
 
     public void initActionListeners() {
+
+        labelSalir.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (JOptionPane.showConfirmDialog(null, "¿Está seguro que desea salir?", "", JOptionPane.YES_NO_OPTION) == 0) {
+                    System.exit(0);
+                }
+            }
+        });
 
         btnResolver.addActionListener(e -> {
 
@@ -397,15 +413,12 @@ public class Interfaz extends JFrame {
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panelEncabezado = new JPanel();
-        panelEncabezado.setLayout(new GridLayoutManager(1, 11, new Insets(0, 0, 0, 0), -1, -1));
+        panelEncabezado.setLayout(new GridLayoutManager(1, 12, new Insets(0, 0, 0, 0), -1, -1));
         panelEncabezado.setBackground(new Color(-5131346));
         panelPrincipal.add(panelEncabezado, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panelEncabezado.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final Spacer spacer1 = new Spacer();
         panelEncabezado.add(spacer1, new GridConstraints(0, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        labelLogo = new JLabel();
-        labelLogo.setText("");
-        panelEncabezado.add(labelLogo, new GridConstraints(0, 10, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         labelBiseccion = new JLabel();
         labelBiseccion.setText("");
         panelEncabezado.add(labelBiseccion, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -429,6 +442,12 @@ public class Interfaz extends JFrame {
         panelEncabezado.add(labelNewtonRaphson, new GridConstraints(0, 8, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer5 = new Spacer();
         panelEncabezado.add(spacer5, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, 1, null, new Dimension(25, -1), null, 0, false));
+        labelSalir = new JLabel();
+        labelSalir.setText("");
+        panelEncabezado.add(labelSalir, new GridConstraints(0, 11, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        labelLogo = new JLabel();
+        labelLogo.setText("");
+        panelEncabezado.add(labelLogo, new GridConstraints(0, 10, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panelInferior = new JPanel();
         panelInferior.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         panelPrincipal.add(panelInferior, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
