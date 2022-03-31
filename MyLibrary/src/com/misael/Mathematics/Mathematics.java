@@ -124,7 +124,13 @@ public class Mathematics {
     }
 
     public static double metodoReglaFalsa(String expresion, double tolerancia) {
-        double[] intervaloInicial = busquedaIncremental(expresion);
+        double[] intervaloInicial = new double[2];
+
+        try {
+            intervaloInicial = busquedaIncremental(expresion);
+        } catch (TeoremaDeBolzanoException e) {
+            return Double.NaN;
+        }
 
         ArrayList<ReglaFalsa> filas = new ArrayList<>();
 
@@ -185,7 +191,13 @@ public class Mathematics {
     }
 
     public static double metodoBiseccion(String expresion, double tolerancia) {
-        double[] intervaloInicial = busquedaIncremental(expresion);
+         double[] intervaloInicial = new double[2];
+
+        try {
+            intervaloInicial = busquedaIncremental(expresion);
+        } catch (TeoremaDeBolzanoException e) {
+            return Double.NaN;
+        }
 
         ArrayList<Biseccion> filas = new ArrayList<>();
 
@@ -236,7 +248,13 @@ public class Mathematics {
     }
 
     public static double metodoSecante(String expresion, double tolerancia) {
-        double[] intervaloInicial = busquedaIncremental(expresion);
+        double[] intervaloInicial = new double[2];
+
+        try {
+            intervaloInicial = busquedaIncremental(expresion);
+        } catch (TeoremaDeBolzanoException e) {
+            return Double.NaN;
+        }
 
         double xm1 = intervaloInicial[0];
         double x0  = intervaloInicial[1];
@@ -290,9 +308,16 @@ public class Mathematics {
     }
 
     public static double metodoNewtonRaphson(String expresion, double tolerancia) {
-        double[] intervaloInicial = busquedaIncremental(expresion);
+        double[] intervaloInicial = new double[2];
+
+        try {
+            intervaloInicial = busquedaIncremental(expresion);
+        } catch (TeoremaDeBolzanoException e) {
+            return Double.NaN;
+        }
+
         double   solucionInicial  = promedio(intervaloInicial[0], intervaloInicial[1]);
-        String derivada = derivar(expresion);
+        String   derivada         = derivar(expresion);
 
         ArrayList<NewtonRaphson> filas = new ArrayList<>();
 
@@ -363,7 +388,7 @@ public class Mathematics {
         return tablaNewtonRaphson;
     }
 
-    public static double[] busquedaIncremental(String expresion) {
+    public static double[] busquedaIncremental(String expresion) throws TeoremaDeBolzanoException {
         double[] resultados = new double[2];
 
         ArrayList<Double> fx = new ArrayList<>();
@@ -373,6 +398,11 @@ public class Mathematics {
         do {
             i++;
             fx.add(evaluarExpresion(expresion, i));
+
+            if (i > 80) {
+                throw new TeoremaDeBolzanoException("Se realizaron " + i + " iteraciones y no se encontró el resultado.");
+            }
+
         } while (i <= 1 || (fx.get(i) * fx.get(i - 1)) >= 0);
 
         resultados[0] = i - 1;

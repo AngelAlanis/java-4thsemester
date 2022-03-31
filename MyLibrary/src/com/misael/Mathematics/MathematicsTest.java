@@ -82,7 +82,7 @@ public class MathematicsTest {
     }
 
     @Test
-    public void BusquedaIncremental_Test1(){
+    public void BusquedaIncremental_Test1() throws TeoremaDeBolzanoException {
         Assert.assertArrayEquals(new double[]{5,6}, Mathematics.busquedaIncremental("x^4-5x^3-4"), 0.00001);
     }
 
