@@ -5,15 +5,30 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.StyleContext;
-import java.awt.*;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -184,15 +199,15 @@ public class Interfaz extends JFrame {
         tableSecante.setModel(new SecanteModel());
         tableNewtonRaphson.setModel(new NewtonRaphsonModel());
 
-        resultBiseccion = 0;
+        resultBiseccion  = 0;
         resultReglaFalsa = 0;
-        resultSecante = 0;
-        resultNewton = 0;
+        resultSecante    = 0;
+        resultNewton     = 0;
 
-        errorBiseccion = 0;
+        errorBiseccion  = 0;
         errorReglaFalsa = 0;
-        errorSecante = 0;
-        errorNewton = 0;
+        errorSecante    = 0;
+        errorNewton     = 0;
 
         tfFx.setText("");
         labelErrorInfo.setText("Error = 0.0");
@@ -221,10 +236,10 @@ public class Interfaz extends JFrame {
                 Mathematics secante    = new Mathematics();
                 Mathematics newton     = new Mathematics();
 
-                resultBiseccion = Mathematics.metodoBiseccion(input, 0.0001);
+                resultBiseccion  = Mathematics.metodoBiseccion(input, 0.0001);
                 resultReglaFalsa = Mathematics.metodoReglaFalsa(input, 0.0001);
-                resultSecante = Mathematics.metodoSecante(input, 0.0001);
-                resultNewton = Mathematics.metodoNewtonRaphson(input, 0.0001);
+                resultSecante    = Mathematics.metodoSecante(input, 0.0001);
+                resultNewton     = Mathematics.metodoNewtonRaphson(input, 0.0001);
 
 
                 if (!Double.isNaN(resultBiseccion)) {
@@ -234,10 +249,10 @@ public class Interfaz extends JFrame {
                     tableSecante.setModel(new SecanteModel(secante.getTablaSecante()));
                     tableNewtonRaphson.setModel(new NewtonRaphsonModel(newton.getTablaNewtonRaphson()));
 
-                    errorBiseccion = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
+                    errorBiseccion  = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
                     errorReglaFalsa = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
-                    errorSecante = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
-                    errorNewton = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
+                    errorSecante    = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
+                    errorNewton     = (double) tableBiseccion.getValueAt(tableBiseccion.getRowCount() - 1, 4);
                 } else {
                     limpiarInterfaz();
                     labelTeoremaBolzano.setVisible(true);
