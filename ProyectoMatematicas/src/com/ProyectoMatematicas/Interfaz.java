@@ -282,7 +282,6 @@ public class Interfaz extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 cargarPanelBiseccion();
             }
-
         });
 
         labelReglaFalsa.addMouseListener(new MouseAdapter() {
