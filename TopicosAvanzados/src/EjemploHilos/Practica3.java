@@ -1,6 +1,7 @@
 package EjemploHilos;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Practica3 implements Runnable {
 
