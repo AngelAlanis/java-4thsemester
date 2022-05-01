@@ -23,7 +23,6 @@ public class Interfaz extends JFrame {
     private       JMenuBar       jMenuBar;
     private       JMenuItem      menuVentana1;
     private       JMenuItem      menuVentana2;
-    private       JMenuItem      menuItemSalir;
     private       JPanel         panelPrincipal;
     private       JDesktopPane   desktopPane;
     private       JInternalFrame internalFrameVentana1;
@@ -32,8 +31,6 @@ public class Interfaz extends JFrame {
     private       JButton        botonHilos;
     public static JList<String>  listaHiloUno;
     public static JList<String>  listaHiloDos;
-
-    private JScrollPane scrollPaneList;
 
     public static void main(String[] args) {
         var interfaz = new Interfaz();
@@ -44,7 +41,7 @@ public class Interfaz extends JFrame {
         this.setSize(640, 480);
         this.setLocationRelativeTo(null);
         makeDesktop();
-        makeInternal();
+        makeVentana1();
         makeVentana2();
         this.getContentPane().add(desktopPane);
         desktopPane.add(internalFrameVentana1);
@@ -60,7 +57,7 @@ public class Interfaz extends JFrame {
         JMenu jMenu = new JMenu("Menú");
         menuVentana1  = new JMenuItem("Ventana 1");
         menuVentana2  = new JMenuItem("Ventana 2");
-        menuItemSalir = new JMenuItem("Salir");
+        JMenuItem menuItemSalir = new JMenuItem("Salir");
 
         jMenu.add(menuVentana1);
         jMenu.add(menuVentana2);
@@ -77,24 +74,11 @@ public class Interfaz extends JFrame {
 
         botonHilo.addActionListener(e -> {
             var hilo_1 = new UnHilo("hilo_1");
-
-            try {
-                hilo_1.hilo.join();
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
         });
 
         botonHilos.addActionListener(e -> {
             var hilo_1 = new UnHilo("hilo_1");
             var hilo_2 = new UnHilo("hilo_2");
-
-            try {
-                hilo_1.hilo.join();
-                hilo_2.hilo.join();
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
         });
     }
 
@@ -127,11 +111,11 @@ public class Interfaz extends JFrame {
 
     }
 
-    public void makeInternal() {
+    public void makeVentana1() {
         listaHiloUno   = new JList<>();
-        scrollPaneList = new JScrollPane(listaHiloUno);
         botonHilo      = new JButton("Hilo");
 
+        JScrollPane scrollPaneList = new JScrollPane(listaHiloUno);
         JLabel labelInternalFrame = new JLabel("Estoy en la ventana 1");
 
         GridBagConstraints gbc = new GridBagConstraints();

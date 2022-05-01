@@ -7,15 +7,14 @@ public class UnHilo implements Runnable {
     Thread hilo;
     String nombreHilo;
 
+    DefaultListModel<String> modeloUno = new DefaultListModel<>();
+    DefaultListModel<String> modeloDos = new DefaultListModel<>();
+
     public UnHilo (String nombreHilo) {
         hilo = new Thread(this, nombreHilo);
         this.nombreHilo = nombreHilo;
         hilo.start();
     }
-
-    DefaultListModel<String> modeloUno = new DefaultListModel<>();
-    DefaultListModel<String> modeloDos = new DefaultListModel<>();
-
 
     @Override
     public void run() {
@@ -24,8 +23,8 @@ public class UnHilo implements Runnable {
                 System.out.println("Comienza hilo 1");
                 for (int i = 0; i < 5; i++) {
                     modeloUno.addElement("HiloUno " + i);
-                    System.out.println("HiloUno " + i);
                     Interfaz.listaHiloUno.setModel(modeloUno);
+                    System.out.println("HiloUno " + i);
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
