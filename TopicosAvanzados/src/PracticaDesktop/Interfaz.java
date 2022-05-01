@@ -1,26 +1,41 @@
 package PracticaDesktop;
 
-import com.formdev.flatlaf.FlatLightLaf;
-import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 public class Interfaz extends JFrame {
 
-    JMenuBar  jMenuBar      = new JMenuBar();
-    JMenu     jMenu         = new JMenu("Menú");
-    JMenuItem menuVentana1  = new JMenuItem("Ventana 1");
-    JMenuItem menuVentana2  = new JMenuItem("Ventana 2");
-    JMenuItem menuItemSalir = new JMenuItem("Salir");
-    private JPanel         panel1;
-    private JDesktopPane   desktopPane;
-    private JInternalFrame internalFrame;
+    private       JMenuBar       jMenuBar;
+    private       JMenuItem      menuVentana1;
+    private       JMenuItem      menuVentana2;
+    private       JMenuItem      menuItemSalir;
+    private       JPanel         panelPrincipal;
+    private       JDesktopPane   desktopPane;
+    private       JInternalFrame internalFrameVentana1;
+    private       JInternalFrame internalFrameVentana2;
+    private       JButton        botonHilo;
+    private       JButton        botonHilos;
+    public static JList<String>  listaHiloUno;
+    public static JList<String>  listaHiloDos;
+
+    private JScrollPane scrollPaneList;
 
     public static void main(String[] args) {
-        FlatLightLaf.setup();
         var interfaz = new Interfaz();
     }
 
@@ -28,32 +43,118 @@ public class Interfaz extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(640, 480);
         this.setLocationRelativeTo(null);
-        $$$setupUI$$$();
+        makeDesktop();
+        makeInternal();
+        makeVentana2();
+        this.getContentPane().add(desktopPane);
+        desktopPane.add(internalFrameVentana1);
+        desktopPane.add(internalFrameVentana2);
         configurarComponentes();
+        initActionListeners();
         this.setJMenuBar(jMenuBar);
         this.setVisible(true);
     }
 
     public void configurarComponentes() {
+        jMenuBar = new JMenuBar();
+        JMenu jMenu = new JMenu("Menú");
+        menuVentana1  = new JMenuItem("Ventana 1");
+        menuVentana2  = new JMenuItem("Ventana 2");
+        menuItemSalir = new JMenuItem("Salir");
+
         jMenu.add(menuVentana1);
         jMenu.add(menuVentana2);
         jMenu.addSeparator();
         jMenu.add(menuItemSalir);
 
+        jMenuBar.add(jMenu);
+    }
 
-        menuVentana1.addActionListener(e -> {
-            desktopPane.add(internalFrame);
-            internalFrame.setVisible(true);
+    public void initActionListeners() {
+        menuVentana1.addActionListener(e -> internalFrameVentana1.setVisible(true));
+
+        menuVentana2.addActionListener(e -> internalFrameVentana2.setVisible(true));
+
+        botonHilo.addActionListener(e -> {
+            var hilo_1 = new UnHilo("hilo_1");
+
+            try {
+                hilo_1.hilo.join();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
         });
 
-        jMenuBar.add(jMenu);
+        botonHilos.addActionListener(e -> {
+            var hilo_1 = new UnHilo("hilo_1");
+            var hilo_2 = new UnHilo("hilo_2");
+
+            try {
+                hilo_1.hilo.join();
+                hilo_2.hilo.join();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+
+    public void makeDesktop() {
+        desktopPane = new JDesktopPane();
+    }
+
+    public void makeVentana2() {
+        listaHiloUno = new JList<>();
+        listaHiloDos = new JList<>();
+        botonHilos   = new JButton("Ejecutar hilos");
+
+        JScrollPane scrollListaUno = new JScrollPane(listaHiloUno);
+        JScrollPane scrollListaDos = new JScrollPane(listaHiloDos);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        internalFrameVentana2 = new JInternalFrame("Ventana 2", true, true, true, true);
+        internalFrameVentana2.setTitle("Ventana 2");
+        internalFrameVentana2.setBounds(100, 100, 450, 300);
+        internalFrameVentana2.setLayout(new GridBagLayout());
+
+        internalFrameVentana2.add(scrollListaUno, gbc);
+        gbc.gridx = 1;
+        internalFrameVentana2.add(scrollListaDos, gbc);
+        gbc.gridy = 1;
+        internalFrameVentana2.add(botonHilos, gbc);
 
     }
 
-    public void eventoBoton() {
-        var    unHilo = new UnHilo();
-        Thread hilo   = new Thread(unHilo);
-        hilo.start();
+    public void makeInternal() {
+        listaHiloUno   = new JList<>();
+        scrollPaneList = new JScrollPane(listaHiloUno);
+        botonHilo      = new JButton("Hilo");
+
+        JLabel labelInternalFrame = new JLabel("Estoy en la ventana 1");
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        internalFrameVentana1 = new JInternalFrame("Internal Frame", true, true, true, true);
+        internalFrameVentana1.setTitle("Ventana 1");
+        internalFrameVentana1.setBounds(100, 100, 450, 300);
+        internalFrameVentana1.setLayout(new GridBagLayout());
+
+        internalFrameVentana1.add(labelInternalFrame, gbc);
+        gbc.gridy = 1;
+        internalFrameVentana1.add(scrollPaneList, gbc);
+        gbc.gridy = 2;
+        internalFrameVentana1.add(botonHilo, gbc);
+    }
+
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
     }
 
     /**
@@ -64,15 +165,14 @@ public class Interfaz extends JFrame {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
     }
 
     /**
      * @noinspection ALL
      */
     public JComponent $$$getRootComponent$$$() {
-        return panel1;
+        return panelPrincipal;
     }
-
 }

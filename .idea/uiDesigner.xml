@@ -135,11 +135,6 @@
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
       </item>
     </group>
-    <group name="MisComponentes">
-      <item class="com.misael.componentes.MiBoton" icon="/com/intellij/uiDesigner/icons/button.png" removable="true" auto-create-binding="true" can-attach-label="false">
-        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="0" />
-      </item>
-    </group>
   </component>
   <component name="uidesigner-configuration">
     <option name="INSTRUMENT_CLASSES" value="false" />
