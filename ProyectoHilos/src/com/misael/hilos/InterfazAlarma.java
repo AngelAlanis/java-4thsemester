@@ -5,9 +5,10 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -16,7 +17,6 @@ import java.io.IOException;
 
 public class InterfazAlarma extends JFrame {
     private FondoFuego panelPrincipal;
-    private JLabel     labelFireStatus;
     private JLabel     toggleFire;
     private JLabel     smokeDetector;
     private ImageIcon  fireAlarmImage;
@@ -56,10 +56,9 @@ public class InterfazAlarma extends JFrame {
             e.printStackTrace();
         }
 
-        panelPrincipal  = new FondoFuego();
-        toggleFire      = new JLabel(fireAlarmImage);
-        labelFireStatus = new JLabel("false");
-        smokeDetector   = new JLabel(smokeDetectorInactive);
+        panelPrincipal = new FondoFuego();
+        toggleFire     = new JLabel(fireAlarmImage);
+        smokeDetector  = new JLabel(smokeDetectorInactive);
 
         panelPrincipal.setLayout(null);
 
@@ -122,26 +121,33 @@ public class InterfazAlarma extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (Alarma.isOnFire) {
-                    stopSounds();
-                    try {
-                        Thread.sleep(2500);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-                    panelPrincipal.imageInUse = panelPrincipal.imageNormal;
-                    smokeDetector.setIcon(smokeDetectorInactive);
-                    Alarma.isOnFire = false;
+                    stopFire();
                 } else {
-                    Alarma.isOnFire = true;
-                    playSounds();
-                    panelPrincipal.imageInUse = panelPrincipal.imageFire;
-                    smokeDetector.setIcon(smokeDetectorActive);
+                    startFire();
                 }
 
-                labelFireStatus.setText(String.valueOf(Alarma.isOnFire));
                 panelPrincipal.repaint();
             }
         });
 
+    }
+
+    private void startFire() {
+        Alarma.isOnFire = true;
+        playSounds();
+        panelPrincipal.imageInUse = panelPrincipal.imageFire;
+        smokeDetector.setIcon(smokeDetectorActive);
+    }
+
+    private void stopFire() {
+        stopSounds();
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        panelPrincipal.imageInUse = panelPrincipal.imageNormal;
+        smokeDetector.setIcon(smokeDetectorInactive);
+        Alarma.isOnFire = false;
     }
 }
