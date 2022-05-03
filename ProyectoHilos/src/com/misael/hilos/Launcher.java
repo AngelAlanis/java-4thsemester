@@ -6,7 +6,7 @@ public class Launcher {
 //        MetodosHilos metodosHilos = new MetodosHilos();
 //        metodosHilos.hilosSincronizados();
 
-        Interfaz interfaz = new Interfaz();
+        InterfazAlarma interfaz = new InterfazAlarma();
     }
 
 }
