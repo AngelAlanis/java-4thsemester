@@ -11,8 +11,13 @@ public class Cronometro implements Runnable {
     DateTimeFormatter dtf      = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
     public void printCronometro() {
-        int segundos = (int) (milisCounter / 1000) % 60;
-        int minutos = (int) (milisCounter / (1000*60) % 60);
+        int segundos     = (int) (milisCounter / 100) % 60;
+        int minutos      = (int) (milisCounter / (100 * 60) % 60);
+        int milisegundos = milisCounter;
+
+        if (milisCounter >= 100) {
+            milisegundos = 0;
+        }
 
 
         System.out.println(minutos + ":0" + segundos + ":" + milisCounter);
