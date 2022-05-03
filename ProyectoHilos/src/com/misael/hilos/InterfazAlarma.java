@@ -32,6 +32,7 @@ public class InterfazAlarma extends JFrame {
     public InterfazAlarma() {
         this.setSize(640, 480);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        startThread();
         configurarComponentes();
         initActionListeners();
         initSoundEffects();
@@ -113,11 +114,8 @@ public class InterfazAlarma extends JFrame {
 
     private void initActionListeners() {
 
-        Alarma alarma = new Alarma();
-        Thread hilo   = new Thread(alarma);
-        hilo.start();
-
         toggleFire.addMouseListener(new MouseAdapter() {
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (Alarma.isOnFire) {
@@ -130,6 +128,12 @@ public class InterfazAlarma extends JFrame {
             }
         });
 
+    }
+
+    private void startThread() {
+        Alarma alarma = new Alarma();
+        Thread hilo   = new Thread(alarma);
+        hilo.start();
     }
 
     private void startFire() {
