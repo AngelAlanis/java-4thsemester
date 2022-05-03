@@ -2,6 +2,10 @@ package com.misael.hilos;
 
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -19,13 +23,20 @@ public class InterfazAlarma extends JFrame {
     private ImageIcon  smokeDetectorActive;
     private ImageIcon  smokeDetectorInactive;
     private File       sfxAlarm;
+    private File       sfxFire;
+    private File       sfxExtinguisher;
+    private Clip       alarmSound;
+    private Clip       fireSound;
+    private Clip       extinguisherSound;
 
     public InterfazAlarma() {
         this.setSize(640, 480);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         configurarComponentes();
         initActionListeners();
+        initSoundEffects();
         this.setContentPane(panelPrincipal);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
@@ -41,10 +52,6 @@ public class InterfazAlarma extends JFrame {
             smokeDetectorInactive = new ImageIcon(imagenSmokeInactive);
             smokeDetectorActive   = new ImageIcon(imagenSmokeActive);
 
-//            sfxAlarm = new File("ProyectoHilos/src/resources/fire-alarm-sound-effect.mp3");
-//            Clip clip = AudioSystem.getClip();
-//            clip.open(AudioSystem.getAudioInputStream(sfxAlarm));
-//            clip.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,6 +71,47 @@ public class InterfazAlarma extends JFrame {
         repaint();
     }
 
+    private void initSoundEffects() {
+        sfxAlarm        = new File("ProyectoHilos/src/resources/fire-alarm-sound-effect.wav");
+        sfxFire         = new File("ProyectoHilos/src/resources/fire-sound-effect.wav");
+        sfxExtinguisher = new File("ProyectoHilos/src/resources/fire-extinguisher-sound-effect-hd.wav");
+
+        try {
+            alarmSound        = AudioSystem.getClip();
+            fireSound         = AudioSystem.getClip();
+            extinguisherSound = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void playSounds() {
+        try {
+            extinguisherSound.close();
+
+            alarmSound.open(AudioSystem.getAudioInputStream(sfxAlarm));
+            fireSound.open(AudioSystem.getAudioInputStream(sfxFire));
+
+            alarmSound.loop(Clip.LOOP_CONTINUOUSLY);
+            fireSound.loop(Clip.LOOP_CONTINUOUSLY);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void stopSounds() {
+        alarmSound.close();
+        fireSound.close();
+
+        try {
+            extinguisherSound.open(AudioSystem.getAudioInputStream(sfxExtinguisher));
+            extinguisherSound.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void initActionListeners() {
 
         Alarma alarma = new Alarma();
@@ -74,11 +122,18 @@ public class InterfazAlarma extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (Alarma.isOnFire) {
-                    Alarma.isOnFire           = false;
+                    stopSounds();
+                    try {
+                        Thread.sleep(2500);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
                     panelPrincipal.imageInUse = panelPrincipal.imageNormal;
                     smokeDetector.setIcon(smokeDetectorInactive);
+                    Alarma.isOnFire = false;
                 } else {
-                    Alarma.isOnFire           = true;
+                    Alarma.isOnFire = true;
+                    playSounds();
                     panelPrincipal.imageInUse = panelPrincipal.imageFire;
                     smokeDetector.setIcon(smokeDetectorActive);
                 }
