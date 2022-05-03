@@ -18,7 +18,8 @@ public class FondoFuego extends JPanel {
         this.setPreferredSize(new Dimension(640, 480));
     }
 
-    public void paint(Graphics g) {
+    @Override
+    public void paintComponent(Graphics g) {
         Graphics2D g2D = (Graphics2D) g;
 
         g2D.drawImage(imageInUse, 0, 0, this);
