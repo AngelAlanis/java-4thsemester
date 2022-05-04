@@ -6,28 +6,38 @@ import java.util.Date;
 
 public class Cronometro implements Runnable {
 
-    int               milisCounter;
+    Thread hilo;
+    int               milisegundos;
+    int               segundos;
+    int               minutos;
     boolean           isPaused = false;
     DateTimeFormatter dtf      = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
-    public void printCronometro() {
-        int segundos     = (int) (milisCounter / 100) % 60;
-        int minutos      = (int) (milisCounter / (100 * 60) % 60);
-        int milisegundos = milisCounter;
+    public Cronometro(){
+        hilo = new Thread(this, "Cronómetro");
+        hilo.start();
+    }
 
-        if (milisCounter >= 100) {
+    public void printCronometro() {
+
+        if(milisegundos >= 100){
             milisegundos = 0;
+            segundos++;
         }
 
+        if(segundos >= 60){
+            segundos = 0;
+            minutos++;
+        }
 
-        System.out.println(minutos + ":0" + segundos + ":" + milisCounter);
+        System.out.println(minutos + ":0" + segundos + ":" + milisegundos);
     }
 
     public void startCronometro() {
         while (!isPaused) {
             try {
                 Thread.sleep(10);
-                milisCounter += 1;
+                milisegundos += 1;
                 printCronometro();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -36,11 +46,15 @@ public class Cronometro implements Runnable {
     }
 
     public void pauseCronometro() {
-
+        hilo.suspend();
     }
 
     public void restartCronometro() {
+        hilo.interrupt();
+    }
 
+    public void resumeCronometro(){
+        hilo.resume();
     }
 
     @Override

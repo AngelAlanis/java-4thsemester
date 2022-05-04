@@ -101,7 +101,7 @@ public class InterfazEmpleados extends JFrame {
 
         labelClint.setBounds(150, 250, 250, 310);
         labelRobin.setBounds(900, 280, 150, 250);
-        labelEliot.setBounds(500, 350, 110, 250);
+        labelEliot.setBounds(500, 350, 120, 250);
         btnSupervisor.setBounds(500, 20, 260, 80);
 
         panelPrincipal.add(labelClint);
@@ -115,7 +115,7 @@ public class InterfazEmpleados extends JFrame {
         btnSupervisor.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (TrabajoEmpleados.isSupervisorHere) {
+                if (!TrabajoEmpleados.isSupervisorHere) {
 
                     labelRobin.setIcon(robin_Scared);
                     labelRobin.setIcon(robin_Work);
@@ -135,13 +135,16 @@ public class InterfazEmpleados extends JFrame {
                         labelEliot.setIcon(eliot_Work2);
                     }
 
+                    TrabajoEmpleados.isSupervisorHere = true;
+
+
                 } else {
                     labelClint.setIcon(clint_Idle);
                     labelEliot.setIcon(eliot_Idle);
                     labelRobin.setIcon(robin_Idle);
-                }
 
-                TrabajoEmpleados.isSupervisorHere = !TrabajoEmpleados.isSupervisorHere;
+                    TrabajoEmpleados.isSupervisorHere = false;
+                }
 
             }
         });
