@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class InterfazAlarma extends JFrame {
+
     private FondoFuego panelPrincipal;
     private JLabel     toggleFire;
     private JLabel     smokeDetector;
@@ -40,7 +41,6 @@ public class InterfazAlarma extends JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
     }
 
     private void configurarComponentes() {
