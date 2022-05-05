@@ -1,8 +1,6 @@
-package com.misael.hilos;
+package com.misael.hilos.cronometro;
 
-import javax.naming.ServiceUnavailableException;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class Cronometro implements Runnable {
 

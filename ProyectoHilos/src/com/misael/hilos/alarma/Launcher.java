@@ -1,4 +1,6 @@
-package com.misael.hilos;
+package com.misael.hilos.alarma;
+
+import com.misael.hilos.alarma.InterfazAlarma;
 
 public class Launcher {
 

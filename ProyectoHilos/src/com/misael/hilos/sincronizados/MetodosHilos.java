@@ -1,4 +1,4 @@
-package com.misael.hilos;
+package com.misael.hilos.sincronizados;
 
 public class MetodosHilos{
 

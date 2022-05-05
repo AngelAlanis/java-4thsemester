@@ -1,4 +1,4 @@
-package com.misael.hilos;
+package com.misael.hilos.alarma;
 
 
 public class Alarma implements Runnable {

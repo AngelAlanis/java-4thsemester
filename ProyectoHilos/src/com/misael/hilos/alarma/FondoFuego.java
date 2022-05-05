@@ -1,4 +1,4 @@
-package com.misael.hilos;
+package com.misael.hilos.alarma;
 
 import javax.swing.*;
 import java.awt.*;

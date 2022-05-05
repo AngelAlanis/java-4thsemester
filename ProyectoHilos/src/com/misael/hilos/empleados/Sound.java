@@ -1,12 +1,9 @@
-package com.misael.hilos;
+package com.misael.hilos.empleados;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
-import java.net.URL;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Sound {
 

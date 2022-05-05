@@ -1,4 +1,4 @@
-package com.misael.hilos;
+package com.misael.hilos.empleados;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
