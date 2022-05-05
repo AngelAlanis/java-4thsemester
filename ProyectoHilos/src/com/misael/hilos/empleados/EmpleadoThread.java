@@ -1,38 +1,39 @@
 package com.misael.hilos.empleados;
 
-import javax.swing.*;
+
+import java.util.Random;
 
 public class EmpleadoThread implements Runnable {
 
-    String nombreEmpleado;
     Thread hilo;
-    JLabel aspecto;
+    String nombreEmpleado;
+    NPC    npc;
+    Random random = new Random();
 
-    static boolean isSupervisorHere;
-
-    public EmpleadoThread(String nombreEmpleado) {
-        hilo                = new Thread(this, nombreEmpleado);
+    public EmpleadoThread(NPC npc, String nombreEmpleado) {
+        this.npc = npc;
         this.nombreEmpleado = nombreEmpleado;
+        hilo     = new Thread(this, nombreEmpleado);
         hilo.start();
     }
 
     @Override
     public void run() {
-
-        while (true) {
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        int timeBetweenResources = random.nextInt(1000) + 2000;
+        int resourcesGotten;
+        while (hilo.isAlive()) {
+            if (npc.isWorking) {
+                try {
+                    Thread.sleep(timeBetweenResources);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                resourcesGotten = random.nextInt(10) + 3;
+                System.out.println(hilo.getName() + " New resource: " + resourcesGotten);
+                npc.totalResources += resourcesGotten;
+                System.out.println(hilo.getName() + " Total resources:" + npc.totalResources);
             }
 
-            if (isSupervisorHere) {
-                System.out.println("El supervisor está aquí");
-            } else {
-                System.out.println("El supervisor no está aquí");
-            }
         }
-
     }
 }

@@ -8,17 +8,22 @@ import java.util.Random;
 
 public class NPC extends Entity {
 
+    int   totalResources;
     Image work1, work2, interactButton;
-    Image      image;
-    GamePanel  gp;
-    KeyHandler keyHandler;
-    boolean    isWorking = false;
+    String         nombreEmpleado;
+    Image          image;
+    GamePanel      gp;
+    KeyHandler     keyHandler;
+    EmpleadoThread empleadoThread;
+    boolean        isWorking = false;
 
-    public NPC(GamePanel gp, KeyHandler keyHandler) {
-        this.gp         = gp;
-        this.keyHandler = keyHandler;
-        hitbox          = new Rectangle(x, y, width, height);
-        image           = idle;
+    public NPC(GamePanel gp, String nombreEmpleado, KeyHandler keyHandler) {
+        this.gp             = gp;
+        this.keyHandler     = keyHandler;
+        this.nombreEmpleado = nombreEmpleado;
+        this.empleadoThread = new EmpleadoThread(this, nombreEmpleado);
+        hitbox              = new Rectangle(x, y, width, height);
+        image               = idle;
 
         try {
             interactButton = ImageIO.read(new File("ProyectoHilos/src/resources/misc/btn_interactuar.png"));
@@ -48,8 +53,8 @@ public class NPC extends Entity {
             } else if (action == 1 && work2 != null) {
                 image = work2;
             }
-        }
 
+        }
     }
 
     public void rest() {

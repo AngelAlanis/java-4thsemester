@@ -11,9 +11,9 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
     KeyHandler       keyHandler       = new KeyHandler();
-    Jugador         jugador         = new Jugador(this, keyHandler);
-    MinesBackground minesBackground = new MinesBackground();
-    Sound           sound           = new Sound();
+    Jugador          jugador          = new Jugador(this, keyHandler);
+    MinesBackground  minesBackground  = new MinesBackground();
+    Sound            sound            = new Sound();
     CollisionChecker collisionChecker = new CollisionChecker(this, keyHandler);
 
     NPC clint;
@@ -48,8 +48,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void createNPCs() {
-        clint = new NPC(this, keyHandler);
-        robin = new NPC(this, keyHandler);
+        clint = new NPC(this, "Clint", keyHandler);
+        robin = new NPC(this, "Robin", keyHandler);
 
         clint.setSize(240, 300);
         clint.setLocation(150, 250);
@@ -72,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public void paintComponent(Graphics g) {
@@ -127,7 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if (timer >= 1000000000) {
-                System.out.println("FPS: " + drawCount);
+//                System.out.println("FPS: " + drawCount);
                 drawCount = 0;
                 timer     = 0;
             }
