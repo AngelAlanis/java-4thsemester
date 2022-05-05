@@ -18,7 +18,7 @@ public class Jugador {
     GamePanel  gp;
     KeyHandler keyHandler;
 
-    BufferedImage idle, work1, work2, up, left, down, right;
+    Image idle, work1, work2, up, left, down, right;
     String direction;
 
     public Jugador(GamePanel gp, KeyHandler keyHandler) {
