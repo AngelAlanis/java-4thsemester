@@ -75,9 +75,9 @@ public class NPC extends Entidad {
             int center = (x + (width / 2) - 45);
             g2.drawImage(interactButton, center, y - 100, 90, 90, null);
         }
-
-        g2.setColor(Color.RED);
-        g2.draw(hitbox);
+//
+//        g2.setColor(Color.RED);
+//        g2.draw(hitbox);
         g2.drawImage(image, x, y, width, height, null);
 
     }

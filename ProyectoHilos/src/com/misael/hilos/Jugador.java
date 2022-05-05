@@ -35,25 +35,26 @@ public class Jugador extends Entidad {
     public void update() {
 
         if (keyIsBeingPressed()) {
-
             gp.collisionChecker.checkCollision();
+
+            stopWhenHittingWall();
 
             if (keyHandler.upPressed) {
                 direction = "up";
                 y -= speed;
-                image = up;
+                image     = up;
             } else if (keyHandler.leftPressed) {
                 direction = "left";
                 x -= speed;
-                image = left;
+                image     = left;
             } else if (keyHandler.downPressed) {
                 direction = "down";
                 y += speed;
-                image = down;
+                image     = down;
             } else if (keyHandler.rightPressed) {
                 direction = "right";
                 x += speed;
-                image = right;
+                image     = right;
             } else if (keyHandler.ePressed && gp.clint.collisionOn) {
                 gp.clint.isWorking     = !gp.clint.isWorking;
                 gp.keyHandler.ePressed = false;
@@ -62,12 +63,12 @@ public class Jugador extends Entidad {
                 gp.keyHandler.ePressed = false;
             }
         } else {
-        switch (direction) {
-            case "up" -> image = up_stopped;
-            case "left" -> image = left_stopped;
-            case "down" -> image = down_stopped;
-            case "right" -> image = right_stopped;
-        }
+            switch (direction) {
+                case "up" -> image = up_stopped;
+                case "left" -> image = left_stopped;
+                case "down" -> image = down_stopped;
+                case "right" -> image = right_stopped;
+            }
         }
     }
 
@@ -75,6 +76,17 @@ public class Jugador extends Entidad {
         return keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed || keyHandler.ePressed;
     }
 
+    private void stopWhenHittingWall() {
+        if (y <= Fondo.bottomCoordinates) {
+            keyHandler.upPressed = false;
+        } else if (y >= 486) {
+            keyHandler.downPressed = false;
+        } else if (x <= 0) {
+            keyHandler.leftPressed = false;
+        } else if (x >= 1172) {
+            keyHandler.rightPressed = false;
+        }
+    }
 
     public void getPlayerImage() {
         try {
@@ -96,24 +108,19 @@ public class Jugador extends Entidad {
     }
 
     public void draw(Graphics2D g2) {
+        drawHitbox(g2);
+        g2.drawImage(image, x, y, width, height, null);
+
+    }
+
+    private void drawHitbox(Graphics2D g2) {
         hitbox.x      = x;
         hitbox.y      = y;
         hitbox.width  = width;
         hitbox.height = height;
-
-//        Image image = null;
 //
-////        switch (direction) {
-////            case "up" -> image = up;
-////            case "left" -> image = left;
-////            case "down" -> image = down;
-////            case "right" -> image = right;
-////        }
-
-        g2.setColor(Color.RED);
-        g2.draw(hitbox);
-        g2.drawImage(image, x, y, width, height, null);
-
+//        g2.setColor(Color.RED);
+//        g2.draw(hitbox);
     }
 
 }
