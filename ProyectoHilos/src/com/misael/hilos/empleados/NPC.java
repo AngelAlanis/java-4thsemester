@@ -75,14 +75,18 @@ public class NPC extends Entity {
         hitbox.width  = width;
         hitbox.height = height;
 
+        int center = (x + (width / 2) - 45);
+        int bottom = (y + height);
+
         if (collisionOn) {
-            int center = (x + (width / 2) - 45);
             g2.drawImage(interactButton, center, y - 100, 90, 90, null);
         }
-//
-//        g2.setColor(Color.RED);
-//        g2.draw(hitbox);
+
         g2.drawImage(image, x, y, width, height, null);
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Arial", Font.BOLD, 24));
+        g2.drawString("Recursos: " + totalResources, center, bottom + 30);
 
     }
 
