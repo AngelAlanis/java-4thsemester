@@ -60,6 +60,7 @@ public class NPC extends Entidad {
     public void update() {
         if (isWorking) {
             work();
+            gp.playSFX(0);
         } else {
             rest();
         }

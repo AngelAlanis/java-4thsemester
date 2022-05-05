@@ -11,7 +11,7 @@ public class Fondo {
 
     public Fondo() {
         background        = new ImageIcon("ProyectoHilos/src/resources/minesBackground.jpg").getImage();
-        hitbox            = new Rectangle(0, 0, 1280, 200);
+        hitbox            = new Rectangle(0, 0, 1280, 170);
         bottomCoordinates = hitbox.height;
     }
 

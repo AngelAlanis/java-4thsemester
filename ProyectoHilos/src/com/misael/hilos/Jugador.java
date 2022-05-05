@@ -39,6 +39,8 @@ public class Jugador extends Entidad {
 
             stopWhenHittingWall();
 
+            gp.playSFX(4);
+
             if (keyHandler.upPressed) {
                 direction = "up";
                 y -= speed;
@@ -79,11 +81,14 @@ public class Jugador extends Entidad {
     private void stopWhenHittingWall() {
         if (y <= Fondo.bottomCoordinates) {
             keyHandler.upPressed = false;
-        } else if (y >= 486) {
+        }
+        if (y >= 480) {
             keyHandler.downPressed = false;
-        } else if (x <= 0) {
+        }
+        if (x <= 0) {
             keyHandler.leftPressed = false;
-        } else if (x >= 1172) {
+        }
+        if (x >= 1100) {
             keyHandler.rightPressed = false;
         }
     }

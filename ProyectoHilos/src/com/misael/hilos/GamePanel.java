@@ -8,13 +8,16 @@ import java.io.IOException;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    Thread     gameThread;
-    KeyHandler keyHandler = new KeyHandler();
-    Jugador    jugador    = new Jugador(this, keyHandler);
-    Fondo      fondo      = new Fondo();
+    Thread gameThread;
+
+    KeyHandler       keyHandler       = new KeyHandler();
+    Jugador          jugador          = new Jugador(this, keyHandler);
+    Fondo            fondo            = new Fondo();
+    Sound            sound            = new Sound();
     CollisionChecker collisionChecker = new CollisionChecker(this, keyHandler);
-    NPC        clint;
-    NPC       robin;
+
+    NPC clint;
+    NPC robin;
 
     int FPS = 45;
 
@@ -23,9 +26,14 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         createNPCs();
         startGameThread();
+        setupGame();
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
         this.setLayout(null);
+    }
+
+    public void setupGame(){
+        playMusic(1);
     }
 
     public void startGameThread() {
@@ -78,6 +86,21 @@ public class GamePanel extends JPanel implements Runnable {
         jugador.draw(g2);
 
         g2.dispose();
+    }
+
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic() {
+        sound.stop();
+    }
+
+    public void playSFX(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 
     @Override
