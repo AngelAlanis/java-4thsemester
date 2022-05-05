@@ -8,15 +8,17 @@ import java.util.Random;
 
 public class NPC extends Entidad {
 
-    String name;
-    Image  work1, work2, interactButton;
-    Image   image;
-    boolean isInteracted = false;
+    Image work1, work2, interactButton;
+    Image      image;
+    GamePanel  gp;
+    KeyHandler keyHandler;
+    boolean    isInteracted = false;
 
-    public NPC(String name) {
-        this.name = name;
-        hitbox    = new Rectangle(x, y, width, height);
-        image     = idle;
+    public NPC(GamePanel gp, KeyHandler keyHandler) {
+        this.gp         = gp;
+        this.keyHandler = keyHandler;
+        hitbox          = new Rectangle(x, y, width, height);
+        image           = idle;
 
         try {
             interactButton = ImageIO.read(new File("ProyectoHilos/src/resources/interactbutton.png"));
@@ -36,17 +38,15 @@ public class NPC extends Entidad {
     }
 
     public void update() {
-        if (isInteracted) {
-
+        if (keyHandler.ePressed) {
             Random random = new Random();
             int    action = random.nextInt(2);
 
-            if (action == 0 && isInteracted) {
+            if (action == 0 && collisionOn) {
                 image = work1;
-            } else if (action == 1 && work2 != null && isInteracted) {
+            } else if (action == 1 && work2 != null && collisionOn) {
                 image = work2;
             }
-
         } else {
             image = idle;
         }

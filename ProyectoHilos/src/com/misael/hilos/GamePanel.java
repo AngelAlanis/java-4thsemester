@@ -12,9 +12,9 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler();
     Jugador    jugador    = new Jugador(this, keyHandler);
     Fondo      fondo      = new Fondo();
-    CollisionChecker collisionChecker = new CollisionChecker(this);
+    CollisionChecker collisionChecker = new CollisionChecker(this, keyHandler);
     NPC        clint;
-    NPC        robin;
+    NPC       robin;
 
     int FPS = 45;
 
@@ -38,8 +38,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void createNPCs() {
-        clint = new NPC("Clint");
-        robin = new NPC("Robin");
+        clint = new NPC(this, keyHandler);
+        robin = new NPC(this, keyHandler);
 
         clint.setSize(240, 300);
         clint.setLocation(150, 250);

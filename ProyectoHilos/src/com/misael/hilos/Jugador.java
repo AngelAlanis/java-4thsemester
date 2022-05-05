@@ -36,6 +36,8 @@ public class Jugador extends Entidad {
 
         if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed || keyHandler.ePressed) {
 
+            gp.collisionChecker.checkCollision();
+
             if (keyHandler.upPressed) {
                 direction = "up";
                 y -= speed;
@@ -48,19 +50,13 @@ public class Jugador extends Entidad {
             } else if (keyHandler.rightPressed) {
                 direction = "right";
                 x += speed;
+            } else if (keyHandler.ePressed){
+                gp.clint.update();
+                gp.robin.update();
             }
 
-            collisionOn = false;
-            gp.collisionChecker.checkCollision();
-
-            if (collisionOn) {
-                if (keyHandler.ePressed) {
-
-                }
-            }
 
         }
-
 
         //System.out.println("x: " + x + " y: " + y);
     }
