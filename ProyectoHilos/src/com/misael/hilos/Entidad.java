@@ -10,5 +10,6 @@ public class Entidad {
     String direction;
     boolean collisionOn = false;
 
+
 }
 

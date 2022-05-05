@@ -44,6 +44,9 @@ public class GamePanel extends JPanel implements Runnable {
         clint.setSize(240, 300);
         clint.setLocation(150, 250);
 
+        robin.setSize(120, 232);
+        robin.setLocation(900, 280);
+
         try {
             clint.idle  = ImageIO.read(new File("ProyectoHilos/src/resources/clintIdle.png"));
             clint.work1 = new ImageIcon("ProyectoHilos/src/resources/clintowork1.gif").getImage();
@@ -56,9 +59,6 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        robin.setSize(128, 232);
-        robin.setLocation(900, 280);
     }
 
     public void paintComponent(Graphics g) {

@@ -34,30 +34,31 @@ public class Jugador extends Entidad {
 
     public void update() {
 
-        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed) {
+        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed || keyHandler.ePressed) {
 
             if (keyHandler.upPressed) {
                 direction = "up";
+                y -= speed;
             } else if (keyHandler.leftPressed) {
                 direction = "left";
+                x -= speed;
             } else if (keyHandler.downPressed) {
                 direction = "down";
+                y += speed;
             } else if (keyHandler.rightPressed) {
                 direction = "right";
+                x += speed;
             }
 
             collisionOn = false;
             gp.collisionChecker.checkCollision();
 
-            if (!collisionOn) {
-                switch (direction) {
-                    case "up" -> y -= speed;
-                    case "left" -> x -= speed;
-                    case "down" -> y += speed;
-                    case "right" -> x += speed;
-
+            if (collisionOn) {
+                if (keyHandler.ePressed) {
+                    System.out.println("interacted");
                 }
             }
+
         }
 
 
