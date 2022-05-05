@@ -21,7 +21,7 @@ public class NPC extends Entidad {
         image           = idle;
 
         try {
-            interactButton = ImageIO.read(new File("ProyectoHilos/src/resources/interactbutton.png"));
+            interactButton = ImageIO.read(new File("ProyectoHilos/src/resources/misc/btn_interactuar.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,7 +50,6 @@ public class NPC extends Entidad {
             }
         }
 
-
     }
 
     public void rest() {
@@ -60,7 +59,6 @@ public class NPC extends Entidad {
     public void update() {
         if (isWorking) {
             work();
-            gp.playSFX(0);
         } else {
             rest();
         }

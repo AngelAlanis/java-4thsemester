@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setLayout(null);
     }
 
-    public void setupGame(){
+    public void setupGame() {
         playMusic(1);
     }
 
@@ -58,13 +58,13 @@ public class GamePanel extends JPanel implements Runnable {
         robin.setLocation(900, 280);
 
         try {
-            clint.idle  = ImageIO.read(new File("ProyectoHilos/src/resources/clintIdle.png"));
-            clint.work1 = new ImageIcon("ProyectoHilos/src/resources/clintowork1.gif").getImage();
-            clint.work2 = new ImageIcon("ProyectoHilos/src/resources/clintwork2.gif").getImage();
+            clint.idle  = ImageIO.read(new File("ProyectoHilos/src/resources/characters/clint/clint_idle.png"));
+            clint.work1 = new ImageIcon("ProyectoHilos/src/resources/characters/clint/clint_work1.gif").getImage();
+            clint.work2 = new ImageIcon("ProyectoHilos/src/resources/characters/clint/clint_work2.gif").getImage();
 
-            robin.idle  = new ImageIcon("ProyectoHilos/src/resources/robin_idle.gif").getImage();
-            robin.work1 = new ImageIcon("ProyectoHilos/src/resources/robin_work.gif").getImage();
-            robin.work2 = new ImageIcon("ProyectoHilos/src/resources/robin_work.gif").getImage();
+            robin.idle  = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_idle.gif").getImage();
+            robin.work1 = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_work.gif").getImage();
+            robin.work2 = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_work.gif").getImage();
 
             robin.image = robin.idle;
             clint.image = clint.idle;

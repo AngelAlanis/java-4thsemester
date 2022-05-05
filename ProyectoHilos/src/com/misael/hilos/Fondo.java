@@ -10,7 +10,7 @@ public class Fondo {
     public static Rectangle hitbox;
 
     public Fondo() {
-        background        = new ImageIcon("ProyectoHilos/src/resources/minesBackground.jpg").getImage();
+        background        = new ImageIcon("ProyectoHilos/src/resources/backgrounds/mines.jpg").getImage();
         hitbox            = new Rectangle(0, 0, 1280, 170);
         bottomCoordinates = hitbox.height;
     }

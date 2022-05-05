@@ -39,7 +39,7 @@ public class Jugador extends Entidad {
 
             stopWhenHittingWall();
 
-            gp.playSFX(4);
+//            gp.playSFX(4);
 
             if (keyHandler.upPressed) {
                 direction = "up";
@@ -58,9 +58,11 @@ public class Jugador extends Entidad {
                 x += speed;
                 image     = right;
             } else if (keyHandler.ePressed && gp.clint.collisionOn) {
+                gp.playSFX(2);
                 gp.clint.isWorking     = !gp.clint.isWorking;
                 gp.keyHandler.ePressed = false;
             } else if (keyHandler.ePressed && gp.robin.collisionOn) {
+                gp.playSFX(2);
                 gp.robin.isWorking     = !gp.robin.isWorking;
                 gp.keyHandler.ePressed = false;
             }
@@ -95,17 +97,17 @@ public class Jugador extends Entidad {
 
     public void getPlayerImage() {
         try {
-            up_stopped    = ImageIO.read(new File("ProyectoHilos/src/resources/eliot_up_stopped.png"));
-            left_stopped  = ImageIO.read(new File("ProyectoHilos/src/resources/eliot_left_stopped.png"));
-            down_stopped  = ImageIO.read(new File("ProyectoHilos/src/resources/eliot_down_stopped.png"));
-            right_stopped = ImageIO.read(new File("ProyectoHilos/src/resources/eliot_right_stopped.png"));
+            up_stopped    = ImageIO.read(new File("ProyectoHilos/src/resources/characters/eliot/eliot_up_stopped.png"));
+            left_stopped  = ImageIO.read(new File("ProyectoHilos/src/resources/characters/eliot/eliot_left_stopped.png"));
+            down_stopped  = ImageIO.read(new File("ProyectoHilos/src/resources/characters/eliot/eliot_down_stopped.png"));
+            right_stopped = ImageIO.read(new File("ProyectoHilos/src/resources/characters/eliot/eliot_right_stopped.png"));
 
-            work1 = new ImageIcon("ProyectoHilos/src/resources/eliott_work.gif").getImage();
-            work2 = new ImageIcon("ProyectoHilos/src/resources/eliot_work2.gif").getImage();
-            up    = new ImageIcon("ProyectoHilos/src/resources/eliot_up.gif").getImage();
-            left  = new ImageIcon("ProyectoHilos/src/resources/eliot_left.gif").getImage();
-            down  = new ImageIcon("ProyectoHilos/src/resources/eliot_down.gif").getImage();
-            right = new ImageIcon("ProyectoHilos/src/resources/eliot_right.gif").getImage();
+            work1 = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_work1.gif").getImage();
+            work2 = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_work2.gif").getImage();
+            up    = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_up.gif").getImage();
+            left  = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_left.gif").getImage();
+            down  = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_down.gif").getImage();
+            right = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_right.gif").getImage();
 
         } catch (IOException e) {
             e.printStackTrace();

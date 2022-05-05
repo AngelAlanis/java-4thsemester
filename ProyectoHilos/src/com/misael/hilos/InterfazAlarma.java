@@ -72,9 +72,9 @@ public class InterfazAlarma extends JFrame {
     }
 
     private void initSoundEffects() {
-        sfxAlarm        = new File("ProyectoHilos/src/resources/fire-alarm-sound-effect.wav");
-        sfxFire         = new File("ProyectoHilos/src/resources/fire-sound-effect.wav");
-        sfxExtinguisher = new File("ProyectoHilos/src/resources/fire-extinguisher-sound-effect-hd.wav");
+        sfxAlarm        = new File("ProyectoHilos/src/resources/sound_effects/fire-alarm-sound-effect.wav");
+        sfxFire         = new File("ProyectoHilos/src/resources/sound_effects/fire-sound-effect.wav");
+        sfxExtinguisher = new File("ProyectoHilos/src/resources/sound_effects/fire-extinguisher-sound-effect-hd.wav");
 
         try {
             alarmSound        = AudioSystem.getClip();
