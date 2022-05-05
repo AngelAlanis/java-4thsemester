@@ -4,16 +4,19 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public class NPC extends Entidad {
 
     String name;
     Image  work1, work2, interactButton;
+    Image   image;
     boolean isInteracted = false;
 
     public NPC(String name) {
         this.name = name;
         hitbox    = new Rectangle(x, y, width, height);
+        image     = idle;
 
         try {
             interactButton = ImageIO.read(new File("ProyectoHilos/src/resources/interactbutton.png"));
@@ -33,7 +36,20 @@ public class NPC extends Entidad {
     }
 
     public void update() {
+        if (isInteracted) {
 
+            Random random = new Random();
+            int    action = random.nextInt(2);
+
+            if (action == 0 && isInteracted) {
+                image = work1;
+            } else if (action == 1 && work2 != null && isInteracted) {
+                image = work2;
+            }
+
+        } else {
+            image = idle;
+        }
     }
 
     public void draw(Graphics2D g2) {
@@ -42,8 +58,6 @@ public class NPC extends Entidad {
         hitbox.width  = width;
         hitbox.height = height;
 
-        Image image = idle;
-
         if (collisionOn) {
             int center = (x + (width / 2) - 45);
             g2.drawImage(interactButton, center, y - 100, 90, 90, null);
@@ -51,7 +65,6 @@ public class NPC extends Entidad {
 
         g2.setColor(Color.RED);
         g2.draw(hitbox);
-        g2.drawRect(x, y, 5, 5);
         g2.drawImage(image, x, y, width, height, null);
 
     }

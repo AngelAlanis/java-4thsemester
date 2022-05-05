@@ -56,6 +56,9 @@ public class GamePanel extends JPanel implements Runnable {
             robin.work1 = new ImageIcon("ProyectoHilos/src/resources/robin_work.gif").getImage();
             robin.work2 = new ImageIcon("ProyectoHilos/src/resources/robin_work.gif").getImage();
 
+            robin.image = robin.idle;
+            clint.image = clint.idle;
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -55,7 +55,7 @@ public class Jugador extends Entidad {
 
             if (collisionOn) {
                 if (keyHandler.ePressed) {
-                    System.out.println("interacted");
+
                 }
             }
 
