@@ -2,9 +2,12 @@ package com.misael.hilos;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class KeyHandler implements KeyListener {
-    public boolean upPressed, downPressed, rightPressed, leftPressed, ePressed = false;
+    public boolean upPressed, downPressed, rightPressed, leftPressed, ePressed;
+    Set<Integer> pressedKeys = new TreeSet<Integer>();
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -21,15 +24,8 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_A -> leftPressed = true;
             case KeyEvent.VK_S -> downPressed = true;
             case KeyEvent.VK_D -> rightPressed = true;
-            case KeyEvent.VK_E -> {
-                if (!ePressed) {
-                    System.out.println("pressed");
-                    ePressed = true;
-                }
-            }
+            case KeyEvent.VK_E -> ePressed = true;
         }
-
-
     }
 
     @Override
@@ -41,12 +37,6 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_A -> leftPressed = false;
             case KeyEvent.VK_S -> downPressed = false;
             case KeyEvent.VK_D -> rightPressed = false;
-            case KeyEvent.VK_E -> {
-                System.out.println("released");
-                ePressed = false;
-            }
         }
-
-
     }
 }

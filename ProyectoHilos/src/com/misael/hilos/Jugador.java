@@ -50,15 +50,16 @@ public class Jugador extends Entidad {
             } else if (keyHandler.rightPressed) {
                 direction = "right";
                 x += speed;
-            } else if (keyHandler.ePressed){
-                gp.clint.update();
-                gp.robin.update();
+            } else if (keyHandler.ePressed) {
+                if (gp.clint.collisionOn) {
+                    gp.clint.isWorking = !gp.clint.isWorking;
+                    gp.keyHandler.ePressed = false;
+                } else if (gp.robin.collisionOn) {
+                    gp.robin.isWorking = !gp.robin.isWorking;
+                    gp.keyHandler.ePressed = false;
+                }
             }
-
-
         }
-
-        //System.out.println("x: " + x + " y: " + y);
     }
 
     public void getPlayerImage() {

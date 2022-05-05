@@ -12,7 +12,7 @@ public class NPC extends Entidad {
     Image      image;
     GamePanel  gp;
     KeyHandler keyHandler;
-    boolean    isInteracted = false;
+    boolean    isWorking = false;
 
     public NPC(GamePanel gp, KeyHandler keyHandler) {
         this.gp         = gp;
@@ -37,18 +37,31 @@ public class NPC extends Entidad {
         this.y = y;
     }
 
-    public void update() {
-        if (keyHandler.ePressed) {
+    public void work() {
+
+        if (image == idle) {
             Random random = new Random();
             int    action = random.nextInt(2);
 
-            if (action == 0 && collisionOn) {
+            if (action == 0) {
                 image = work1;
-            } else if (action == 1 && work2 != null && collisionOn) {
+            } else if (action == 1 && work2 != null) {
                 image = work2;
             }
+        }
+
+
+    }
+
+    public void rest() {
+        image = idle;
+    }
+
+    public void update() {
+        if (isWorking) {
+            work();
         } else {
-            image = idle;
+            rest();
         }
     }
 

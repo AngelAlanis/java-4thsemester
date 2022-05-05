@@ -35,6 +35,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         jugador.update();
+        clint.update();
+        robin.update();
     }
 
     public void createNPCs() {
