@@ -6,7 +6,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class Jugador extends Entidad {
+public class Jugador extends Entity {
 
     GamePanel  gp;
     KeyHandler keyHandler;
@@ -81,7 +81,7 @@ public class Jugador extends Entidad {
     }
 
     private void stopWhenHittingWall() {
-        if (y <= Fondo.bottomCoordinates) {
+        if (y <= MinesBackground.bottomCoordinates) {
             keyHandler.upPressed = false;
         }
         if (y >= 480) {

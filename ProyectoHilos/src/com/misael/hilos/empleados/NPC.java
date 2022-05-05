@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class NPC extends Entidad {
+public class NPC extends Entity {
 
     Image work1, work2, interactButton;
     Image      image;

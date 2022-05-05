@@ -11,9 +11,9 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
     KeyHandler       keyHandler       = new KeyHandler();
-    Jugador          jugador          = new Jugador(this, keyHandler);
-    Fondo            fondo            = new Fondo();
-    Sound            sound            = new Sound();
+    Jugador         jugador         = new Jugador(this, keyHandler);
+    MinesBackground minesBackground = new MinesBackground();
+    Sound           sound           = new Sound();
     CollisionChecker collisionChecker = new CollisionChecker(this, keyHandler);
 
     NPC clint;
@@ -80,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        fondo.draw(g2);
+        minesBackground.draw(g2);
         clint.draw(g2);
         robin.draw(g2);
         jugador.draw(g2);

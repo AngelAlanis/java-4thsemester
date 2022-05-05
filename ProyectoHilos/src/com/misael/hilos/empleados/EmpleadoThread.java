@@ -2,7 +2,7 @@ package com.misael.hilos.empleados;
 
 import javax.swing.*;
 
-public class TrabajoEmpleados implements Runnable {
+public class EmpleadoThread implements Runnable {
 
     String nombreEmpleado;
     Thread hilo;
@@ -10,7 +10,7 @@ public class TrabajoEmpleados implements Runnable {
 
     static boolean isSupervisorHere;
 
-    public TrabajoEmpleados(String nombreEmpleado) {
+    public EmpleadoThread(String nombreEmpleado) {
         hilo                = new Thread(this, nombreEmpleado);
         this.nombreEmpleado = nombreEmpleado;
         hilo.start();

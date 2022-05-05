@@ -2,7 +2,7 @@ package com.misael.hilos.empleados;
 
 import java.awt.*;
 
-public class Entidad {
+public class Entity {
 
     int x, y, width, height, speed;
     Image idle;

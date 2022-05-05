@@ -3,13 +3,13 @@ package com.misael.hilos.empleados;
 import javax.swing.*;
 import java.awt.*;
 
-public class Fondo {
+public class MinesBackground {
 
     Image background;
     static        int       bottomCoordinates;
     public static Rectangle hitbox;
 
-    public Fondo() {
+    public MinesBackground() {
         background        = new ImageIcon("ProyectoHilos/src/resources/backgrounds/mines.jpg").getImage();
         hitbox            = new Rectangle(0, 0, 1280, 170);
         bottomCoordinates = hitbox.height;

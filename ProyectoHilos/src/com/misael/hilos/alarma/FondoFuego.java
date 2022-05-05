@@ -10,8 +10,8 @@ public class FondoFuego extends JPanel {
     Image imageInUse;
 
     public FondoFuego() {
-        imageFire = new ImageIcon("ProyectoHilos/src/resources/woodbackground_fire.gif").getImage();
-        imageNormal = new ImageIcon("ProyectoHilos/src/resources/woodbackground.jpg").getImage();
+        imageFire   = new ImageIcon("ProyectoHilos/src/resources/backgrounds/wooden_wall_fire.gif").getImage();
+        imageNormal = new ImageIcon("ProyectoHilos/src/resources/backgrounds/wooden_wall.jpg").getImage();
 
         imageInUse = imageNormal;
 

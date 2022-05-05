@@ -2,13 +2,11 @@ package com.misael.hilos.empleados;
 
 import javax.swing.JFrame;
 
-public class InterfazEmpleados extends JFrame {
+public class Launcher extends JFrame {
 
-    private GamePanel panelPrincipal;
-
-    public InterfazEmpleados() {
+    public Launcher() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        configurarComponentes();
+        GamePanel panelPrincipal = new GamePanel();
         this.setContentPane(panelPrincipal);
         this.pack();
         this.setResizable(false);
@@ -16,12 +14,8 @@ public class InterfazEmpleados extends JFrame {
         this.setVisible(true);
     }
 
-    public void configurarComponentes() {
-        panelPrincipal = new GamePanel();
-    }
-
     public static void main(String[] args) {
-        var interfazEmpleados = new InterfazEmpleados();
+        var interfazEmpleados = new Launcher();
     }
 
 

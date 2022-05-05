@@ -45,9 +45,9 @@ public class InterfazAlarma extends JFrame {
 
     private void configurarComponentes() {
         try {
-            BufferedImage imagenAlarma        = ImageIO.read(new File("ProyectoHilos/src/resources/fireAlarm.png"));
-            Image         imagenSmokeActive   = new ImageIcon("ProyectoHilos/src/resources/smoke_detector_animated.gif").getImage();
-            BufferedImage imagenSmokeInactive = ImageIO.read(new File("ProyectoHilos/src/resources/smoke_detector_normal.png"));
+            BufferedImage imagenAlarma        = ImageIO.read(new File("ProyectoHilos/src/resources/misc/fireAlarm.png"));
+            Image         imagenSmokeActive   = new ImageIcon("ProyectoHilos/src/resources/misc/smoke_detector_animated.gif").getImage();
+            BufferedImage imagenSmokeInactive = ImageIO.read(new File("ProyectoHilos/src/resources/misc/smoke_detector_normal.png"));
 
             fireAlarmImage        = new ImageIcon(imagenAlarma);
             smokeDetectorInactive = new ImageIcon(imagenSmokeInactive);

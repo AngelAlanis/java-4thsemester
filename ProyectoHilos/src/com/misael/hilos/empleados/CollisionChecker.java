@@ -12,6 +12,8 @@ public class CollisionChecker {
 
     public void checkCollision() {
 
+        //Checks if player's hitbox intersects with npc's hitbox
+
         if (gp.jugador.hitbox.intersects(gp.clint.hitbox)) {
             gp.clint.collisionOn   = true;
             gp.jugador.collisionOn = true;
