@@ -11,7 +11,7 @@ public class Jugador extends Entidad {
     GamePanel  gp;
     KeyHandler keyHandler;
 
-    Image work1, work2, up, left, down, right;
+    Image image, work1, work2, up, left, down, right, up_stopped, left_stopped, down_stopped, right_stopped;
 
     public Jugador(GamePanel gp, KeyHandler keyHandler) {
         this.gp         = gp;
@@ -34,37 +34,55 @@ public class Jugador extends Entidad {
 
     public void update() {
 
-        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed || keyHandler.ePressed) {
+        if (keyIsBeingPressed()) {
 
             gp.collisionChecker.checkCollision();
 
             if (keyHandler.upPressed) {
                 direction = "up";
                 y -= speed;
+                image = up;
             } else if (keyHandler.leftPressed) {
                 direction = "left";
                 x -= speed;
+                image = left;
             } else if (keyHandler.downPressed) {
                 direction = "down";
                 y += speed;
+                image = down;
             } else if (keyHandler.rightPressed) {
                 direction = "right";
                 x += speed;
-            } else if (keyHandler.ePressed) {
-                if (gp.clint.collisionOn) {
-                    gp.clint.isWorking = !gp.clint.isWorking;
-                    gp.keyHandler.ePressed = false;
-                } else if (gp.robin.collisionOn) {
-                    gp.robin.isWorking = !gp.robin.isWorking;
-                    gp.keyHandler.ePressed = false;
-                }
+                image = right;
+            } else if (keyHandler.ePressed && gp.clint.collisionOn) {
+                gp.clint.isWorking     = !gp.clint.isWorking;
+                gp.keyHandler.ePressed = false;
+            } else if (keyHandler.ePressed && gp.robin.collisionOn) {
+                gp.robin.isWorking     = !gp.robin.isWorking;
+                gp.keyHandler.ePressed = false;
             }
+        } else {
+        switch (direction) {
+            case "up" -> image = up_stopped;
+            case "left" -> image = left_stopped;
+            case "down" -> image = down_stopped;
+            case "right" -> image = right_stopped;
+        }
         }
     }
 
+    private boolean keyIsBeingPressed() {
+        return keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed || keyHandler.ePressed;
+    }
+
+
     public void getPlayerImage() {
         try {
-            idle  = ImageIO.read(new File("ProyectoHilos/src/resources/eliot_idle.png"));
+            up_stopped    = ImageIO.read(new File("ProyectoHilos/src/resources/eliot_up_stopped.png"));
+            left_stopped  = ImageIO.read(new File("ProyectoHilos/src/resources/eliot_left_stopped.png"));
+            down_stopped  = ImageIO.read(new File("ProyectoHilos/src/resources/eliot_down_stopped.png"));
+            right_stopped = ImageIO.read(new File("ProyectoHilos/src/resources/eliot_right_stopped.png"));
+
             work1 = new ImageIcon("ProyectoHilos/src/resources/eliott_work.gif").getImage();
             work2 = new ImageIcon("ProyectoHilos/src/resources/eliot_work2.gif").getImage();
             up    = new ImageIcon("ProyectoHilos/src/resources/eliot_up.gif").getImage();
@@ -83,14 +101,14 @@ public class Jugador extends Entidad {
         hitbox.width  = width;
         hitbox.height = height;
 
-        Image image = null;
-
-        switch (direction) {
-            case "up" -> image = up;
-            case "left" -> image = left;
-            case "down" -> image = down;
-            case "right" -> image = right;
-        }
+//        Image image = null;
+//
+////        switch (direction) {
+////            case "up" -> image = up;
+////            case "left" -> image = left;
+////            case "down" -> image = down;
+////            case "right" -> image = right;
+////        }
 
         g2.setColor(Color.RED);
         g2.draw(hitbox);
