@@ -1,53 +1,32 @@
 package com.misael.hilos;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class GamePanel extends JPanel implements Runnable {
 
     Thread     gameThread;
     KeyHandler keyHandler = new KeyHandler();
     Jugador    jugador    = new Jugador(this, keyHandler);
+    Fondo      fondo      = new Fondo();
+    CollisionChecker collisionChecker = new CollisionChecker(this);
+    NPC        clint;
+    NPC        robin;
 
-    int FPS = 60;
+    int FPS = 45;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(1280, 720));
         this.setDoubleBuffered(true);
+        createNPCs();
         startGameThread();
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
         this.setLayout(null);
-
     }
-
-//    @Override
-//    public void run() {
-//
-//        double drawInterval = 1000000000 / FPS;
-//        double nextDrawTime = System.nanoTime() + drawInterval;
-//
-//        while (gameThread != null) {
-//            update();
-//            repaint();
-//
-//            try {
-//                double remainingTime = nextDrawTime - System.nanoTime();
-//                remainingTime = remainingTime / 1000000;
-//
-//                if (remainingTime < 0) {
-//                    remainingTime = 0;
-//                }
-//
-//                Thread.sleep((long) remainingTime);
-//
-//                nextDrawTime += drawInterval;
-//
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -58,17 +37,43 @@ public class GamePanel extends JPanel implements Runnable {
         jugador.update();
     }
 
+    public void createNPCs() {
+        clint = new NPC("Clint");
+        robin = new NPC("Robin");
+
+        clint.setSize(240, 300);
+        clint.setLocation(150, 250);
+
+        try {
+            clint.idle  = ImageIO.read(new File("ProyectoHilos/src/resources/clintIdle.png"));
+            clint.work1 = new ImageIcon("ProyectoHilos/src/resources/clintowork1.gif").getImage();
+            clint.work2 = new ImageIcon("ProyectoHilos/src/resources/clintwork2.gif").getImage();
+
+            robin.idle  = new ImageIcon("ProyectoHilos/src/resources/robin_idle.gif").getImage();
+            robin.work1 = new ImageIcon("ProyectoHilos/src/resources/robin_work.gif").getImage();
+            robin.work2 = new ImageIcon("ProyectoHilos/src/resources/robin_work.gif").getImage();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        robin.setSize(128, 232);
+        robin.setLocation(900, 280);
+    }
 
     public void paintComponent(Graphics g) {
-        super.paintComponents(g);
+
+        super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
 
+        fondo.draw(g2);
+        clint.draw(g2);
+        robin.draw(g2);
         jugador.draw(g2);
 
         g2.dispose();
     }
-
 
     @Override
     public void run() {

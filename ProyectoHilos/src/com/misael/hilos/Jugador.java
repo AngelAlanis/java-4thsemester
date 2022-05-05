@@ -3,35 +3,29 @@ package com.misael.hilos;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Jugador {
-
-    int width;
-    int height;
-    int x;
-    int y;
-    int speed;
+public class Jugador extends Entidad {
 
     GamePanel  gp;
     KeyHandler keyHandler;
 
-    Image idle, work1, work2, up, left, down, right;
-    String direction;
+    Image work1, work2, up, left, down, right;
 
     public Jugador(GamePanel gp, KeyHandler keyHandler) {
         this.gp         = gp;
         this.keyHandler = keyHandler;
+
+        hitbox = new Rectangle(x, y, width, height);
 
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues() {
-        width     = 120;
-        height    = 250;
+        width     = 104;
+        height    = 232;
         x         = 500;
         y         = 350;
         speed     = 8;
@@ -39,21 +33,35 @@ public class Jugador {
     }
 
     public void update() {
-        if (keyHandler.upPressed) {
-            direction = "up";
-            y -= speed;
-        } else if (keyHandler.leftPressed) {
-            direction = "left";
-            x -= speed;
-        } else if (keyHandler.downPressed) {
-            direction = "down";
-            y += speed;
-        } else if (keyHandler.rightPressed) {
-            direction = "right";
-            x += speed;
+
+        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed) {
+
+            if (keyHandler.upPressed) {
+                direction = "up";
+            } else if (keyHandler.leftPressed) {
+                direction = "left";
+            } else if (keyHandler.downPressed) {
+                direction = "down";
+            } else if (keyHandler.rightPressed) {
+                direction = "right";
+            }
+
+            collisionOn = false;
+            gp.collisionChecker.checkCollision();
+
+            if (!collisionOn) {
+                switch (direction) {
+                    case "up" -> y -= speed;
+                    case "left" -> x -= speed;
+                    case "down" -> y += speed;
+                    case "right" -> x += speed;
+
+                }
+            }
         }
 
-        System.out.println("x: " + x + " y: " + y);
+
+        //System.out.println("x: " + x + " y: " + y);
     }
 
     public void getPlayerImage() {
@@ -69,10 +77,13 @@ public class Jugador {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void draw(Graphics2D g2) {
+        hitbox.x      = x;
+        hitbox.y      = y;
+        hitbox.width  = width;
+        hitbox.height = height;
 
         Image image = null;
 
@@ -83,6 +94,8 @@ public class Jugador {
             case "right" -> image = right;
         }
 
+        g2.setColor(Color.RED);
+        g2.draw(hitbox);
         g2.drawImage(image, x, y, width, height, null);
 
     }
