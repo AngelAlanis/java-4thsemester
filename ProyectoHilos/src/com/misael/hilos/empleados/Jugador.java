@@ -115,19 +115,22 @@ public class Jugador extends Entity {
     }
 
     public void draw(Graphics2D g2) {
-        drawHitbox(g2);
-        g2.drawImage(image, x, y, width, height, null);
-
-    }
-
-    private void drawHitbox(Graphics2D g2) {
         hitbox.x      = x;
         hitbox.y      = y;
         hitbox.width  = width;
         hitbox.height = height;
-//
-//        g2.setColor(Color.RED);
-//        g2.draw(hitbox);
+
+        if (keyHandler.hPressed) {
+            g2.setColor(Color.RED);
+            g2.draw(hitbox);
+            g2.draw(gp.clint.hitbox);
+            g2.draw(gp.robin.hitbox);
+            g2.fillRect(MinesBackground.hitbox.x, MinesBackground.hitbox.y, MinesBackground.hitbox.width, MinesBackground.hitbox.height);
+        }
+
+        g2.drawImage(image, x, y, width, height, null);
+
     }
+
 
 }
