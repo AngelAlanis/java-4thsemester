@@ -8,7 +8,8 @@ import java.util.Random;
 
 public class NPC extends Entity {
 
-    int   totalResources;
+    Resources resources;
+    int       material1, material2;
     Image work1, work2, interactButton;
     String         nombreEmpleado;
     Image          image;
@@ -22,6 +23,7 @@ public class NPC extends Entity {
         this.keyHandler     = keyHandler;
         this.nombreEmpleado = nombreEmpleado;
         this.empleadoThread = new EmpleadoThread(this, nombreEmpleado);
+        this.resources      = gp.resources;
         hitbox              = new Rectangle(x, y, width, height);
         image               = idle;
 
@@ -69,6 +71,14 @@ public class NPC extends Entity {
         }
     }
 
+    public void recieveMaterialUpdate() {
+        drawNewMaterial();
+    }
+
+    public void drawNewMaterial() {
+
+    }
+
     public void draw(Graphics2D g2) {
         hitbox.x      = x;
         hitbox.y      = y;
@@ -76,18 +86,30 @@ public class NPC extends Entity {
         hitbox.height = height;
 
         int center = (x + (width / 2) - 45);
-        int bottom = (y + height);
 
+        g2.setColor(Color.WHITE);
+        g2.setFont(new Font("Arial", Font.BOLD, 26));
+
+        //Interact button
         if (collisionOn) {
             g2.drawImage(interactButton, center, y - 100, 90, 90, null);
         }
 
+        //NPC image
         g2.drawImage(image, x, y, width, height, null);
 
-        g2.setColor(Color.WHITE);
-        g2.setFont(new Font("Arial", Font.BOLD, 24));
-        g2.drawString("Recursos: " + totalResources, center, bottom + 30);
+        drawMaterialBar(g2);
 
+    }
+
+    private void drawMaterialBar(Graphics2D g2) {
+        g2.drawImage(resources.stone, 50, 50, 50, 50, null);
+        g2.drawImage(resources.geode, 200, 50, 50, 50, null);
+        g2.drawImage(resources.iron, 350, 50, 50, 50, null);
+
+        g2.drawString(String.valueOf(resources.totalStone), 110, 75);
+        g2.drawString(String.valueOf(resources.totalGeode), 260, 75);
+        g2.drawString(String.valueOf(resources.totalIron), 410, 75);
     }
 
 }

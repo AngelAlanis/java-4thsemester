@@ -8,8 +8,8 @@ import java.io.IOException;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    Thread gameThread;
-
+    Thread           gameThread;
+    Resources        resources        = new Resources();
     KeyHandler       keyHandler       = new KeyHandler();
     Jugador          jugador          = new Jugador(this, keyHandler);
     MinesBackground  minesBackground  = new MinesBackground();
@@ -58,13 +58,16 @@ public class GamePanel extends JPanel implements Runnable {
         robin.setLocation(900, 280);
 
         try {
-            clint.idle  = ImageIO.read(new File("ProyectoHilos/src/resources/characters/clint/clint_idle.png"));
-            clint.work1 = new ImageIcon("ProyectoHilos/src/resources/characters/clint/clint_work1.gif").getImage();
-            clint.work2 = new ImageIcon("ProyectoHilos/src/resources/characters/clint/clint_work2.gif").getImage();
+            clint.idle      = ImageIO.read(new File("ProyectoHilos/src/resources/characters/clint/clint_idle.png"));
+            clint.work1     = new ImageIcon("ProyectoHilos/src/resources/characters/clint/clint_work1.gif").getImage();
+            clint.work2     = new ImageIcon("ProyectoHilos/src/resources/characters/clint/clint_work2.gif").getImage();
+            clint.material1 = resources.totalGeode;
+            clint.material2 = resources.totalIron;
 
-            robin.idle  = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_idle.gif").getImage();
-            robin.work1 = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_work.gif").getImage();
-            robin.work2 = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_work.gif").getImage();
+            robin.idle      = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_idle.gif").getImage();
+            robin.work1     = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_work.gif").getImage();
+            robin.work2     = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_work.gif").getImage();
+            robin.material1 = resources.totalStone;
 
             robin.image = robin.idle;
             clint.image = clint.idle;

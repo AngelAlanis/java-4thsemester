@@ -11,16 +11,17 @@ public class EmpleadoThread implements Runnable {
     Random random = new Random();
 
     public EmpleadoThread(NPC npc, String nombreEmpleado) {
-        this.npc = npc;
+        this.npc            = npc;
         this.nombreEmpleado = nombreEmpleado;
-        hilo     = new Thread(this, nombreEmpleado);
+        hilo                = new Thread(this, nombreEmpleado);
         hilo.start();
     }
 
     @Override
     public void run() {
         int timeBetweenResources = random.nextInt(1000) + 2000;
-        int resourcesGotten;
+        int resourcesGotten1;
+        int resourcesGotten2;
         while (hilo.isAlive()) {
             if (npc.isWorking) {
                 try {
@@ -28,10 +29,28 @@ public class EmpleadoThread implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                resourcesGotten = random.nextInt(10) + 3;
-                System.out.println(hilo.getName() + " New resource: " + resourcesGotten);
-                npc.totalResources += resourcesGotten;
-                System.out.println(hilo.getName() + " Total resources:" + npc.totalResources);
+
+                switch (hilo.getName()) {
+                    case "Clint" -> {
+                        if (npc.image == npc.work1) {
+                            resourcesGotten1 = random.nextInt(6);
+                            npc.resources.totalGeode += resourcesGotten1;
+                        }
+
+                        if (npc.image == npc.work2) {
+                            resourcesGotten2 = random.nextInt(3);
+                            npc.resources.totalIron += resourcesGotten2;
+                        }
+                    }
+                    case "Robin" -> {
+                        if (npc.image == npc.work1) {
+                            resourcesGotten1 = random.nextInt(9);
+                            npc.resources.totalStone += resourcesGotten1;
+                        }
+                    }
+                }
+
+
             }
 
         }
