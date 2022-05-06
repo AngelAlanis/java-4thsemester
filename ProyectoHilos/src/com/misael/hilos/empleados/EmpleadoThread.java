@@ -8,6 +8,7 @@ public class EmpleadoThread implements Runnable {
     Thread hilo;
     String nombreEmpleado;
     NPC    npc;
+    Sound  sound  = new Sound();
     Random random = new Random();
 
     public EmpleadoThread(NPC npc, String nombreEmpleado) {
@@ -15,6 +16,11 @@ public class EmpleadoThread implements Runnable {
         this.nombreEmpleado = nombreEmpleado;
         hilo                = new Thread(this, nombreEmpleado);
         hilo.start();
+    }
+
+    public void playSFX(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 
     @Override
@@ -35,17 +41,20 @@ public class EmpleadoThread implements Runnable {
                         if (npc.image == npc.work1) {
                             resourcesGotten1 = random.nextInt(6);
                             npc.resources.totalGeode += resourcesGotten1;
+                            playSFX(0);
                         }
 
                         if (npc.image == npc.work2) {
                             resourcesGotten2 = random.nextInt(3);
                             npc.resources.totalIron += resourcesGotten2;
+                            playSFX(0);
                         }
                     }
                     case "Robin" -> {
                         if (npc.image == npc.work1) {
                             resourcesGotten1 = random.nextInt(9);
                             npc.resources.totalStone += resourcesGotten1;
+                            playSFX(4);
                         }
                     }
                 }
