@@ -39,7 +39,7 @@ public class Jugador extends Entity {
 
             stopWhenHittingWall();
 
-//            gp.playSFX(4);
+           //gp.playSFX(4);
 
             if (keyHandler.upPressed) {
                 direction = "up";

@@ -44,6 +44,5 @@ public class HilosSincronizados implements Runnable {
             case "Hilo 3", "Hilo 4" -> cicloLetras();
             default -> System.out.println("Hilo no encontrado");
         }
-
     }
 }

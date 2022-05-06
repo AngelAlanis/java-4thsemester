@@ -93,6 +93,7 @@ public class NPC extends Entity {
         //Interact button
         if (collisionOn) {
             g2.drawImage(interactButton, center, y - 100, 90, 90, null);
+            g2.drawRoundRect(center + 20, y - 50, 150, 60, 5, 6);
         }
 
         //NPC image
