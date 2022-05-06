@@ -1,7 +1,9 @@
 package BaseDatos;
 
+import com.formdev.flatlaf.ui.FlatListCellBorder;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -34,9 +36,12 @@ public class InterfazBD extends JFrame {
     private JTable      tablaEmpleado;
     private JButton     btnSalir;
     private JScrollPane spEmpleado;
-    private JTextField tfTarjetaQuery;
-    private JButton    btnTarjetaQuery;
-    private JLabel     lbTarjetaQuery;
+    private JTextField  tfTarjetaQuery;
+    private JButton     btnTarjetaQuery;
+    private JLabel      lbTarjetaQuery;
+    private JButton     btnCargarRegistro;
+    private JButton     btnModificar;
+    private JButton     btnTodos;
     private Conectar    conectar;
     private Connection  registro;
     private String[]    datosTabla;
@@ -46,9 +51,8 @@ public class InterfazBD extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(800, 400);
         conectarBaseDatos();
-        configurarComponentes();
         initActionListeners();
-        verTabla();
+        verTabla("");
         this.setContentPane(panelPrincipal);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -60,10 +64,30 @@ public class InterfazBD extends JFrame {
 
     public void initActionListeners() {
         btnGuardar.addActionListener(e -> guardarUsuario());
+
         btnSalir.addActionListener(e -> System.exit(0));
-        btnTarjetaQuery.addActionListener(e -> {
+
+        btnTarjetaQuery.addActionListener(e -> consultarTarjeta());
+
+        btnCargarRegistro.addActionListener(e -> {
+            cargarRegistroAModificar(tfTarjetaQuery.getText());
+        });
+
+        btnModificar.addActionListener(e -> {
 
         });
+
+        btnTodos.addActionListener(e -> verTabla(""));
+    }
+
+    private void consultarTarjeta() {
+        String numTarjeta = tfTarjetaQuery.getText();
+
+        if (numTarjeta.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo está vacío");
+        } else {
+            verTabla(numTarjeta);
+        }
     }
 
     private void guardarUsuario() {
@@ -85,7 +109,7 @@ public class InterfazBD extends JFrame {
             ex.printStackTrace();
         }
 
-        verTabla();
+        verTabla("");
     }
 
     private void conectarBaseDatos() {
@@ -99,10 +123,31 @@ public class InterfazBD extends JFrame {
         tfDepartamento.setText("");
     }
 
-    public void configurarComponentes() {
+    public void cargarRegistroAModificar(String numTarjeta) {
+        sqlQuery = "SELECT * FROM empleado WHERE tarjeta='" + numTarjeta + "'";
+        DefaultTableModel defaultTableModel = new DefaultTableModel();
+        try {
+            Statement sentencia = registro.createStatement();
+            ResultSet resultSet = sentencia.executeQuery(sqlQuery);
+
+            while (resultSet.next()) {
+                datosTabla[0] = resultSet.getString(1);
+                datosTabla[1] = resultSet.getString(2);
+                datosTabla[2] = resultSet.getString(3);
+                datosTabla[3] = resultSet.getString(4);
+                defaultTableModel.addRow(datosTabla);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        tfNombre.setText(datosTabla[1]);
+        tfPuesto.setText(datosTabla[2]);
+        tfDepartamento.setText(datosTabla[3]);
+
     }
 
-    public void verTabla() {
+    public void verTabla(String numTarjeta) {
         DefaultTableModel defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("Tarjeta");
         defaultTableModel.addColumn("Nombre");
@@ -112,7 +157,11 @@ public class InterfazBD extends JFrame {
 
         datosTabla = new String[4];
 
-        sqlQuery = "SELECT * FROM empleado";
+        if (numTarjeta.equals("")) {
+            sqlQuery = "SELECT * FROM empleado";
+        } else {
+            sqlQuery = "SELECT * FROM empleado WHERE tarjeta='" + numTarjeta + "'";
+        }
 
         try {
             Statement sentencia = registro.createStatement();
@@ -129,8 +178,6 @@ public class InterfazBD extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
     {
@@ -149,7 +196,7 @@ public class InterfazBD extends JFrame {
      */
     private void $$$setupUI$$$() {
         panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new GridLayoutManager(6, 5, new Insets(0, 0, 0, 0), -1, -1));
+        panelPrincipal.setLayout(new GridLayoutManager(8, 5, new Insets(0, 0, 0, 0), -1, -1));
         panelPrincipal.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         tfNombre = new JTextField();
         panelPrincipal.add(tfNombre, new GridConstraints(0, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -170,7 +217,7 @@ public class InterfazBD extends JFrame {
         btnGuardar.setText("Guardar");
         panelPrincipal.add(btnGuardar, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         spEmpleado = new JScrollPane();
-        panelPrincipal.add(spEmpleado, new GridConstraints(5, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panelPrincipal.add(spEmpleado, new GridConstraints(6, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         tablaEmpleado = new JTable();
         spEmpleado.setViewportView(tablaEmpleado);
         btnSalir = new JButton();
@@ -182,8 +229,17 @@ public class InterfazBD extends JFrame {
         tfTarjetaQuery = new JTextField();
         panelPrincipal.add(tfTarjetaQuery, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         btnTarjetaQuery = new JButton();
-        btnTarjetaQuery.setText("Button");
-        panelPrincipal.add(btnTarjetaQuery, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnTarjetaQuery.setText("Consultar");
+        panelPrincipal.add(btnTarjetaQuery, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnCargarRegistro = new JButton();
+        btnCargarRegistro.setText("Cargar registro");
+        panelPrincipal.add(btnCargarRegistro, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnModificar = new JButton();
+        btnModificar.setText("Modificar");
+        panelPrincipal.add(btnModificar, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnTodos = new JButton();
+        btnTodos.setText("Todos");
+        panelPrincipal.add(btnTodos, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
