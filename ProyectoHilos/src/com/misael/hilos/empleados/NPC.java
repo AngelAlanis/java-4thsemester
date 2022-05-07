@@ -85,15 +85,14 @@ public class NPC extends Entity {
         hitbox.width  = width;
         hitbox.height = height;
 
-        int center = (x + (width / 2) - 45);
+        int center = (x + (width / 2) - 35);
 
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 26));
 
         //Interact button
         if (collisionOn) {
-            g2.drawImage(interactButton, center, y - 100, 90, 90, null);
-            g2.drawRoundRect(center + 20, y - 50, 150, 60, 5, 6);
+            g2.drawImage(interactButton, center, y - 70, 70, 70, null);
         }
 
         //NPC image
@@ -104,9 +103,9 @@ public class NPC extends Entity {
     }
 
     private void drawMaterialBar(Graphics2D g2) {
-        g2.drawImage(resources.stone, 50, 50, 50, 50, null);
-        g2.drawImage(resources.geode, 200, 50, 50, 50, null);
-        g2.drawImage(resources.iron, 350, 50, 50, 50, null);
+        g2.drawImage(resources.stone, 50, 45, 50, 50, null);
+        g2.drawImage(resources.geode, 200, 45, 50, 50, null);
+        g2.drawImage(resources.iron, 350, 45, 50, 50, null);
 
         g2.drawString(String.valueOf(resources.totalStone), 110, 75);
         g2.drawString(String.valueOf(resources.totalGeode), 260, 75);

@@ -16,6 +16,9 @@ public class Sound {
         soundURL[2] = new File("ProyectoHilos/src/resources/sound_effects/dialogueCharacter.wav");
         soundURL[3] = new File("ProyectoHilos/src/resources/sound_effects/hammer.wav");
         soundURL[4] = new File("ProyectoHilos/src/resources/sound_effects/stoneStep.wav");
+        soundURL[5] = new File("ProyectoHilos/src/resources/sound_effects/newArtifact.wav");
+        soundURL[6] = new File("ProyectoHilos/src/resources/sound_effects/give_gift.wav");
+
     }
 
     public void setFile(int i) {

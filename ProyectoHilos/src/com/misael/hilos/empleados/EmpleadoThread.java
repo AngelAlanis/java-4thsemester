@@ -39,22 +39,22 @@ public class EmpleadoThread implements Runnable {
                 switch (hilo.getName()) {
                     case "Clint" -> {
                         if (npc.image == npc.work1) {
-                            resourcesGotten1 = random.nextInt(6);
+                            resourcesGotten1 = random.nextInt(6) + 1;
                             npc.resources.totalGeode += resourcesGotten1;
-                            playSFX(0);
+                            playSFX(5);
                         }
 
                         if (npc.image == npc.work2) {
-                            resourcesGotten2 = random.nextInt(3);
+                            resourcesGotten2 = random.nextInt(3) + 1;
                             npc.resources.totalIron += resourcesGotten2;
-                            playSFX(0);
+                            playSFX(6);
                         }
                     }
                     case "Robin" -> {
                         if (npc.image == npc.work1) {
-                            resourcesGotten1 = random.nextInt(9);
+                            resourcesGotten1 = random.nextInt(9) + 1;
                             npc.resources.totalStone += resourcesGotten1;
-                            playSFX(4);
+                            playSFX(3);
                         }
                     }
                 }
