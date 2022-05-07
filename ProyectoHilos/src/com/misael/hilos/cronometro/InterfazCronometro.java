@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 public class InterfazCronometro extends JFrame {
+
     private JPanel     panelMain;
     private JLabel     labelTime;
     private JLabel     labelStop;
@@ -34,9 +35,20 @@ public class InterfazCronometro extends JFrame {
         initActionListeners();
         initComponents();
         startThread();
+        loadStoppedScreen();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
+    }
+
+    public void loadStoppedScreen() {
+        labelPlay.setVisible(true);
+        labelPause.setVisible(false);
+    }
+
+    public void loadRunningScreen() {
+        labelPlay.setVisible(false);
+        labelPause.setVisible(true);
     }
 
     public void initComponents() {
@@ -59,27 +71,39 @@ public class InterfazCronometro extends JFrame {
         labelPlay.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                cronometro.resumeCronometro();
+                loadRunningScreen();
             }
         });
 
         labelPause.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                cronometro.pauseCronometro();
+                loadStoppedScreen();
+
             }
         });
 
         labelStop.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                cronometro.stopCronometro();
+                loadStoppedScreen();
             }
         });
     }
 
     public void update() {
         String time = "";
+
+        if (cronometro.horas > 0) {
+            if (cronometro.horas < 10) {
+                time += "0" + cronometro.horas + ":";
+            } else {
+                time += cronometro.horas + ":";
+            }
+        }
 
         if (cronometro.minutos < 10) {
             time += "0" + cronometro.minutos + ":";
@@ -98,7 +122,6 @@ public class InterfazCronometro extends JFrame {
         } else {
             time += "." + cronometro.milisegundos;
         }
-
 
         labelTime.setText(time);
     }

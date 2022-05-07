@@ -4,10 +4,11 @@ public class Cronometro implements Runnable {
 
     InterfazCronometro interfazCronometro;
     Thread             hilo;
+    int                horas;
     int                milisegundos;
     int                segundos;
     int                minutos;
-    boolean            isPaused = false;
+    boolean            isStopped = true;
 
     public Cronometro(InterfazCronometro interfazCronometro) {
         this.interfazCronometro = interfazCronometro;
@@ -17,7 +18,9 @@ public class Cronometro implements Runnable {
 
     public void updateTime() {
 
-        milisegundos += 1;
+        if (!isStopped) {
+            milisegundos += 1;
+        }
 
         if (milisegundos >= 100) {
             milisegundos = 0;
@@ -28,33 +31,41 @@ public class Cronometro implements Runnable {
             segundos = 0;
             minutos++;
         }
+
+        if (minutos >= 60) {
+            minutos = 0;
+            horas++;
+        }
     }
 
     public void startCronometro() {
-        while (!isPaused) {
-            try {
-                Thread.sleep(10);
-                updateTime();
-                interfazCronometro.update();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        while (hilo.isAlive()) {
+            if (!isStopped) {
+                try {
+                    Thread.sleep(10);
+                    updateTime();
+                    interfazCronometro.update();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     public void pauseCronometro() {
-        isPaused = true;
+        isStopped = true;
     }
 
-    public void restartCronometro() {
-        isPaused     = true;
+    public void stopCronometro() {
+        isStopped    = true;
         minutos      = 0;
         segundos     = 0;
         milisegundos = 0;
+        interfazCronometro.update();
     }
 
     public void resumeCronometro() {
-        isPaused = false;
+        isStopped = false;
     }
 
     @Override
