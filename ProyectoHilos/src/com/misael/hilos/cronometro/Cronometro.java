@@ -42,17 +42,20 @@ public class Cronometro implements Runnable {
         }
     }
 
-//    public void pauseCronometro() {
-//        hilo.suspend();
-//    }
-//
-//    public void restartCronometro() {
-//        hilo.interrupt();
-//    }
-//
-//    public void resumeCronometro(){
-//        hilo.resume();
-//    }
+    public void pauseCronometro() {
+        isPaused = true;
+    }
+
+    public void restartCronometro() {
+        isPaused     = true;
+        minutos      = 0;
+        segundos     = 0;
+        milisegundos = 0;
+    }
+
+    public void resumeCronometro() {
+        isPaused = false;
+    }
 
     @Override
     public void run() {

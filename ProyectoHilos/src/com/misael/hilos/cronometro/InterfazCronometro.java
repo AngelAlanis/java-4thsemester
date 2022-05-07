@@ -79,7 +79,28 @@ public class InterfazCronometro extends JFrame {
     }
 
     public void update() {
-        labelTime.setText(cronometro.minutos + ":" + cronometro.segundos + "." + cronometro.milisegundos);
+        String time = "";
+
+        if (cronometro.minutos < 10) {
+            time += "0" + cronometro.minutos + ":";
+        } else {
+            time += cronometro.minutos + ":";
+        }
+
+        if (cronometro.segundos < 10) {
+            time += "0" + cronometro.segundos;
+        } else {
+            time += cronometro.segundos;
+        }
+
+        if (cronometro.milisegundos < 10) {
+            time += ".0" + cronometro.milisegundos;
+        } else {
+            time += "." + cronometro.milisegundos;
+        }
+
+
+        labelTime.setText(time);
     }
 
     public void startThread() {
