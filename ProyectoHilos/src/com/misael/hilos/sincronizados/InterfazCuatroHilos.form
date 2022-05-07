@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.misael.hilos.sincronizados.InterfazCuatroHilos">
+  <grid id="27dc6" binding="panelMain" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="empty">
+      <size top="20" left="20" bottom="20" right="20"/>
+    </border>
+    <children>
+      <scrollpane id="14cfa" binding="spHilo1">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="line">
+          <color color="-15236482"/>
+        </border>
+        <children>
+          <component id="954db" class="javax.swing.JList" binding="listaHilo1">
+            <constraints/>
+            <properties>
+              <font name="JetBrains Mono" size="28" style="1"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <scrollpane id="e39d9" binding="spLista2">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="line">
+          <color color="-15236482"/>
+        </border>
+        <children>
+          <component id="f445d" class="javax.swing.JList" binding="listaHilo2">
+            <constraints/>
+            <properties>
+              <font name="JetBrains Mono" size="28" style="1"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <scrollpane id="f86ea" binding="spLista3">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="line">
+          <color color="-15236482"/>
+        </border>
+        <children>
+          <component id="a2eac" class="javax.swing.JList" binding="listaHilo3">
+            <constraints/>
+            <properties>
+              <font name="JetBrains Mono" size="28" style="1"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <scrollpane id="73039" binding="spLista4">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="line">
+          <color color="-15236482"/>
+        </border>
+        <children>
+          <component id="f8324" class="javax.swing.JList" binding="listaHilo4">
+            <constraints/>
+            <properties>
+              <font name="JetBrains Mono" size="28" style="1"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <component id="c1506" class="javax.swing.JLabel" binding="labelHilo1">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="JetBrains Mono" size="26" style="1"/>
+          <foreground color="-16728149"/>
+          <text value="Hilo 1"/>
+        </properties>
+      </component>
+      <component id="e46b5" class="javax.swing.JLabel" binding="labelHilo2">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="JetBrains Mono" size="26" style="1"/>
+          <foreground color="-16728149"/>
+          <text value="Hilo 2"/>
+        </properties>
+      </component>
+      <component id="72645" class="javax.swing.JLabel" binding="labelHilo3">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="JetBrains Mono" size="26" style="1"/>
+          <foreground color="-16728149"/>
+          <text value="Hilo 3"/>
+        </properties>
+      </component>
+      <component id="dcb78" class="javax.swing.JLabel" binding="labelHilo4">
+        <constraints>
+          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="JetBrains Mono" size="26" style="1"/>
+          <foreground color="-16728149"/>
+          <text value="Hilo 4"/>
+        </properties>
+      </component>
+      <component id="dec6e" class="javax.swing.JButton" binding="btnCorrer">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Correr"/>
+        </properties>
+      </component>
+      <component id="baf2e" class="javax.swing.JButton" binding="btnLimpiar">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Limpiar"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
