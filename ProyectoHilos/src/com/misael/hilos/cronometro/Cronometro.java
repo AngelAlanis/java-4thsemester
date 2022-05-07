@@ -42,7 +42,7 @@ public class Cronometro implements Runnable {
         while (hilo.isAlive()) {
             if (!isStopped) {
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(8);
                     updateTime();
                     interfazCronometro.update();
                 } catch (InterruptedException e) {
