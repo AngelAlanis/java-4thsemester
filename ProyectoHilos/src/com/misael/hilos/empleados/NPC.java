@@ -22,7 +22,7 @@ public class NPC extends Entity {
         this.gp             = gp;
         this.keyHandler     = keyHandler;
         this.nombreEmpleado = nombreEmpleado;
-        this.empleadoThread = new EmpleadoThread(this, nombreEmpleado);
+        this.empleadoThread = new EmpleadoThread(this, nombreEmpleado, gp.sound);
         this.resources      = gp.resources;
         hitbox              = new Rectangle(x, y, width, height);
         image               = idle;
@@ -69,14 +69,6 @@ public class NPC extends Entity {
         } else {
             rest();
         }
-    }
-
-    public void recieveMaterialUpdate() {
-        drawNewMaterial();
-    }
-
-    public void drawNewMaterial() {
-
     }
 
     public void draw(Graphics2D g2) {

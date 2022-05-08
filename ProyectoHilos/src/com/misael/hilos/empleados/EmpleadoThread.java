@@ -8,13 +8,14 @@ public class EmpleadoThread implements Runnable {
     Thread  hilo;
     String  nombreEmpleado;
     NPC     npc;
-    Sound   sound  = new Sound();
-    Random  random = new Random();
-    boolean isRunning;
+    Sound   sound;
+    Random  random    = new Random();
+    boolean isRunning = true;
 
-    public EmpleadoThread(NPC npc, String nombreEmpleado) {
+    public EmpleadoThread(NPC npc, String nombreEmpleado, Sound sound) {
         this.npc            = npc;
         this.nombreEmpleado = nombreEmpleado;
+        this.sound          = sound;
         hilo                = new Thread(this, nombreEmpleado);
         hilo.start();
     }
@@ -24,13 +25,21 @@ public class EmpleadoThread implements Runnable {
         sound.play();
     }
 
+    public void stopThread() {
+        isRunning     = false;
+        npc.isWorking = false;
+    }
+
     @Override
     public void run() {
         int timeBetweenResources = random.nextInt(1000) + 2000;
         int resourcesGotten1;
         int resourcesGotten2;
+
         while (isRunning) {
+            System.out.println(isRunning);
             if (npc.isWorking) {
+
                 try {
                     Thread.sleep(timeBetweenResources);
                 } catch (InterruptedException e) {

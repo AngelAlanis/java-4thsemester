@@ -4,11 +4,12 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Sound {
 
-    Clip   clip;
-    File[] soundURL = new File[30];
+    ArrayList<Clip> clip = new ArrayList<>();
+    File[]          soundURL = new File[30];
 
     public Sound() {
         soundURL[0] = new File("ProyectoHilos/src/resources/sound_effects/axchop.wav");
@@ -24,23 +25,23 @@ public class Sound {
     public void setFile(int i) {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
-            clip = AudioSystem.getClip();
-            clip.open(ais);
+            clip.add(AudioSystem.getClip());
+            clip.get(clip.size() - 1).open(ais);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void play() {
-        clip.start();
+        clip.get(clip.size() - 1).start();
     }
 
     public void loop() {
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        clip.get(clip.size() - 1).loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public void stop() {
-        clip.stop();
+        clip.iterator().next().close();
     }
 
 }

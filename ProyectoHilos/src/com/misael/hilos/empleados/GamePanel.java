@@ -1,6 +1,9 @@
 package com.misael.hilos.empleados;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -19,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     NPC clint;
     NPC robin;
 
-    boolean isRunning;
+    boolean isRunning = true;
 
     int FPS = 45;
 
@@ -35,12 +38,16 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-        //playMusic(1);
+        playMusic(1);
     }
 
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    public void stopThread() {
+        isRunning = false;
     }
 
     public void update() {
@@ -133,7 +140,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if (timer >= 1000000000) {
-//                System.out.println("FPS: " + drawCount);
+                System.out.println("FPS: " + drawCount);
                 drawCount = 0;
                 timer     = 0;
             }
