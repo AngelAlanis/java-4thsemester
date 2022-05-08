@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.misael.hilos.mainScreen.MainScreenGUI">
+  <grid id="27dc6" binding="panelMain" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="536" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="empty">
+      <size top="40" left="40" bottom="40" right="40"/>
+    </border>
+    <children>
+      <component id="dd9bf" class="javax.swing.JLabel" binding="labelCronometro">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="JetBrains Mono" size="20" style="1"/>
+          <foreground color="-1"/>
+          <horizontalTextPosition value="0"/>
+          <text value="Cronómetro"/>
+          <verticalTextPosition value="3"/>
+        </properties>
+      </component>
+      <component id="b56cc" class="javax.swing.JLabel" binding="labelAlarm">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="JetBrains Mono" size="20" style="1"/>
+          <foreground color="-1"/>
+          <horizontalTextPosition value="0"/>
+          <text value="Alarma de Fuego"/>
+          <verticalTextPosition value="3"/>
+        </properties>
+      </component>
+      <component id="989a6" class="javax.swing.JLabel" binding="labelThreads">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="JetBrains Mono" size="20" style="1"/>
+          <foreground color="-1"/>
+          <horizontalTextPosition value="0"/>
+          <text value="Hilos sincronizados"/>
+          <verticalTextPosition value="3"/>
+        </properties>
+      </component>
+      <component id="f00da" class="javax.swing.JLabel" binding="labelEmpleados">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="JetBrains Mono" size="20" style="1"/>
+          <foreground color="-1"/>
+          <horizontalTextPosition value="0"/>
+          <text value="Empleados"/>
+          <verticalTextPosition value="3"/>
+        </properties>
+      </component>
+      <component id="366f7" class="javax.swing.JLabel" binding="labelTitle">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="JetBrains Mono" size="22" style="1"/>
+          <foreground color="-1"/>
+          <text value="Label"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

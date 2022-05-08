@@ -32,7 +32,7 @@ public class InterfazAlarma extends JFrame {
 
     public InterfazAlarma() {
         this.setSize(640, 480);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         startThread();
         configurarComponentes();
         initActionListeners();

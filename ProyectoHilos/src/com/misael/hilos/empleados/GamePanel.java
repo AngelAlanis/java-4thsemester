@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
-        playMusic(1);
+        //playMusic(1);
     }
 
     public void startGameThread() {

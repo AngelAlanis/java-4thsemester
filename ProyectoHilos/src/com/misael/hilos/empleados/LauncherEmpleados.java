@@ -2,9 +2,9 @@ package com.misael.hilos.empleados;
 
 import javax.swing.JFrame;
 
-public class Launcher extends JFrame {
+public class LauncherEmpleados extends JFrame {
 
-    public Launcher() {
+    public LauncherEmpleados() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         GamePanel panelPrincipal = new GamePanel();
         this.setContentPane(panelPrincipal);
@@ -13,10 +13,4 @@ public class Launcher extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-
-    public static void main(String[] args) {
-        var interfazEmpleados = new Launcher();
-    }
-
-
 }
