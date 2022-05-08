@@ -11,6 +11,8 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -28,7 +30,7 @@ public class InterfazCronometro extends JFrame {
     private Cronometro cronometro;
 
     public InterfazCronometro() {
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(540, 960);
         this.setContentPane(panelMain);
         loadImages();
@@ -90,6 +92,13 @@ public class InterfazCronometro extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 cronometro.stopCronometro();
                 loadStoppedScreen();
+            }
+        });
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                cronometro.stopThread();
             }
         });
     }

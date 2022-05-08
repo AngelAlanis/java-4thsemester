@@ -28,7 +28,7 @@ public class InterfazCuatroHilos extends JFrame {
     private JButton       btnLimpiar;
 
     public InterfazCuatroHilos() {
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(1024, 576);
         this.setContentPane(panelMain);
         initComponentes();

@@ -5,11 +5,12 @@ import java.util.Random;
 
 public class EmpleadoThread implements Runnable {
 
-    Thread hilo;
-    String nombreEmpleado;
-    NPC    npc;
-    Sound  sound  = new Sound();
-    Random random = new Random();
+    Thread  hilo;
+    String  nombreEmpleado;
+    NPC     npc;
+    Sound   sound  = new Sound();
+    Random  random = new Random();
+    boolean isRunning;
 
     public EmpleadoThread(NPC npc, String nombreEmpleado) {
         this.npc            = npc;
@@ -28,7 +29,7 @@ public class EmpleadoThread implements Runnable {
         int timeBetweenResources = random.nextInt(1000) + 2000;
         int resourcesGotten1;
         int resourcesGotten2;
-        while (hilo.isAlive()) {
+        while (isRunning) {
             if (npc.isWorking) {
                 try {
                     Thread.sleep(timeBetweenResources);

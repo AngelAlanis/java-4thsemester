@@ -19,6 +19,8 @@ public class GamePanel extends JPanel implements Runnable {
     NPC clint;
     NPC robin;
 
+    boolean isRunning;
+
     int FPS = 45;
 
     public GamePanel() {
@@ -116,7 +118,7 @@ public class GamePanel extends JPanel implements Runnable {
         long   timer        = 0;
         int    drawCount    = 0;
 
-        while (gameThread != null) {
+        while (isRunning) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / drawInterval;
             timer += (currentTime - lastTime);

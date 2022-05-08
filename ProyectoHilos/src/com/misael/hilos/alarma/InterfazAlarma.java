@@ -29,6 +29,7 @@ public class InterfazAlarma extends JFrame {
     private Clip       alarmSound;
     private Clip       fireSound;
     private Clip       extinguisherSound;
+    public Alarma alarma;
 
     public InterfazAlarma() {
         this.setSize(640, 480);
@@ -118,7 +119,7 @@ public class InterfazAlarma extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (Alarma.isOnFire) {
+                if (alarma.isOnFire) {
                     stopFire();
                 } else {
                     startFire();
@@ -131,13 +132,13 @@ public class InterfazAlarma extends JFrame {
     }
 
     private void startThread() {
-        Alarma alarma = new Alarma();
+        alarma = new Alarma();
         Thread hilo   = new Thread(alarma);
         hilo.start();
     }
 
     private void startFire() {
-        Alarma.isOnFire = true;
+        alarma.isOnFire = true;
         playSounds();
         panelPrincipal.imageInUse = panelPrincipal.imageFire;
         smokeDetector.setIcon(smokeDetectorActive);
@@ -152,6 +153,6 @@ public class InterfazAlarma extends JFrame {
         }
         panelPrincipal.imageInUse = panelPrincipal.imageNormal;
         smokeDetector.setIcon(smokeDetectorInactive);
-        Alarma.isOnFire = false;
+        alarma.isOnFire = false;
     }
 }

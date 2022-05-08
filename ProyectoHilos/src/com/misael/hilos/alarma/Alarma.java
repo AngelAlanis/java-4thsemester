@@ -3,11 +3,12 @@ package com.misael.hilos.alarma;
 
 public class Alarma implements Runnable {
 
-    static boolean isOnFire;
+    boolean isOnFire;
+    boolean isRunning;
 
     @Override
     public void run() {
-        while(true){
+        while(isRunning){
 
             try {
                 Thread.sleep(1000);

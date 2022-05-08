@@ -9,6 +9,7 @@ public class Cronometro implements Runnable {
     int                segundos;
     int                minutos;
     boolean            isStopped = true;
+    private boolean isRunning = true;
 
     public Cronometro(InterfazCronometro interfazCronometro) {
         this.interfazCronometro = interfazCronometro;
@@ -39,7 +40,7 @@ public class Cronometro implements Runnable {
     }
 
     public void startCronometro() {
-        while (hilo.isAlive()) {
+        while (isRunning) {
             if (!isStopped) {
                 try {
                     Thread.sleep(8);
@@ -50,6 +51,7 @@ public class Cronometro implements Runnable {
                 }
             }
         }
+
     }
 
     public void pauseCronometro() {
@@ -66,6 +68,10 @@ public class Cronometro implements Runnable {
 
     public void resumeCronometro() {
         isStopped = false;
+    }
+
+    public void stopThread() {
+        isRunning = false;
     }
 
     @Override
