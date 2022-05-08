@@ -2,6 +2,7 @@ package com.misael.hilos.alarma;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class FondoFuego extends JPanel {
 
@@ -10,8 +11,8 @@ public class FondoFuego extends JPanel {
     Image imageInUse;
 
     public FondoFuego() {
-        imageFire   = new ImageIcon("ProyectoHilos/src/resources/backgrounds/wooden_wall_fire.gif").getImage();
-        imageNormal = new ImageIcon("ProyectoHilos/src/resources/backgrounds/wooden_wall.jpg").getImage();
+        imageFire   = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/backgrounds/wooden_wall_fire.gif"))).getImage();
+        imageNormal = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/backgrounds/wooden_wall.jpg"))).getImage();
 
         imageInUse = imageNormal;
 

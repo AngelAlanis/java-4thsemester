@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MainScreenGUI extends JFrame {
 
@@ -30,11 +31,6 @@ public class MainScreenGUI extends JFrame {
     private ImageIcon iconThreads;
     private ImageIcon iconEmpleados;
     private ImageIcon iconCronometro;
-    private ImageIcon iconAlarmSelected;
-    private ImageIcon iconThreadsSelected;
-    private ImageIcon iconEmpleadosSelected;
-    private ImageIcon iconCronometroSelected;
-
 
     public MainScreenGUI() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -85,16 +81,10 @@ public class MainScreenGUI extends JFrame {
     }
 
     public void loadImages() {
-        iconCronometro = new ImageIcon("ProyectoHilos/src/resources/misc/icon_stopwatch.png");
-        iconAlarm      = new ImageIcon("ProyectoHilos/src/resources/misc/icon_fire.png");
-        iconThreads    = new ImageIcon("ProyectoHilos/src/resources/misc/threads_icon.png");
-        iconEmpleados  = new ImageIcon("ProyectoHilos/src/resources/misc/icon_empleados.png");
-
-        iconCronometroSelected = new ImageIcon("ProyectoHilos/src/resources/misc/icon_stopwatch.png");
-        iconAlarmSelected      = new ImageIcon("ProyectoHilos/src/resources/misc/icon_fire_s.png");
-        iconThreadsSelected    = new ImageIcon("ProyectoHilos/src/resources/misc/threads_icon.png");
-        iconEmpleadosSelected  = new ImageIcon("ProyectoHilos/src/resources/misc/icon_empleados.png");
-
+        iconCronometro = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_stopwatch.png")));
+        iconAlarm      = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_fire.png")));
+        iconThreads    = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_threads.png")));
+        iconEmpleados  = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_empleados.png")));
     }
 
     {
