@@ -71,38 +71,42 @@ public class NPC extends Entity {
         }
     }
 
+    public void recieveMaterialUpdate() {
+        drawNewMaterial();
+    }
+
+    public void drawNewMaterial() {
+
+    }
+
     public void draw(Graphics2D g2) {
         hitbox.x      = x;
         hitbox.y      = y;
         hitbox.width  = width;
         hitbox.height = height;
 
-        int center = (x + (width / 2) - 35);
+        int center = (x + (width / 2) - 45);
 
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 26));
 
         //Interact button
         if (collisionOn) {
-            g2.drawImage(interactButton, center, y - 70, 70, 70, null);
-
-            g2.fillRoundRect(x, y - 100, 230, 140, 15, 15);
-            g2.setColor(Color.BLACK);
-            g2.fillRoundRect(x+5, y - 95, 220, 130, 15, 15);
+            g2.drawImage(interactButton, center, y - 100, 90, 90, null);
+            g2.drawRoundRect(center + 20, y - 50, 150, 60, 5, 6);
         }
 
         //NPC image
         g2.drawImage(image, x, y, width, height, null);
 
-        g2.setColor(Color.WHITE);
         drawMaterialBar(g2);
 
     }
 
     private void drawMaterialBar(Graphics2D g2) {
-        g2.drawImage(resources.stone, 50, 45, 50, 50, null);
-        g2.drawImage(resources.geode, 200, 45, 50, 50, null);
-        g2.drawImage(resources.iron, 350, 45, 50, 50, null);
+        g2.drawImage(resources.stone, 50, 50, 50, 50, null);
+        g2.drawImage(resources.geode, 200, 50, 50, 50, null);
+        g2.drawImage(resources.iron, 350, 50, 50, 50, null);
 
         g2.drawString(String.valueOf(resources.totalStone), 110, 75);
         g2.drawString(String.valueOf(resources.totalGeode), 260, 75);

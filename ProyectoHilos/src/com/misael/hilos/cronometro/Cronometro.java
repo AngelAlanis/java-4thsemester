@@ -73,9 +73,6 @@ public class Cronometro implements Runnable {
                 updateTime();
                 interfazCronometro.update();
             }
-
         }
-
     }
-
 }

@@ -129,7 +129,6 @@ public class Jugador extends Entity {
         }
 
         g2.drawImage(image, x, y, width, height, null);
-
     }
 
 

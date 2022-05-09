@@ -37,7 +37,6 @@ public class EmpleadoThread implements Runnable {
         int resourcesGotten2;
 
         while (isRunning) {
-            System.out.println(isRunning);
             if (npc.isWorking) {
 
                 try {
@@ -68,8 +67,6 @@ public class EmpleadoThread implements Runnable {
                         }
                     }
                 }
-
-
             }
 
         }

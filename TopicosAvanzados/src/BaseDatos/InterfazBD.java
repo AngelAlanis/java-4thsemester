@@ -1,6 +1,5 @@
 package BaseDatos;
 
-import com.formdev.flatlaf.ui.FlatListCellBorder;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -42,6 +41,7 @@ public class InterfazBD extends JFrame {
     private JButton     btnCargarRegistro;
     private JButton     btnModificar;
     private JButton     btnTodos;
+    private JButton     btnEliminar;
     private Conectar    conectar;
     private Connection  registro;
     private String[]    datosTabla;
@@ -69,15 +69,30 @@ public class InterfazBD extends JFrame {
 
         btnTarjetaQuery.addActionListener(e -> consultarTarjeta());
 
-        btnCargarRegistro.addActionListener(e -> {
-            cargarRegistroAModificar(tfTarjetaQuery.getText());
-        });
+        btnCargarRegistro.addActionListener(e -> cargarRegistroAModificar(tfTarjetaQuery.getText()));
 
-        btnModificar.addActionListener(e -> {
-
-        });
+        btnModificar.addActionListener(e -> modificarUsuario());
 
         btnTodos.addActionListener(e -> verTabla(""));
+
+        btnEliminar.addActionListener(e -> eliminarRegistro());
+    }
+
+    private void eliminarRegistro() {
+        try {
+            int confirmation = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar el registro?", "Borrar registro", JOptionPane.YES_NO_OPTION);
+            if (confirmation == JOptionPane.YES_OPTION) {
+                PreparedStatement ps = registro.prepareStatement("DELETE FROM empleado WHERE tarjeta='" + tfTarjetaQuery.getText() + "'");
+                ps.executeUpdate();
+                verTabla("");
+                JOptionPane.showMessageDialog(null, "Modificación realizada");
+                limpiar();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void consultarTarjeta() {
@@ -112,6 +127,18 @@ public class InterfazBD extends JFrame {
         verTabla("");
     }
 
+    private void modificarUsuario() {
+        try {
+            PreparedStatement ps = registro.prepareStatement("UPDATE empleado SET nombre = '" + tfNombre.getText() + "', puesto = '" + tfPuesto.getText() + "', departamento = '" + tfDepartamento.getText() + "' WHERE tarjeta='" + tfTarjetaQuery.getText() + "'");
+            ps.executeUpdate();
+            verTabla("");
+            JOptionPane.showMessageDialog(null, "Modificación realizada");
+            limpiar();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void conectarBaseDatos() {
         conectar = new Conectar();
         registro = conectar.conexion();
@@ -121,6 +148,7 @@ public class InterfazBD extends JFrame {
         tfNombre.setText("");
         tfPuesto.setText("");
         tfDepartamento.setText("");
+        tfTarjetaQuery.setText("");
     }
 
     public void cargarRegistroAModificar(String numTarjeta) {
@@ -196,7 +224,7 @@ public class InterfazBD extends JFrame {
      */
     private void $$$setupUI$$$() {
         panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new GridLayoutManager(8, 5, new Insets(0, 0, 0, 0), -1, -1));
+        panelPrincipal.setLayout(new GridLayoutManager(9, 5, new Insets(0, 0, 0, 0), -1, -1));
         panelPrincipal.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         tfNombre = new JTextField();
         panelPrincipal.add(tfNombre, new GridConstraints(0, 1, 1, 3, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
@@ -217,7 +245,7 @@ public class InterfazBD extends JFrame {
         btnGuardar.setText("Guardar");
         panelPrincipal.add(btnGuardar, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         spEmpleado = new JScrollPane();
-        panelPrincipal.add(spEmpleado, new GridConstraints(6, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panelPrincipal.add(spEmpleado, new GridConstraints(7, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         tablaEmpleado = new JTable();
         spEmpleado.setViewportView(tablaEmpleado);
         btnSalir = new JButton();
@@ -239,7 +267,10 @@ public class InterfazBD extends JFrame {
         panelPrincipal.add(btnModificar, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnTodos = new JButton();
         btnTodos.setText("Todos");
-        panelPrincipal.add(btnTodos, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelPrincipal.add(btnTodos, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnEliminar = new JButton();
+        btnEliminar.setText("Eliminar");
+        panelPrincipal.add(btnEliminar, new GridConstraints(6, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
