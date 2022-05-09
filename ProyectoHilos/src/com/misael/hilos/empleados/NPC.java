@@ -85,11 +85,16 @@ public class NPC extends Entity {
         //Interact button
         if (collisionOn) {
             g2.drawImage(interactButton, center, y - 70, 70, 70, null);
+
+            g2.fillRoundRect(x, y - 100, 230, 140, 15, 15);
+            g2.setColor(Color.BLACK);
+            g2.fillRoundRect(x+5, y - 95, 220, 130, 15, 15);
         }
 
         //NPC image
         g2.drawImage(image, x, y, width, height, null);
 
+        g2.setColor(Color.WHITE);
         drawMaterialBar(g2);
 
     }

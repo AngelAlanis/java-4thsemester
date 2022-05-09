@@ -65,7 +65,7 @@
         <properties>
           <font name="JetBrains Mono" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="Label"/>
+          <text value="Proyecto unidad 3"/>
         </properties>
       </component>
     </children>

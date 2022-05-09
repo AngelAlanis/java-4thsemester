@@ -141,7 +141,7 @@ public class MainScreenGUI extends JFrame {
         Font labelTitleFont = this.$$$getFont$$$("JetBrains Mono", Font.BOLD, 22, labelTitle.getFont());
         if (labelTitleFont != null) labelTitle.setFont(labelTitleFont);
         labelTitle.setForeground(new Color(-1));
-        labelTitle.setText("Label");
+        labelTitle.setText("Proyecto unidad 3");
         panelMain.add(labelTitle, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
