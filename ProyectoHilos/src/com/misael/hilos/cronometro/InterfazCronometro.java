@@ -2,8 +2,8 @@ package com.misael.hilos.cronometro;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.misael.hilos.SetupFile;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
@@ -13,8 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.Locale;
 
 public class InterfazCronometro extends JFrame {
@@ -28,6 +26,8 @@ public class InterfazCronometro extends JFrame {
     private ImageIcon  pauseButton;
     private ImageIcon  stopButton;
     private Cronometro cronometro;
+
+    SetupFile setupFile = new SetupFile();
 
     public InterfazCronometro() {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -60,13 +60,9 @@ public class InterfazCronometro extends JFrame {
     }
 
     public void loadImages() {
-        try {
-            playButton  = new ImageIcon(ImageIO.read(new File("ProyectoHilos/src/resources/misc/play.png")));
-            pauseButton = new ImageIcon(ImageIO.read(new File("ProyectoHilos/src/resources/misc/pause.png")));
-            stopButton  = new ImageIcon(ImageIO.read(new File("ProyectoHilos/src/resources/misc/stop.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        playButton  = setupFile.imageIcon("/resources/misc/play.png");
+        pauseButton = setupFile.imageIcon("/resources/misc/pause.png");
+        stopButton  = setupFile.imageIcon("/resources/misc/stop.png");
     }
 
     public void initActionListeners() {

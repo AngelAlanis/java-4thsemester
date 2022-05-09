@@ -37,6 +37,9 @@ public class EmpleadoThread implements Runnable {
         int resourcesGotten2;
 
         while (isRunning) {
+
+            System.out.println("is running");
+
             if (npc.isWorking) {
 
                 try {

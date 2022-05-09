@@ -1,11 +1,15 @@
 package com.misael.hilos.empleados;
 
+import com.misael.hilos.SetupFile;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
 public class Resources {
+
+    SetupFile setup = new SetupFile();
 
     Image stone;
     Image geode;
@@ -18,13 +22,9 @@ public class Resources {
     }
 
     private void readImages() {
-        try {
-            geode = ImageIO.read(new File("ProyectoHilos/src/resources/misc/geode.png"));
-            iron  = ImageIO.read(new File("ProyectoHilos/src/resources/misc/iron.png"));
-            stone = ImageIO.read(new File("ProyectoHilos/src/resources/misc/stone.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        geode = setup.image("/resources/misc/geode.png");
+        iron  = setup.image("/resources/misc/iron.png");
+        stone = setup.image("/resources/misc/stone.png");
     }
 
 }

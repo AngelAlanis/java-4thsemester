@@ -81,10 +81,10 @@ public class MainScreenGUI extends JFrame {
     }
 
     public void loadImages() {
-//        iconCronometro = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_stopwatch.png")));
-//        iconAlarm      = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_fire.png")));
-//        iconThreads    = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_threads.png")));
-//        iconEmpleados  = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_empleados.png")));
+        iconCronometro = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_stopwatch.png")));
+        iconAlarm      = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_fire.png")));
+        iconThreads    = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_threads.png")));
+        iconEmpleados  = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_empleados.png")));
     }
 
     {

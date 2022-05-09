@@ -1,5 +1,7 @@
 package com.misael.hilos.empleados;
 
+import com.misael.hilos.SetupFile;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -18,6 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
     MinesBackground  minesBackground  = new MinesBackground();
     Sound            sound            = new Sound();
     CollisionChecker collisionChecker = new CollisionChecker(this, keyHandler);
+    SetupFile        setup            = new SetupFile();
 
     NPC clint;
     NPC robin;
@@ -66,24 +69,21 @@ public class GamePanel extends JPanel implements Runnable {
         robin.setSize(120, 232);
         robin.setLocation(900, 280);
 
-        try {
-            clint.idle      = ImageIO.read(new File("ProyectoHilos/src/resources/characters/clint/clint_idle.png"));
-            clint.work1     = new ImageIcon("ProyectoHilos/src/resources/characters/clint/clint_work1.gif").getImage();
-            clint.work2     = new ImageIcon("ProyectoHilos/src/resources/characters/clint/clint_work2.gif").getImage();
-            clint.material1 = resources.totalGeode;
-            clint.material2 = resources.totalIron;
+        clint.idle  = setup.image("/resources/characters/clint/clint_idle.png");
+        clint.work1 = setup.image("/resources/characters/clint/clint_work1.gif");
+        clint.work2 = setup.image("/resources/characters/clint/clint_work2.gif");
 
-            robin.idle      = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_idle.gif").getImage();
-            robin.work1     = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_work.gif").getImage();
-            robin.work2     = new ImageIcon("ProyectoHilos/src/resources/characters/robin/robin_work.gif").getImage();
-            robin.material1 = resources.totalStone;
+        clint.material1 = resources.totalGeode;
+        clint.material2 = resources.totalIron;
 
-            robin.image = robin.idle;
-            clint.image = clint.idle;
+        robin.idle  = setup.image("/resources/characters/robin/robin_idle.gif");
+        robin.work1 = setup.image("/resources/characters/robin/robin_work.gif");
+        robin.work2 = setup.image("/resources/characters/robin/robin_work.gif");
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        robin.material1 = resources.totalStone;
+
+        robin.image = robin.idle;
+        clint.image = clint.idle;
 
     }
 
@@ -140,7 +140,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             if (timer >= 1000000000) {
-                System.out.println("FPS: " + drawCount);
+                //System.out.println("FPS: " + drawCount);
                 drawCount = 0;
                 timer     = 0;
             }

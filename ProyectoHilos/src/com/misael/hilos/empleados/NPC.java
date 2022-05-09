@@ -1,9 +1,12 @@
 package com.misael.hilos.empleados;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import com.misael.hilos.SetupFile;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class NPC extends Entity {
@@ -16,6 +19,8 @@ public class NPC extends Entity {
     GamePanel      gp;
     KeyHandler     keyHandler;
     EmpleadoThread empleadoThread;
+
+    SetupFile setup = new SetupFile();
     boolean        isWorking = false;
 
     public NPC(GamePanel gp, String nombreEmpleado, KeyHandler keyHandler) {
@@ -27,11 +32,7 @@ public class NPC extends Entity {
         hitbox              = new Rectangle(x, y, width, height);
         image               = idle;
 
-        try {
-            interactButton = ImageIO.read(new File("ProyectoHilos/src/resources/misc/btn_interactuar.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        interactButton = setup.image("/resources/misc/btn_interactuar.png");
     }
 
     public void setSize(int width, int height) {
@@ -71,14 +72,6 @@ public class NPC extends Entity {
         }
     }
 
-    public void recieveMaterialUpdate() {
-        drawNewMaterial();
-    }
-
-    public void drawNewMaterial() {
-
-    }
-
     public void draw(Graphics2D g2) {
         hitbox.x      = x;
         hitbox.y      = y;
@@ -90,15 +83,20 @@ public class NPC extends Entity {
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 26));
 
-        //Interact button
-        if (collisionOn) {
-            g2.drawImage(interactButton, center, y - 100, 90, 90, null);
-            g2.drawRoundRect(center + 20, y - 50, 150, 60, 5, 6);
-        }
-
         //NPC image
         g2.drawImage(image, x, y, width, height, null);
 
+
+        //Interact button
+        if (collisionOn) {
+            g2.drawImage(interactButton, center, y - 100, 90, 90, null);
+
+//            g2.fillRoundRect(x + 50, y - 120, 240, 150, 15, 15);
+//            g2.setColor(Color.BLACK);
+//            g2.fillRoundRect(x + 55, y - 115, 230, 140, 15, 15);
+        }
+
+        g2.setColor(Color.WHITE);
         drawMaterialBar(g2);
 
     }

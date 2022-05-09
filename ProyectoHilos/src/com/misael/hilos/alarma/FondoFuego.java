@@ -1,21 +1,26 @@
 package com.misael.hilos.alarma;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Objects;
+import com.misael.hilos.SetupFile;
+
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 
 public class FondoFuego extends JPanel {
+
+    SetupFile setupFile;
 
     Image imageFire;
     Image imageNormal;
     Image imageInUse;
 
     public FondoFuego() {
-        imageFire   = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/backgrounds/wooden_wall_fire.gif"))).getImage();
-        imageNormal = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/backgrounds/wooden_wall.jpg"))).getImage();
+        imageFire   = setupFile.image("/resources/backgrounds/wooden_wall_fire.gif");
+        imageNormal = setupFile.image("/resources/backgrounds/wooden_wall.jpg");
 
         imageInUse = imageNormal;
-
         this.setPreferredSize(new Dimension(640, 480));
     }
 

@@ -1,17 +1,16 @@
 package com.misael.hilos.empleados;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
+import com.misael.hilos.SetupFile;
+
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class Jugador extends Entity {
 
     GamePanel  gp;
     KeyHandler keyHandler;
+    SetupFile  setup = new SetupFile();
 
-    Image image, work1, work2, up, left, down, right, up_stopped, left_stopped, down_stopped, right_stopped;
+    Image image, up, left, down, right, up_stopped, left_stopped, down_stopped, right_stopped;
 
     public Jugador(GamePanel gp, KeyHandler keyHandler) {
         this.gp         = gp;
@@ -38,8 +37,6 @@ public class Jugador extends Entity {
             gp.collisionChecker.checkCollision();
 
             stopWhenHittingWall();
-
-           //gp.playSFX(4);
 
             if (keyHandler.upPressed) {
                 direction = "up";
@@ -96,22 +93,15 @@ public class Jugador extends Entity {
     }
 
     public void getPlayerImage() {
-        try {
-            up_stopped    = ImageIO.read(new File("ProyectoHilos/src/resources/characters/eliot/eliot_up_stopped.png"));
-            left_stopped  = ImageIO.read(new File("ProyectoHilos/src/resources/characters/eliot/eliot_left_stopped.png"));
-            down_stopped  = ImageIO.read(new File("ProyectoHilos/src/resources/characters/eliot/eliot_down_stopped.png"));
-            right_stopped = ImageIO.read(new File("ProyectoHilos/src/resources/characters/eliot/eliot_right_stopped.png"));
+        up_stopped    = setup.image("/resources/characters/eliot/eliot_up_stopped.png");
+        left_stopped  = setup.image("/resources/characters/eliot/eliot_left_stopped.png");
+        down_stopped  = setup.image("/resources/characters/eliot/eliot_down_stopped.png");
+        right_stopped = setup.image("/resources/characters/eliot/eliot_right_stopped.png");
 
-            work1 = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_work1.gif").getImage();
-            work2 = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_work2.gif").getImage();
-            up    = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_up.gif").getImage();
-            left  = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_left.gif").getImage();
-            down  = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_down.gif").getImage();
-            right = new ImageIcon("ProyectoHilos/src/resources/characters/eliot/eliot_right.gif").getImage();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        up    = setup.image("/resources/characters/eliot/eliot_up.gif");
+        left  = setup.image("/resources/characters/eliot/eliot_left.gif");
+        down  = setup.image("/resources/characters/eliot/eliot_down.gif");
+        right = setup.image("/resources/characters/eliot/eliot_right.gif");
     }
 
     public void draw(Graphics2D g2) {
