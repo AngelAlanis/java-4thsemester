@@ -1,6 +1,6 @@
 package com.misael.hilos.sincronizados;
 
-import javax.swing.*;
+import javax.swing.DefaultListModel;
 
 public class HilosSincronizados implements Runnable {
 

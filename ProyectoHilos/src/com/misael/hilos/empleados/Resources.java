@@ -2,10 +2,8 @@ package com.misael.hilos.empleados;
 
 import com.misael.hilos.SetupFile;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Image;
+
 
 public class Resources {
 

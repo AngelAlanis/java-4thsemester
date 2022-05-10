@@ -2,22 +2,27 @@ package com.misael.hilos.mainScreen;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.misael.hilos.SetupFile;
 import com.misael.hilos.alarma.InterfazAlarma;
-import com.misael.hilos.cronometro.Cronometro;
 import com.misael.hilos.cronometro.InterfazCronometro;
 import com.misael.hilos.empleados.LauncherEmpleados;
 import com.misael.hilos.sincronizados.InterfazCuatroHilos;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.Locale;
-import java.util.Objects;
 
 public class MainScreenGUI extends JFrame {
 
@@ -32,6 +37,8 @@ public class MainScreenGUI extends JFrame {
     private ImageIcon iconEmpleados;
     private ImageIcon iconCronometro;
 
+    private SetupFile setup = new SetupFile();
+
     public MainScreenGUI() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(540, 760);
@@ -39,6 +46,7 @@ public class MainScreenGUI extends JFrame {
         loadImages();
         initActionListeners();
         initComponents();
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -81,10 +89,10 @@ public class MainScreenGUI extends JFrame {
     }
 
     public void loadImages() {
-        iconCronometro = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_stopwatch.png")));
-        iconAlarm      = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_fire.png")));
-        iconThreads    = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_threads.png")));
-        iconEmpleados  = new ImageIcon(Objects.requireNonNull(getClass().getResource("/resources/misc/icon_empleados.png")));
+        iconCronometro = setup.imageIcon("/resources/misc/icon_stopwatch.png");
+        iconAlarm      = setup.imageIcon("/resources/misc/icon_fire.png");
+        iconThreads    = setup.imageIcon("/resources/misc/icon_threads.png");
+        iconEmpleados  = setup.imageIcon("/resources/misc/icon_empleados.png");
     }
 
     {

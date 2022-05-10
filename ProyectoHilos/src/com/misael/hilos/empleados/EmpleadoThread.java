@@ -38,7 +38,11 @@ public class EmpleadoThread implements Runnable {
 
         while (isRunning) {
 
-            System.out.println("is running");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             if (npc.isWorking) {
 

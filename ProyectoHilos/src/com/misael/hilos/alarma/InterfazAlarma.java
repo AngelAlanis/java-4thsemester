@@ -1,6 +1,5 @@
 package com.misael.hilos.alarma;
 
-
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -31,7 +30,7 @@ public class InterfazAlarma extends JFrame {
     private Clip       alarmSound;
     private Clip       fireSound;
     private Clip       extinguisherSound;
-    public Alarma alarma;
+    public  Alarma     alarma;
 
     public InterfazAlarma() {
         this.setSize(640, 480);
@@ -142,7 +141,7 @@ public class InterfazAlarma extends JFrame {
 
     private void startThread() {
         alarma = new Alarma();
-        Thread hilo   = new Thread(alarma);
+        Thread hilo = new Thread(alarma);
         hilo.start();
     }
 

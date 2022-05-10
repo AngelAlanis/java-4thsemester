@@ -1,6 +1,7 @@
 package com.misael.hilos.empleados;
 
-import java.awt.*;
+import java.awt.Image;
+import java.awt.Rectangle;
 
 public class Entity {
 

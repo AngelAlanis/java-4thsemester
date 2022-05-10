@@ -2,14 +2,10 @@ package com.misael.hilos.empleados;
 
 import com.misael.hilos.SetupFile;
 
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.swing.*;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -25,13 +21,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     boolean isRunning = true;
 
-    int FPS = 45;
+    final int FPS = 45;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(1280, 720));
         this.setDoubleBuffered(true);
-        createNPCs();
-        startGameThread();
         setupGame();
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
@@ -39,6 +33,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
+        createNPCs();
+        startGameThread();
         playMusic(1);
     }
 
@@ -53,8 +49,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         jugador.update();
-        npcs[0].update();
-        npcs[1].update();
+
+        for (int i = 0; i < npcs.length; i++) {
+            npcs[i].update();
+        }
     }
 
     public void createNPCs() {

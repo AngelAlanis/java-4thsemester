@@ -1,9 +1,8 @@
 package com.misael.hilos;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.Objects;
 
 public class SetupFile {

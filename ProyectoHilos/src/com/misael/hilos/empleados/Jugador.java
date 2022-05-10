@@ -2,14 +2,17 @@ package com.misael.hilos.empleados;
 
 import com.misael.hilos.SetupFile;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
 
 public class Jugador extends Entity {
 
     GamePanel  gp;
     KeyHandler keyHandler;
     SetupFile  setup = new SetupFile();
+    Graphics2D g2;
 
     Image image, up, left, down, right, up_stopped, left_stopped, down_stopped, right_stopped;
 
@@ -130,20 +133,29 @@ public class Jugador extends Entity {
     }
 
     public void draw(Graphics2D g2) {
+
+        this.g2 = g2;
+
         hitbox.x      = x;
         hitbox.y      = y;
         hitbox.width  = width;
         hitbox.height = height;
 
         if (keyHandler.hPressed) {
-            g2.setColor(Color.RED);
-            g2.draw(hitbox);
-            g2.draw(gp.npcs[0].hitbox);
-            g2.draw(gp.npcs[1].hitbox);
-            g2.fillRect(MinesBackground.hitbox.x, MinesBackground.hitbox.y, MinesBackground.hitbox.width, MinesBackground.hitbox.height);
+            drawHitboxes();
         }
 
         g2.drawImage(image, x, y, width, height, null);
+
+        g2.dispose();
+    }
+
+    private void drawHitboxes() {
+        g2.setColor(Color.RED);
+        g2.draw(hitbox);
+        g2.draw(gp.npcs[0].hitbox);
+        g2.draw(gp.npcs[1].hitbox);
+        g2.fillRect(MinesBackground.hitbox.x, MinesBackground.hitbox.y, MinesBackground.hitbox.width, MinesBackground.hitbox.height);
     }
 
 

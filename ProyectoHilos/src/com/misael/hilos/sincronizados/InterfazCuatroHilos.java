@@ -3,11 +3,21 @@ package com.misael.hilos.sincronizados;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
 import java.util.Locale;
 
 public class InterfazCuatroHilos extends JFrame {
