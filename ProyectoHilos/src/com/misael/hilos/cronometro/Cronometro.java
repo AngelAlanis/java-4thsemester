@@ -4,10 +4,10 @@ public class Cronometro implements Runnable {
 
     InterfazCronometro interfazCronometro;
     Thread             hilo;
-    int                horas;
     int                milisegundos;
     int                segundos;
     int                minutos;
+    int                horas;
     boolean            isStopped = true;
     boolean            isRunning = true;
 
@@ -20,7 +20,7 @@ public class Cronometro implements Runnable {
     public void updateTime() {
 
         if (!isStopped) {
-            milisegundos += 1;
+            milisegundos ++;
         }
 
         if (milisegundos >= 100) {
@@ -39,9 +39,6 @@ public class Cronometro implements Runnable {
         }
     }
 
-    public void pauseCronometro() {
-        isStopped = true;
-    }
 
     public void stopCronometro() {
         isStopped    = true;
@@ -53,6 +50,10 @@ public class Cronometro implements Runnable {
 
     public void resumeCronometro() {
         isStopped = false;
+    }
+
+    public void pauseCronometro() {
+        isStopped = true;
     }
 
     public void stopThread() {

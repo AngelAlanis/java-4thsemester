@@ -21,9 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     Sound            sound            = new Sound();
     CollisionChecker collisionChecker = new CollisionChecker(this, keyHandler);
     SetupFile        setup            = new SetupFile();
-
-    NPC clint;
-    NPC robin;
+    NPC[]            npcs             = new NPC[2];
 
     boolean isRunning = true;
 
@@ -55,35 +53,35 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         jugador.update();
-        clint.update();
-        robin.update();
+        npcs[0].update();
+        npcs[1].update();
     }
 
     public void createNPCs() {
-        clint = new NPC(this, "Clint", keyHandler);
-        robin = new NPC(this, "Robin", keyHandler);
+        npcs[0] = new NPC(this, "Clint", keyHandler);
+        npcs[1] = new NPC(this, "Robin", keyHandler);
 
-        clint.setSize(240, 300);
-        clint.setLocation(150, 250);
+        npcs[0].setSize(240, 300);
+        npcs[0].setLocation(150, 250);
 
-        robin.setSize(120, 232);
-        robin.setLocation(900, 280);
+        npcs[1].setSize(120, 232);
+        npcs[1].setLocation(900, 280);
 
-        clint.idle  = setup.image("/resources/characters/clint/clint_idle.png");
-        clint.work1 = setup.image("/resources/characters/clint/clint_work1.gif");
-        clint.work2 = setup.image("/resources/characters/clint/clint_work2.gif");
+        npcs[0].idle  = setup.image("/resources/characters/clint/clint_idle.png");
+        npcs[0].work1 = setup.image("/resources/characters/clint/clint_work1.gif");
+        npcs[0].work2 = setup.image("/resources/characters/clint/clint_work2.gif");
 
-        clint.material1 = resources.totalGeode;
-        clint.material2 = resources.totalIron;
+        npcs[0].material1 = resources.totalGeode;
+        npcs[0].material2 = resources.totalIron;
 
-        robin.idle  = setup.image("/resources/characters/robin/robin_idle.gif");
-        robin.work1 = setup.image("/resources/characters/robin/robin_work.gif");
-        robin.work2 = setup.image("/resources/characters/robin/robin_work.gif");
+        npcs[1].idle  = setup.image("/resources/characters/robin/robin_idle.gif");
+        npcs[1].work1 = setup.image("/resources/characters/robin/robin_work.gif");
+        npcs[1].work2 = setup.image("/resources/characters/robin/robin_work.gif");
 
-        robin.material1 = resources.totalStone;
+        npcs[1].material1 = resources.totalStone;
 
-        robin.image = robin.idle;
-        clint.image = clint.idle;
+        npcs[1].image = npcs[1].idle;
+        npcs[0].image = npcs[0].idle;
 
     }
 
@@ -94,8 +92,11 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2 = (Graphics2D) g;
 
         minesBackground.draw(g2);
-        clint.draw(g2);
-        robin.draw(g2);
+
+        for (int i = 0; i < npcs.length; i++) {
+            npcs[i].draw(g2);
+        }
+
         jugador.draw(g2);
 
         g2.dispose();

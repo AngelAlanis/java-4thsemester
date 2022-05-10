@@ -3,6 +3,7 @@ package com.misael.hilos.empleados;
 import com.misael.hilos.SetupFile;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Jugador extends Entity {
 
@@ -28,53 +29,77 @@ public class Jugador extends Entity {
         x         = 500;
         y         = 350;
         speed     = 8;
-        direction = "up";
+        direction = DIRECTION_DOWN;
     }
 
     public void update() {
 
         if (keyIsBeingPressed()) {
+
             gp.collisionChecker.checkCollision();
 
             stopWhenHittingWall();
 
             if (keyHandler.upPressed) {
-                direction = "up";
-                y -= speed;
-                image     = up;
+                goUp();
             } else if (keyHandler.leftPressed) {
-                direction = "left";
-                x -= speed;
-                image     = left;
+                goLeft();
             } else if (keyHandler.downPressed) {
-                direction = "down";
-                y += speed;
-                image     = down;
+                goDown();
             } else if (keyHandler.rightPressed) {
-                direction = "right";
-                x += speed;
-                image     = right;
-            } else if (keyHandler.ePressed && gp.clint.collisionOn) {
-                gp.playSFX(2);
-                gp.clint.isWorking     = !gp.clint.isWorking;
-                gp.keyHandler.ePressed = false;
-            } else if (keyHandler.ePressed && gp.robin.collisionOn) {
-                gp.playSFX(2);
-                gp.robin.isWorking     = !gp.robin.isWorking;
-                gp.keyHandler.ePressed = false;
+                goRight();
+            } else if (keyHandler.ePressed) {
+                changeNPCWorkState();
             }
+
         } else {
             switch (direction) {
-                case "up" -> image = up_stopped;
-                case "left" -> image = left_stopped;
-                case "down" -> image = down_stopped;
-                case "right" -> image = right_stopped;
+                case DIRECTION_UP -> image = up_stopped;
+                case DIRECTION_LEFT -> image = left_stopped;
+                case DIRECTION_DOWN -> image = down_stopped;
+                case DIRECTION_RIGHT -> image = right_stopped;
             }
         }
     }
 
+    private void goRight() {
+        direction = DIRECTION_RIGHT;
+        x += speed;
+        image     = right;
+    }
+
+    private void goDown() {
+        direction = DIRECTION_DOWN;
+        y += speed;
+        image     = down;
+    }
+
+    private void goLeft() {
+        direction = DIRECTION_LEFT;
+        x -= speed;
+        image     = left;
+    }
+
+    private void goUp() {
+        direction = DIRECTION_UP;
+        y -= speed;
+        image     = up;
+    }
+
     private boolean keyIsBeingPressed() {
         return keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed || keyHandler.ePressed;
+    }
+
+    private void changeNPCWorkState() {
+        for (int i = 0; i < gp.npcs.length; i++) {
+
+            if (gp.npcs[i].collisionOn) {
+                gp.playSFX(2);
+                gp.npcs[i].isWorking = !gp.npcs[i].isWorking;
+            }
+        }
+
+        gp.keyHandler.ePressed = false;
     }
 
     private void stopWhenHittingWall() {
@@ -113,8 +138,8 @@ public class Jugador extends Entity {
         if (keyHandler.hPressed) {
             g2.setColor(Color.RED);
             g2.draw(hitbox);
-            g2.draw(gp.clint.hitbox);
-            g2.draw(gp.robin.hitbox);
+            g2.draw(gp.npcs[0].hitbox);
+            g2.draw(gp.npcs[1].hitbox);
             g2.fillRect(MinesBackground.hitbox.x, MinesBackground.hitbox.y, MinesBackground.hitbox.width, MinesBackground.hitbox.height);
         }
 

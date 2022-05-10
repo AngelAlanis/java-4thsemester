@@ -24,8 +24,11 @@ public class LauncherEmpleados extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 panelPrincipal.stopMusic();
-                panelPrincipal.robin.empleadoThread.stopThread();
-                panelPrincipal.clint.empleadoThread.stopThread();
+
+                for (int i = 0; i < panelPrincipal.npcs.length; i++) {
+                    panelPrincipal.npcs[i].empleadoThread.stopThread();
+                }
+
                 panelPrincipal.stopThread();
             }
         });
