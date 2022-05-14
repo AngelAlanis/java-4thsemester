@@ -9,44 +9,85 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class Interfaz extends JFrame {
-    private JPanel      panelMain;
-    private JScrollPane spListaContactoss;
-    private JPanel      panelBotones;
-    private JButton     nuevoButton;
-    private JButton     borrarButton;
-    private JButton     editarButton;
-    private JButton     guardarButton;
-    private JButton     cancelarButton;
-    private JTextField  tfNombre;
-    private JTextField  tfTelefono;
-    private JTextField  tfCorreo;
-    private JComboBox   cbCategoria;
-    private JLabel      labelNombre;
-    private JLabel      lbTelefono;
-    private JLabel      lbCategoria;
-    private JLabel      lbCorreo;
-    public  JTable      tableContactos;
-    private Conectar    conectar;
+    private JPanel            panelMain;
+    private JScrollPane       spListaContactoss;
+    private JPanel            panelBotones;
+    private JButton           btnNuevo;
+    private JButton           btnBorrar;
+    private JButton           btnEditar;
+    private JButton           btnGuardar;
+    private JButton           btnCancelar;
+    private JTextField        tfNombre;
+    private JTextField        tfTelefono;
+    private JTextField        tfCorreo;
+    private JComboBox<String> cbCategoria;
+    private JLabel            labelNombre;
+    private JLabel            lbTelefono;
+    private JLabel            lbCategoria;
+    private JLabel            lbCorreo;
+    public  JTable            tableContactos;
+    private Conectar          conectar;
+    private String[]          categorias;
 
     public Interfaz() {
         super("Agenda");
         conectar = new Conectar();
         configurarComponentes();
-        this.setSize(700, 300);
+        this.setSize(1000, 300);
         this.setContentPane(panelMain);
-        initTabla();
+        conectarBaseDatos();
+        configurarComponentes();
+        initActionListeners();
+        this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
     }
 
-    public void initTabla() {
+    public void conectarBaseDatos() {
         conectar.registro = conectar.conexion();
-        tableContactos.setModel(conectar.verTabla(""));
+        actualizarTabla();
+    }
+
+    private void actualizarTabla() {
+        tableContactos.setModel(conectar.verTabla());
+    }
+
+    public void initActionListeners() {
+        btnNuevo.addActionListener(e -> {
+            guardarNuevo();
+            limpiar();
+            actualizarTabla();
+        });
+
+        btnBorrar.addActionListener(e -> {
+            int identificador = Integer.parseInt(String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 0)));
+            conectar.eliminarRegistro(identificador);
+            actualizarTabla();
+        });
+    }
+
+    private void limpiar() {
+        tfNombre.setText("");
+        tfTelefono.setText("");
+        tfCorreo.setText("");
+        cbCategoria.setSelectedIndex(0);
+    }
+
+    private void guardarNuevo() {
+        String nombre    = tfNombre.getText();
+        String telefono  = tfTelefono.getText();
+        String correo    = tfCorreo.getText();
+        String categoria = String.valueOf(cbCategoria.getSelectedItem());
+        Contacto contacto = new Contacto(nombre, telefono, correo, categoria);
+        conectar.guardarContacto(contacto);
     }
 
     private void configurarComponentes() {
+        categorias = new String[]{"Familiar", "Amistad", "Trabajo"};
+        cbCategoria.setModel(new DefaultComboBoxModel<>(categorias));
+        spListaContactoss.setPreferredSize(new Dimension(650, 200));
     }
 
     public static void main(String[] args) {
@@ -80,21 +121,21 @@ public class Interfaz extends JFrame {
         panelBotones = new JPanel();
         panelBotones.setLayout(new GridLayoutManager(1, 5, new Insets(0, 0, 0, 0), -1, -1));
         panelMain.add(panelBotones, new GridConstraints(4, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        nuevoButton = new JButton();
-        nuevoButton.setText("Nuevo");
-        panelBotones.add(nuevoButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        borrarButton = new JButton();
-        borrarButton.setText("Borrar");
-        panelBotones.add(borrarButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        editarButton = new JButton();
-        editarButton.setText("Editar");
-        panelBotones.add(editarButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        guardarButton = new JButton();
-        guardarButton.setText("Guardar");
-        panelBotones.add(guardarButton, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        cancelarButton = new JButton();
-        cancelarButton.setText("Cancelar");
-        panelBotones.add(cancelarButton, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnNuevo = new JButton();
+        btnNuevo.setText("Nuevo");
+        panelBotones.add(btnNuevo, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnBorrar = new JButton();
+        btnBorrar.setText("Borrar");
+        panelBotones.add(btnBorrar, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnEditar = new JButton();
+        btnEditar.setText("Editar");
+        panelBotones.add(btnEditar, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnGuardar = new JButton();
+        btnGuardar.setText("Guardar");
+        panelBotones.add(btnGuardar, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnCancelar = new JButton();
+        btnCancelar.setText("Cancelar");
+        panelBotones.add(btnCancelar, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         labelNombre = new JLabel();
         labelNombre.setText("Nombre:");
         panelMain.add(labelNombre, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

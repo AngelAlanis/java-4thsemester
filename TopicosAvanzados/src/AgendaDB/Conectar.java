@@ -8,7 +8,6 @@ public class Conectar {
 
     Connection connection;
     String[]   datosTabla;
-    Interfaz   interfaz;
     String     sqlQuery;
     Connection registro;
 
@@ -25,30 +24,30 @@ public class Conectar {
         return connection;
     }
 
-    public DefaultTableModel verTabla(String numContacto) {
+    public DefaultTableModel verTabla() {
         DefaultTableModel defaultTableModel = new DefaultTableModel();
+        defaultTableModel.addColumn("Identificador");
         defaultTableModel.addColumn("Nombre");
         defaultTableModel.addColumn("Teléfono");
         defaultTableModel.addColumn("Correo");
         defaultTableModel.addColumn("Categoría");
 
-        datosTabla = new String[4];
+        datosTabla = new String[5];
 
-        if (numContacto.equals("")) {
-            sqlQuery = "SELECT * FROM contactos";
-        } else {
-            sqlQuery = "SELECT * FROM contactos WHERE identificador='" + numContacto + "'";
-        }
+
+        sqlQuery = "SELECT * FROM contactos";
+
 
         try {
             Statement sentencia = registro.createStatement();
             ResultSet resultSet = sentencia.executeQuery(sqlQuery);
 
             while (resultSet.next()) {
-                datosTabla[0] = resultSet.getString(2);
-                datosTabla[1] = resultSet.getString(3);
-                datosTabla[2] = resultSet.getString(4);
-                datosTabla[3] = resultSet.getString(5);
+                datosTabla[0] = resultSet.getString(1);
+                datosTabla[1] = resultSet.getString(2);
+                datosTabla[2] = resultSet.getString(3);
+                datosTabla[3] = resultSet.getString(4);
+                datosTabla[4] = resultSet.getString(5);
                 defaultTableModel.addRow(datosTabla);
             }
 
@@ -59,5 +58,41 @@ public class Conectar {
         return defaultTableModel;
     }
 
+    public void guardarContacto(Contacto contacto) {
+
+        sqlQuery = "INSERT INTO contactos (nombre,teléfono,correo,categoría) VALUES (?,?,?,?)";
+
+        try {
+            PreparedStatement preparedStatement = registro.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, contacto.getNombre());
+            preparedStatement.setString(2, contacto.getTelefono());
+            preparedStatement.setString(3, contacto.getCorreo());
+            preparedStatement.setString(4, contacto.getCategoria());
+            preparedStatement.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro guardado.");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        verTabla();
+    }
+
+    public void eliminarRegistro(int identificador) {
+
+
+        try {
+            int confirmation = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar el registro?", "Borrar registro", JOptionPane.YES_NO_OPTION);
+
+            if (confirmation == JOptionPane.YES_OPTION) {
+                PreparedStatement preparedStatement = registro.prepareStatement("DELETE FROM contactos WHERE identificador='" + identificador + "'");
+                preparedStatement.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Modificación realizada");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
