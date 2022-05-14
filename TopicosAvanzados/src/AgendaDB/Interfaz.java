@@ -9,7 +9,6 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class Interfaz extends JFrame {
-    private JList       listaContactos;
     private JPanel      panelMain;
     private JScrollPane spListaContactoss;
     private JPanel      panelBotones;
@@ -26,16 +25,25 @@ public class Interfaz extends JFrame {
     private JLabel      lbTelefono;
     private JLabel      lbCategoria;
     private JLabel      lbCorreo;
+    public  JTable      tableContactos;
+    private Conectar    conectar;
 
     public Interfaz() {
         super("Agenda");
+        conectar = new Conectar();
         configurarComponentes();
         this.setSize(700, 300);
         this.setContentPane(panelMain);
+        initTabla();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
+    }
+
+    public void initTabla() {
+        conectar.registro = conectar.conexion();
+        tableContactos.setModel(conectar.verTabla(""));
     }
 
     private void configurarComponentes() {
@@ -67,8 +75,8 @@ public class Interfaz extends JFrame {
         panelMain.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         spListaContactoss = new JScrollPane();
         panelMain.add(spListaContactoss, new GridConstraints(0, 0, 4, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        listaContactos = new JList();
-        spListaContactoss.setViewportView(listaContactos);
+        tableContactos = new JTable();
+        spListaContactoss.setViewportView(tableContactos);
         panelBotones = new JPanel();
         panelBotones.setLayout(new GridLayoutManager(1, 5, new Insets(0, 0, 0, 0), -1, -1));
         panelMain.add(panelBotones, new GridConstraints(4, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
