@@ -6,6 +6,7 @@ public class Contacto {
     String nombre, telefono, correo, categoria;
 
     public Contacto(int identificador, String nombre, String telefono, String correo, String categoria) {
+        this.identificador = identificador;
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;

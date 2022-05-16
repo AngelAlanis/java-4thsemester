@@ -28,6 +28,7 @@ public class Interfaz extends JFrame {
     public  JTable            tableContactos;
     private Conectar          conectar;
     private String[]          categorias;
+    private int               identificador;
 
     public Interfaz() {
         super("Agenda");
@@ -66,6 +67,17 @@ public class Interfaz extends JFrame {
             conectar.eliminarRegistro(identificador);
             actualizarTabla();
         });
+
+        btnEditar.addActionListener(e -> {
+            cargarRegistro();
+        });
+
+        btnGuardar.addActionListener(e -> {
+            Contacto contacto = new Contacto(identificador, tfNombre.getText(), tfTelefono.getText(), tfCorreo.getText(), String.valueOf(cbCategoria.getSelectedItem()));
+            conectar.modificarUsuario(contacto);
+            actualizarTabla();
+            limpiar();
+        });
     }
 
     private void limpiar() {
@@ -76,11 +88,11 @@ public class Interfaz extends JFrame {
     }
 
     private void guardarNuevo() {
-        String nombre    = tfNombre.getText();
-        String telefono  = tfTelefono.getText();
-        String correo    = tfCorreo.getText();
-        String categoria = String.valueOf(cbCategoria.getSelectedItem());
-        Contacto contacto = new Contacto(nombre, telefono, correo, categoria);
+        String   nombre    = tfNombre.getText();
+        String   telefono  = tfTelefono.getText();
+        String   correo    = tfCorreo.getText();
+        String   categoria = String.valueOf(cbCategoria.getSelectedItem());
+        Contacto contacto  = new Contacto(nombre, telefono, correo, categoria);
         conectar.guardarContacto(contacto);
     }
 
@@ -88,6 +100,30 @@ public class Interfaz extends JFrame {
         categorias = new String[]{"Familiar", "Amistad", "Trabajo"};
         cbCategoria.setModel(new DefaultComboBoxModel<>(categorias));
         spListaContactoss.setPreferredSize(new Dimension(650, 200));
+    }
+
+    private void cargarRegistro() {
+        identificador = Integer.parseInt(String.valueOf(tableContactos.getValueAt(tableContactos.getSelectedRow(), 0)));
+        Contacto contacto = conectar.cargarContacto(identificador);
+        tfNombre.setText(contacto.getNombre());
+        tfTelefono.setText(contacto.getTelefono());
+        tfCorreo.setText(contacto.getCorreo());
+        cbCategoria.setSelectedIndex(cBSelectedIndex(contacto.getCategoria()));
+    }
+
+    private int cBSelectedIndex(String item) {
+        switch (item) {
+            case "Familiar" -> {
+                return 0;
+            }
+            case "Amistad" -> {
+                return 1;
+            }
+            case "Trabajo" -> {
+                return 2;
+            }
+        }
+        return -1;
     }
 
     public static void main(String[] args) {

@@ -58,6 +58,32 @@ public class Conectar {
         return defaultTableModel;
     }
 
+    public Contacto cargarContacto(int identificador) {
+
+        datosTabla = new String[5];
+
+        sqlQuery = "SELECT * FROM contactos WHERE identificador='" + identificador + "'";
+
+        try {
+            Statement sentencia = registro.createStatement();
+            ResultSet resultSet = sentencia.executeQuery(sqlQuery);
+
+            while (resultSet.next()) {
+                datosTabla[0] = resultSet.getString(1);
+                datosTabla[1] = resultSet.getString(2);
+                datosTabla[2] = resultSet.getString(3);
+                datosTabla[3] = resultSet.getString(4);
+                datosTabla[4] = resultSet.getString(5);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new Contacto(datosTabla[1], datosTabla[2], datosTabla[3], datosTabla[4]);
+
+    }
+
     public void guardarContacto(Contacto contacto) {
 
         sqlQuery = "INSERT INTO contactos (nombre,teléfono,correo,categoría) VALUES (?,?,?,?)";
@@ -93,6 +119,16 @@ public class Conectar {
             e.printStackTrace();
         }
 
+    }
+
+    public void modificarUsuario(Contacto contacto) {
+        try {
+            PreparedStatement ps = registro.prepareStatement("UPDATE contactos SET nombre = '" + contacto.getNombre() + "', teléfono = '" + contacto.getTelefono() + "', correo = '" + contacto.getCorreo() + "', categoría = '" + contacto.getCategoria() + "' WHERE identificador='" + contacto.getIdentificador() + "'");
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Modificación realizada");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
