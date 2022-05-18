@@ -3,41 +3,25 @@ package AgendaDB;
 public class Contacto {
 
     int    identificador;
-    String nombre, telefono, correo, categoria;
+    String nombre, telefono, correo, categoria, direccion, cumpleaños;
 
-    public Contacto(int identificador, String nombre, String telefono, String correo, String categoria) {
+    public Contacto(int identificador, String nombre, String telefono, String correo, String categoria, String direccion, String cumpleaños) {
         this.identificador = identificador;
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
         this.categoria = categoria;
+        this.direccion = direccion;
+        this.cumpleaños = cumpleaños;
     }
 
-    public Contacto(String nombre, String telefono, String correo, String categoria) {
+    public Contacto(String nombre, String telefono, String correo, String categoria, String direccion, String cumpleaños) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
         this.categoria = categoria;
-    }
-
-    public void setIdentificador(int identificador) {
-        this.identificador = identificador;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+        this.direccion = direccion;
+        this.cumpleaños = cumpleaños;
     }
 
     public int getIdentificador() {
@@ -59,4 +43,13 @@ public class Contacto {
     public String getCategoria() {
         return categoria;
     }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getCumpleaños() {
+        return cumpleaños;
+    }
+
 }

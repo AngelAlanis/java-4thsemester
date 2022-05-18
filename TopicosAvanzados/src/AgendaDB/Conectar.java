@@ -31,8 +31,10 @@ public class Conectar {
         defaultTableModel.addColumn("Teléfono");
         defaultTableModel.addColumn("Correo");
         defaultTableModel.addColumn("Categoría");
+        defaultTableModel.addColumn("Dirección");
+        defaultTableModel.addColumn("Cumpleaños");
 
-        datosTabla = new String[5];
+        datosTabla = new String[7];
 
 
         sqlQuery = "SELECT * FROM contactos";
@@ -48,6 +50,8 @@ public class Conectar {
                 datosTabla[2] = resultSet.getString(3);
                 datosTabla[3] = resultSet.getString(4);
                 datosTabla[4] = resultSet.getString(5);
+                datosTabla[5] = resultSet.getString(6);
+                datosTabla[6] = resultSet.getString(7);
                 defaultTableModel.addRow(datosTabla);
             }
 
@@ -60,7 +64,7 @@ public class Conectar {
 
     public Contacto cargarContacto(int identificador) {
 
-        datosTabla = new String[5];
+        datosTabla = new String[7];
 
         sqlQuery = "SELECT * FROM contactos WHERE identificador='" + identificador + "'";
 
@@ -74,19 +78,21 @@ public class Conectar {
                 datosTabla[2] = resultSet.getString(3);
                 datosTabla[3] = resultSet.getString(4);
                 datosTabla[4] = resultSet.getString(5);
+                datosTabla[5] = resultSet.getString(6);
+                datosTabla[6] = resultSet.getString(7);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return new Contacto(datosTabla[1], datosTabla[2], datosTabla[3], datosTabla[4]);
+        return new Contacto(datosTabla[1], datosTabla[2], datosTabla[3], datosTabla[4], datosTabla[5], datosTabla[6]);
 
     }
 
     public void guardarContacto(Contacto contacto) {
 
-        sqlQuery = "INSERT INTO contactos (nombre,teléfono,correo,categoría) VALUES (?,?,?,?)";
+        sqlQuery = "INSERT INTO contactos (nombre,teléfono,correo,categoría, direccion, cumpleaños) VALUES (?,?,?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = registro.prepareStatement(sqlQuery);
@@ -94,6 +100,8 @@ public class Conectar {
             preparedStatement.setString(2, contacto.getTelefono());
             preparedStatement.setString(3, contacto.getCorreo());
             preparedStatement.setString(4, contacto.getCategoria());
+            preparedStatement.setString(5, contacto.getDireccion());
+            preparedStatement.setString(6, contacto.getCumpleaños());
             preparedStatement.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro guardado.");
         } catch (SQLException ex) {
@@ -104,8 +112,6 @@ public class Conectar {
     }
 
     public void eliminarRegistro(int identificador) {
-
-
         try {
             int confirmation = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar el registro?", "Borrar registro", JOptionPane.YES_NO_OPTION);
 
@@ -123,7 +129,7 @@ public class Conectar {
 
     public void modificarUsuario(Contacto contacto) {
         try {
-            PreparedStatement ps = registro.prepareStatement("UPDATE contactos SET nombre = '" + contacto.getNombre() + "', teléfono = '" + contacto.getTelefono() + "', correo = '" + contacto.getCorreo() + "', categoría = '" + contacto.getCategoria() + "' WHERE identificador='" + contacto.getIdentificador() + "'");
+            PreparedStatement ps = registro.prepareStatement("UPDATE contactos SET nombre = '" + contacto.getNombre() + "', teléfono = '" + contacto.getTelefono() + "', correo = '" + contacto.getCorreo() + "', categoría = '" + contacto.getCategoria() + "', direccion = '" + contacto.getDireccion() + "', cumpleaños = '" + contacto.getCumpleaños() + "' WHERE identificador='" + contacto.getIdentificador() + "'");
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Modificación realizada");
         } catch (SQLException e) {
