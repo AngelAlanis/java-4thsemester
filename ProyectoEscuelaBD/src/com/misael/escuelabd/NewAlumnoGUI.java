@@ -38,6 +38,8 @@ public class NewAlumnoGUI extends JFrame {
     private JButton           btnRegistrar;
     private JTextField        tfFechaNacimiento;
     private JLabel            lbFechaNacimiento;
+    private JButton           btnAnterior;
+    private JButton           btnSiguiente;
 
     int currentPanel = 0;
 
@@ -46,12 +48,17 @@ public class NewAlumnoGUI extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panelMain);
         this.setLocationRelativeTo(null);
-        configurarComponentes();
+        initComponents();
         initActionListeners();
         this.setVisible(true);
     }
 
-    public void configurarComponentes() {
+    public void initComponents() {
+        setBorderToComponents();
+    }
+
+
+    private void setBorderToComponents() {
         tfNombreAlumno.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         tfFechaNacimiento.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         tfNombreTutor.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
@@ -62,7 +69,6 @@ public class NewAlumnoGUI extends JFrame {
         cbGrado.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         cbYear.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         cbExtraCurricular.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-
     }
 
     public void initActionListeners() {
@@ -85,7 +91,7 @@ public class NewAlumnoGUI extends JFrame {
 
         });
 
-        labelSiguiente.addMouseListener(new MouseAdapter() {
+        btnSiguiente.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 incrementCurrentPanel();
@@ -93,7 +99,7 @@ public class NewAlumnoGUI extends JFrame {
             }
         });
 
-        labelAnterior.addMouseListener(new MouseAdapter() {
+        btnAnterior.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 decreaseCurrentPanel();
@@ -130,6 +136,9 @@ public class NewAlumnoGUI extends JFrame {
         panelCards.add(panelInfoTutor);
         panelCards.revalidate();
         panelCards.repaint();
+        btnAnterior.setEnabled(true);
+        btnSiguiente.setEnabled(true);
+
     }
 
     private void cargarPanelGrado() {
@@ -137,6 +146,8 @@ public class NewAlumnoGUI extends JFrame {
         panelCards.add(panelInfoGrado);
         panelCards.revalidate();
         panelCards.repaint();
+        btnAnterior.setEnabled(true);
+        btnSiguiente.setEnabled(false);
     }
 
     private void cargarPanelAlumno() {
@@ -144,6 +155,8 @@ public class NewAlumnoGUI extends JFrame {
         panelCards.add(panelInfoAlumno);
         panelCards.revalidate();
         panelCards.repaint();
+        btnAnterior.setEnabled(false);
+        btnSiguiente.setEnabled(true);
     }
 
 }
