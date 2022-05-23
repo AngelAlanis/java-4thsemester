@@ -1,6 +1,7 @@
 package com.misael.escuelabd;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -45,8 +46,23 @@ public class NewAlumnoGUI extends JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panelMain);
         this.setLocationRelativeTo(null);
+        configurarComponentes();
         initActionListeners();
         this.setVisible(true);
+    }
+
+    public void configurarComponentes() {
+        tfNombreAlumno.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfFechaNacimiento.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfNombreTutor.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfRFCTutor.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfTelefonoAlumno.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfTelefonoTutor.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        cbGenero.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        cbGrado.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        cbYear.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        cbExtraCurricular.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+
     }
 
     public void initActionListeners() {
@@ -102,9 +118,9 @@ public class NewAlumnoGUI extends JFrame {
         switch (currentPanel) {
             case 0 -> cargarPanelAlumno();
 
-            case 1 -> cargarPanelGrado();
+            case 1 -> cargarPanelTutor();
 
-            case 2 -> cargarPanelTutor();
+            case 2 -> cargarPanelGrado();
 
         }
     }
