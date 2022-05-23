@@ -13,7 +13,7 @@ public class NewAlumnoGUI extends JFrame {
     private JLabel            labelTituloAlumno;
     private JTextField        tfTelefonoAlumno;
     private JTextField        tfNombreAlumno;
-    private JComboBox<String> tfGenero;
+    private JComboBox<String> cbGenero;
     private JLabel            labelNombre;
     private JLabel            labelGenero;
     private JLabel            labelTelefono;
@@ -34,6 +34,9 @@ public class NewAlumnoGUI extends JFrame {
     private JLabel            labelExtracurricular;
     private JLabel            labelTituloTutor;
     private JLabel            labelTituloGrado;
+    private JButton           btnRegistrar;
+    private JTextField        tfFechaNacimiento;
+    private JLabel            lbFechaNacimiento;
 
     int currentPanel = 0;
 
@@ -47,6 +50,25 @@ public class NewAlumnoGUI extends JFrame {
     }
 
     public void initActionListeners() {
+
+        btnRegistrar.addActionListener(e -> {
+            String nombreAlumno    = tfNombreAlumno.getText();
+            int    genero          = cbGenero.getSelectedIndex();
+            String fechaNacimiento = tfFechaNacimiento.getText();
+            String telefonoAlumno  = tfTelefonoAlumno.getText();
+
+            String nombreTutor   = tfNombreTutor.getText();
+            String rfcTutor      = tfRFCTutor.getText();
+            String telefonoTutor = tfTelefonoTutor.getText();
+
+            int grado = cbGrado.getSelectedIndex();
+            int year  = cbYear.getSelectedIndex();
+
+            String sql = "INSERT INTO `alumno` (`nombre`, `genero`, `fecha_nacimiento`, `telefono`) " +
+                    "VALUES ('" + nombreAlumno + "','" + genero + "','" + fechaNacimiento + "','" + telefonoAlumno + "')";
+
+        });
+
         labelSiguiente.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
