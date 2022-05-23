@@ -48,6 +48,7 @@
                 <properties>
                   <font name="Roboto Medium" size="18" style="0"/>
                   <foreground color="-16777216"/>
+                  <labelFor value="670b0"/>
                   <text value="Nombre"/>
                 </properties>
               </component>
@@ -58,6 +59,7 @@
                 <properties>
                   <font name="Roboto Medium" size="18" style="0"/>
                   <foreground color="-16777216"/>
+                  <labelFor value="a48ac"/>
                   <text value="Género"/>
                 </properties>
               </component>
@@ -68,6 +70,7 @@
                 <properties>
                   <font name="Roboto Medium" size="18" style="0"/>
                   <foreground color="-16777216"/>
+                  <labelFor value="540e0"/>
                   <text value="Teléfono"/>
                 </properties>
               </component>
@@ -78,6 +81,7 @@
                 <properties>
                   <font name="Roboto Medium" size="18" style="0"/>
                   <foreground color="-16777216"/>
+                  <labelFor value="2d09e"/>
                   <text value="Fecha de nacimiento"/>
                 </properties>
               </component>
@@ -150,6 +154,7 @@
                 <properties>
                   <font name="Roboto Medium" size="18"/>
                   <foreground color="-16777216"/>
+                  <labelFor value="d6415"/>
                   <text value="Nombre"/>
                 </properties>
               </component>
@@ -160,6 +165,7 @@
                 <properties>
                   <font name="Roboto Medium" size="18"/>
                   <foreground color="-16777216"/>
+                  <labelFor value="f1b3f"/>
                   <text value="Teléfono"/>
                 </properties>
               </component>
@@ -170,6 +176,7 @@
                 <properties>
                   <font name="Roboto Medium" size="18"/>
                   <foreground color="-16777216"/>
+                  <labelFor value="912c0"/>
                   <text value="RFC"/>
                 </properties>
               </component>
@@ -238,6 +245,7 @@
                 <properties>
                   <font name="Roboto Medium" size="18"/>
                   <foreground color="-16777216"/>
+                  <labelFor value="fcf1d"/>
                   <text value="Grado"/>
                 </properties>
               </component>
@@ -248,6 +256,7 @@
                 <properties>
                   <font name="Roboto Medium" size="18"/>
                   <foreground color="-16777216"/>
+                  <labelFor value="f0b2b"/>
                   <text value="Año"/>
                 </properties>
               </component>
@@ -258,6 +267,7 @@
                 <properties>
                   <font name="Roboto Medium" size="18"/>
                   <foreground color="-16777216"/>
+                  <labelFor value="5897c"/>
                   <text value="Actividad extracurricular"/>
                 </properties>
               </component>

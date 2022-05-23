@@ -28,6 +28,7 @@ public class MainGUI extends JFrame {
     private JTextField  tfBusqueda;
     private JButton     btnNewAlumno;
     private JScrollPane spTableAlumnos;
+    private JLabel      labelMenuPrincipal;
 
     public MainGUI() {
         this.setSize(1024, 728);

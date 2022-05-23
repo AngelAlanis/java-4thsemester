@@ -12,10 +12,12 @@
       <size top="0" left="0" bottom="0" right="0"/>
     </border>
     <children>
-      <grid id="fa289" binding="panelSidebar" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="fa289" binding="panelSidebar" layout-manager="GridLayoutManager" row-count="6" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="250" height="-1"/>
+          </grid>
         </constraints>
         <properties>
           <background color="-14247543"/>
@@ -27,33 +29,42 @@
         <children>
           <component id="14d9f" class="javax.swing.JLabel" binding="labelGrupos">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Roboto Medium" size="16"/>
+              <foreground color="-1"/>
               <text value="Grupos"/>
             </properties>
           </component>
           <component id="a4697" class="javax.swing.JLabel" binding="labelTutores">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Roboto Medium" size="16"/>
+              <foreground color="-1"/>
               <text value="Tutores"/>
             </properties>
           </component>
           <component id="5c49" class="javax.swing.JLabel" binding="labelAlumnos">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-8248301"/>
+              <font name="Roboto Medium" size="16"/>
+              <foreground color="-1"/>
               <text value="Alumnos"/>
             </properties>
           </component>
           <component id="2788" class="javax.swing.JLabel" binding="labelProfesores">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font name="Roboto Medium" size="16"/>
+              <foreground color="-1"/>
               <text value="Profesores"/>
             </properties>
           </component>
@@ -62,22 +73,33 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value="LOGO"/>
             </properties>
           </component>
           <component id="9b44c" class="javax.swing.JLabel" binding="labelSidebarIcon">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <icon value="sidenav.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="b546c" class="javax.swing.JLabel" binding="labelMenuPrincipal">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Roboto Medium" size="16"/>
+              <foreground color="-1"/>
+              <text value="Menú principal"/>
             </properties>
           </component>
         </children>
       </grid>
       <grid id="a1d10" binding="panelInformacion" layout-manager="CardLayout" hgap="0" vgap="0">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="1" use-parent-layout="false"/>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="3" indent="1" use-parent-layout="false"/>
         </constraints>
         <properties>
           <background color="-1"/>
@@ -101,23 +123,29 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <font name="Roboto Medium" size="22" style="0"/>
+                  <font name="Roboto Medium" size="24" style="1"/>
+                  <foreground color="-16777216"/>
                   <text value="Alumnos"/>
                 </properties>
               </component>
               <component id="9670b" class="javax.swing.JTextField" binding="tfBusqueda">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
+                    <preferred-size width="150" height="40"/>
                   </grid>
                 </constraints>
                 <properties/>
               </component>
               <component id="e1069" class="javax.swing.JButton" binding="btnNewAlumno">
                 <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="40"/>
+                  </grid>
                 </constraints>
                 <properties>
+                  <background color="-14247543"/>
+                  <font name="Roboto Medium" size="16"/>
+                  <foreground color="-1"/>
                   <text value="Registrar Alumno"/>
                 </properties>
               </component>
