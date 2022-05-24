@@ -3,13 +3,11 @@ package com.misael.escuelabd;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class Conectar {
 
     Connection connection;
-    String[]   datosTabla;
     Connection registro;
 
     public Connection conexion() {
@@ -37,11 +35,14 @@ public class Conectar {
 
             columns = resultSet.getMetaData().getColumnCount();
 
+            for (int i = 1; i <= columns ; i++) {
+                columnNames.add(resultSet.getMetaData().getColumnName(i));
+            }
+
             while (resultSet.next()) {
                 Vector<Object> row = new Vector<>();
 
                 for (int i = 1; i <= columns; i++) {
-                    columnNames.add(resultSet.getMetaData().getColumnName(i));
                     row.add(resultSet.getObject(i));
                 }
 

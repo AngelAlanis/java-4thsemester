@@ -30,11 +30,15 @@ public class MainGUI extends JFrame {
     private JScrollPane spTableAlumnos;
     private JLabel      labelMenuPrincipal;
 
+    private Conectar conectar;
+
     public MainGUI() {
+        conectar = new Conectar();
         this.setSize(1024, 728);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
+        connectToDatabase();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -43,6 +47,11 @@ public class MainGUI extends JFrame {
         btnNewAlumno.addActionListener(e -> {
             var newAlumno = new NewAlumnoGUI();
         });
+    }
+
+    public void connectToDatabase() {
+        conectar.registro = conectar.conexion();
+        tableAlumnos.setModel(conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono from alumno"));
     }
 
     public static void main(String[] args) {
