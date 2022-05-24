@@ -1,14 +1,15 @@
 package com.misael.escuelabd;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class Conectar {
 
     Connection connection;
     String[]   datosTabla;
-    String     sqlQuery;
     Connection registro;
 
     public Connection conexion() {
@@ -24,42 +25,39 @@ public class Conectar {
         return connection;
     }
 
-    public DefaultTableModel verTabla() {
-        DefaultTableModel defaultTableModel = new DefaultTableModel();
-        defaultTableModel.addColumn("Identificador");
-        defaultTableModel.addColumn("Nombre");
-        defaultTableModel.addColumn("Teléfono");
-        defaultTableModel.addColumn("Correo");
-        defaultTableModel.addColumn("Categoría");
-        defaultTableModel.addColumn("Dirección");
-        defaultTableModel.addColumn("Cumpleaños");
+    public DefaultTableModel fillTable(String sqlQuery) {
 
-        datosTabla = new String[7];
-
-
-        sqlQuery = "SELECT * FROM contactos";
-
+        Vector<Vector<Object>> data        = new Vector<>();
+        int                    columns;
+        Vector<Object>         columnNames = new Vector<>();
 
         try {
-            Statement sentencia = registro.createStatement();
-            ResultSet resultSet = sentencia.executeQuery(sqlQuery);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+
+            columns = resultSet.getMetaData().getColumnCount();
 
             while (resultSet.next()) {
-                datosTabla[0] = resultSet.getString(1);
-                datosTabla[1] = resultSet.getString(2);
-                datosTabla[2] = resultSet.getString(3);
-                datosTabla[3] = resultSet.getString(4);
-                datosTabla[4] = resultSet.getString(5);
-                datosTabla[5] = resultSet.getString(6);
-                datosTabla[6] = resultSet.getString(7);
-                defaultTableModel.addRow(datosTabla);
+                Vector<Object> row = new Vector<>();
+
+                for (int i = 1; i <= columns; i++) {
+                    columnNames.add(resultSet.getMetaData().getColumnName(i));
+                    row.add(resultSet.getObject(i));
+                }
+
+                data.add(row);
             }
+
+            resultSet.close();
+            statement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return defaultTableModel;
+        return new DefaultTableModel(data, columnNames);
+
     }
+
 
 }
