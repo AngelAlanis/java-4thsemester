@@ -1,13 +1,9 @@
 package com.misael.escuelabd;
 
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+
 
 public class MainGUI extends JFrame {
     private JPanel      panelMain;
@@ -38,7 +34,7 @@ public class MainGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        connectToDatabase();
+        //connectToDatabase();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }

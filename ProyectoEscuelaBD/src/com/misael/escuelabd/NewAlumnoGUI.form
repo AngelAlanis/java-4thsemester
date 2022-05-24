@@ -19,7 +19,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="b20fb" binding="panelInfoAlumno" layout-manager="GridLayoutManager" row-count="9" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="b20fb" binding="panelInfoAlumno" layout-manager="GridLayoutManager" row-count="11" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <card name="Card1"/>
@@ -54,7 +54,7 @@
               </component>
               <component id="c3600" class="javax.swing.JLabel" binding="labelGenero">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto Medium" size="18" style="0"/>
@@ -65,7 +65,7 @@
               </component>
               <component id="79fa2" class="javax.swing.JLabel" binding="labelTelefono">
                 <constraints>
-                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto Medium" size="18" style="0"/>
@@ -76,7 +76,7 @@
               </component>
               <component id="687b9" class="javax.swing.JLabel" binding="lbFechaNacimiento">
                 <constraints>
-                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto Medium" size="18" style="0"/>
@@ -87,7 +87,7 @@
               </component>
               <component id="a48ac" class="javax.swing.JComboBox" binding="cbGenero">
                 <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="40"/>
                   </grid>
                 </constraints>
@@ -103,7 +103,7 @@
               </component>
               <component id="2d09e" class="javax.swing.JTextField" binding="tfFechaNacimiento">
                 <constraints>
-                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="40"/>
                   </grid>
                 </constraints>
@@ -115,7 +115,7 @@
               </component>
               <component id="540e0" class="javax.swing.JTextField" binding="tfTelefonoAlumno">
                 <constraints>
-                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="40"/>
                   </grid>
                 </constraints>
@@ -135,6 +135,31 @@
                   <font name="Roboto Light" size="16" style="0"/>
                   <foreground color="-5131346"/>
                   <text value="Ingrese el nombre del alumno"/>
+                </properties>
+              </component>
+              <component id="bfe91" class="javax.swing.JLabel" binding="labelMatricula">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="65" height="35"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto Medium" size="18" style="0"/>
+                  <foreground color="-16777216"/>
+                  <labelFor value="aaced"/>
+                  <text value="Matrícula"/>
+                </properties>
+              </component>
+              <component id="aaced" class="javax.swing.JTextField" binding="tfMatricula">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="40"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto Light" size="16" style="0"/>
+                  <foreground color="-5131346"/>
+                  <text value="Ingrese la matrícula del alumno"/>
                 </properties>
               </component>
             </children>
@@ -230,7 +255,7 @@
               </component>
             </children>
           </grid>
-          <grid id="4ed2e" binding="panelInfoGrado" layout-manager="GridLayoutManager" row-count="8" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="4ed2e" binding="panelInfoGrado" layout-manager="GridLayoutManager" row-count="13" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <card name="Card2"/>
@@ -264,7 +289,7 @@
               </component>
               <component id="f6559" class="javax.swing.JLabel" binding="labelExtracurricular">
                 <constraints>
-                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font name="Roboto Medium" size="18"/>
@@ -285,7 +310,7 @@
               </component>
               <component id="24628" class="javax.swing.JButton" binding="btnRegistrar">
                 <constraints>
-                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="40"/>
                   </grid>
                 </constraints>
@@ -335,7 +360,7 @@
               </component>
               <component id="5897c" class="javax.swing.JComboBox" binding="cbExtraCurricular">
                 <constraints>
-                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="-1" height="40"/>
                   </grid>
                 </constraints>
@@ -344,7 +369,56 @@
                   <foreground color="-5131346"/>
                   <model>
                     <item value="Seleccione la actividad extracurricular del alumno"/>
+                    <item value="Carpintería"/>
+                    <item value="Electrónica"/>
+                    <item value="Cocina"/>
+                    <item value="Torno"/>
                   </model>
+                </properties>
+              </component>
+              <component id="67b17" class="javax.swing.JLabel" binding="lbCantidadRecibida">
+                <constraints>
+                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto Medium" size="18"/>
+                  <foreground color="-16777216"/>
+                  <labelFor value="d6415"/>
+                  <text value="Cantidad recibida"/>
+                </properties>
+              </component>
+              <component id="f8b38" class="javax.swing.JTextField" binding="tfCantidadRecibida">
+                <constraints>
+                  <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="40"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font name="Roboto Light" size="16" style="0"/>
+                  <foreground color="-5131346"/>
+                  <text value="Ingrese la cantidad recibida"/>
+                </properties>
+              </component>
+              <component id="312df" class="javax.swing.JLabel" binding="labelCantidadAPagar">
+                <constraints>
+                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto Medium" size="18"/>
+                  <foreground color="-16777216"/>
+                  <labelFor value="d6415"/>
+                  <text value="Cantidad a pagar"/>
+                </properties>
+              </component>
+              <component id="30d02" class="javax.swing.JLabel" binding="labelPrecioInscripcion">
+                <constraints>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <font name="Roboto Medium" size="18"/>
+                  <foreground color="-16777216"/>
+                  <labelFor value="d6415"/>
+                  <text value="$1000"/>
                 </properties>
               </component>
             </children>

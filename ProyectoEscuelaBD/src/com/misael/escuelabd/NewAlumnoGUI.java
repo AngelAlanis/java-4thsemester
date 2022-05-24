@@ -44,6 +44,12 @@ public class NewAlumnoGUI extends JFrame {
     private JLabel            lbFechaNacimiento;
     private JButton           btnAnterior;
     private JButton           btnSiguiente;
+    private JLabel            labelMatricula;
+    private JTextField        tfMatricula;
+    private JLabel            lbCantidadRecibida;
+    private JTextField        tfCantidadRecibida;
+    private JLabel            labelCantidadAPagar;
+    private JLabel            labelPrecioInscripcion;
     private Color             placeHolderColor;
 
     int currentPanel = 0;
@@ -66,6 +72,7 @@ public class NewAlumnoGUI extends JFrame {
 
     private void setBorderToComponents() {
         tfNombreAlumno.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfMatricula.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         tfFechaNacimiento.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         tfNombreTutor.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         tfRFCTutor.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
@@ -75,10 +82,50 @@ public class NewAlumnoGUI extends JFrame {
         cbGrado.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         cbYear.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         cbExtraCurricular.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfCantidadRecibida.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
     }
 
     public void initActionListeners() {
 
+        placeHolderListeners();
+
+        btnRegistrar.addActionListener(e -> {
+            String matriculaAlumno       = tfMatricula.getText();
+            String nombreAlumno          = tfNombreAlumno.getText();
+            int    generoAlumno          = cbGenero.getSelectedIndex();
+            String fechaNacimientoAlumno = tfFechaNacimiento.getText();
+            String telefonoAlumno        = tfTelefonoAlumno.getText();
+
+            String nombreTutor   = tfNombreTutor.getText();
+            String rfcTutor      = tfRFCTutor.getText();
+            String telefonoTutor = tfTelefonoTutor.getText();
+
+            int grado = cbGrado.getSelectedIndex();
+            int year  = cbYear.getSelectedIndex();
+
+            String sql = "INSERT INTO `alumno` (`nombre`, `genero`, `fecha_nacimiento`, `telefono`) " +
+                    "VALUES ('" + nombreAlumno + "','" + generoAlumno + "','" + fechaNacimientoAlumno + "','" + telefonoAlumno + "')";
+
+        });
+
+        btnSiguiente.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                incrementCurrentPanel();
+                loadCurrentPanel();
+            }
+        });
+
+        btnAnterior.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                decreaseCurrentPanel();
+                loadCurrentPanel();
+            }
+        });
+    }
+
+    private void placeHolderListeners() {
         tfNombreAlumno.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -88,11 +135,31 @@ public class NewAlumnoGUI extends JFrame {
                 }
             }
 
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (tfNombreAlumno.getText().trim().equals("Ingrese el nombre del alumno") || tfNombreAlumno.getText().trim().isEmpty()) {
                     tfNombreAlumno.setText("Ingrese el nombre del alumno");
                     tfNombreAlumno.setForeground(placeHolderColor);
+                }
+            }
+        });
+
+        tfMatricula.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (tfMatricula.getText().equals("Ingrese la matrícula del alumno")) {
+                    tfMatricula.setText("");
+                    tfMatricula.setForeground(Color.BLACK);
+                }
+            }
+
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (tfMatricula.getText().trim().equals("Ingrese la matrícula del alumno") || tfMatricula.getText().trim().isEmpty()) {
+                    tfMatricula.setText("Ingrese la matrícula del alumno");
+                    tfMatricula.setForeground(placeHolderColor);
                 }
             }
         });
@@ -187,6 +254,24 @@ public class NewAlumnoGUI extends JFrame {
             }
         });
 
+        tfCantidadRecibida.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (tfCantidadRecibida.getText().equals("Ingrese la cantidad recibida")) {
+                    tfCantidadRecibida.setText("");
+                    tfCantidadRecibida.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (tfCantidadRecibida.getText().trim().equals("Ingrese la cantidad recibida") || tfCantidadRecibida.getText().trim().isEmpty()) {
+                    tfCantidadRecibida.setText("Ingrese la cantidad recibida");
+                    tfCantidadRecibida.setForeground(placeHolderColor);
+                }
+            }
+        });
+
         cbGenero.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 if (cbGenero.getSelectedIndex() > 0) {
@@ -224,40 +309,6 @@ public class NewAlumnoGUI extends JFrame {
                 } else {
                     cbGrado.setForeground(placeHolderColor);
                 }
-            }
-        });
-
-        btnRegistrar.addActionListener(e -> {
-            String nombreAlumno    = tfNombreAlumno.getText();
-            int    genero          = cbGenero.getSelectedIndex();
-            String fechaNacimiento = tfFechaNacimiento.getText();
-            String telefonoAlumno  = tfTelefonoAlumno.getText();
-
-            String nombreTutor   = tfNombreTutor.getText();
-            String rfcTutor      = tfRFCTutor.getText();
-            String telefonoTutor = tfTelefonoTutor.getText();
-
-            int grado = cbGrado.getSelectedIndex();
-            int year  = cbYear.getSelectedIndex();
-
-            String sql = "INSERT INTO `alumno` (`nombre`, `genero`, `fecha_nacimiento`, `telefono`) " +
-                    "VALUES ('" + nombreAlumno + "','" + genero + "','" + fechaNacimiento + "','" + telefonoAlumno + "')";
-
-        });
-
-        btnSiguiente.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                incrementCurrentPanel();
-                loadCurrentPanel();
-            }
-        });
-
-        btnAnterior.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                decreaseCurrentPanel();
-                loadCurrentPanel();
             }
         });
     }
