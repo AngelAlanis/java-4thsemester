@@ -60,16 +60,15 @@ public class Conectar {
 
     }
 
-    public void guardarAlumno(String sqlQuery) {
-
-        sqlQuery = "INSERT INTO contactos (nombre,teléfono,correo,categoría, direccion, cumpleaños) VALUES (?,?,?,?,?,?)";
+    public void executeQuery(String sqlQuery) {
 
         try {
             PreparedStatement preparedStatement = registro.prepareStatement(sqlQuery);
             preparedStatement.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro guardado.");
+            JOptionPane.showMessageDialog(null, "Operación realizada correctamente.");
         } catch (SQLException ex) {
             ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Fallo durante la ejecución de la operación");
         }
 
     }

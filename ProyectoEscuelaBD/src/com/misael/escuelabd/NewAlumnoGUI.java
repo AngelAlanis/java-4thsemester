@@ -51,9 +51,12 @@ public class NewAlumnoGUI extends JFrame {
     private JLabel            labelPrecioInscripcion;
     private Color             placeHolderColor;
 
-    int currentPanel = 0;
+    String  sqlQuery;
+    int     currentPanel = 0;
+    MainGUI main;
 
-    NewAlumnoGUI() {
+    NewAlumnoGUI(MainGUI main) {
+        this.main = main;
         this.setSize(500, 700);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panelMain);
@@ -103,10 +106,19 @@ public class NewAlumnoGUI extends JFrame {
             int    year             = cbYear.getSelectedIndex();
             String cantidadRecibida = tfCantidadRecibida.getText();
 
-            String sql = "INSERT INTO alumno (matricula, nombre, genero, fecha_nacimiento, telefono) " +
-                    "VALUES ('" + matriculaAlumno + "','" + nombreAlumno + "','" + generoAlumno + "','" + telefonoAlumno + "','" + telefonoAlumno + "')";
+            sqlQuery = "INSERT INTO alumno (matricula, nombre, genero, fecha_nacimiento, telefono) " +
+                    "VALUES ('" + matriculaAlumno + "','" + nombreAlumno + "','" + generoAlumno + "','" + fechaNacimientoAlumno + "','" + telefonoAlumno + "')";
 
-            MainGUI.conectar.guardarAlumno(sql);
+            main.conectar.executeQuery(sqlQuery);
+
+            sqlQuery = "INSERT INTO tutor(nombre, rfc, telefono)" +
+                    "VALUES ('" + nombreTutor + "','" + rfcTutor + "','" + telefonoTutor + "')";
+
+            main.conectar.executeQuery(sqlQuery);
+
+            //sqlQuery = "INSERT INTO inscripcion (id_alumno, id_grado, monto, pagado)";
+
+            main.refreshTable();
 
         });
 

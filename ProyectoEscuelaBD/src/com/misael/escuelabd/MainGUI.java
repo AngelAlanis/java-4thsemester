@@ -26,7 +26,7 @@ public class MainGUI extends JFrame {
     private JScrollPane spTableAlumnos;
     private JLabel      labelMenuPrincipal;
 
-    public static Conectar conectar;
+    Conectar conectar;
 
     public MainGUI() {
         conectar = new Conectar();
@@ -34,20 +34,24 @@ public class MainGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        //connectToDatabase();
+        connectToDatabase();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
     public void initActionListeners() {
         btnNewAlumno.addActionListener(e -> {
-            var newAlumno = new NewAlumnoGUI();
+            var newAlumno = new NewAlumnoGUI(this);
         });
     }
 
     public void connectToDatabase() {
         conectar.registro = conectar.conexion();
         tableAlumnos.setModel(conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono from alumno"));
+    }
+
+    public void refreshTable(){
+        conectar.fillTable("SELECT * from alumno");
     }
 
     public static void main(String[] args) {
