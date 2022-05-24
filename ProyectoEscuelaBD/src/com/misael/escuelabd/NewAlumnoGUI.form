@@ -96,6 +96,8 @@
                   <foreground color="-5131346"/>
                   <model>
                     <item value="Seleccione el género del alumno"/>
+                    <item value="Masculino"/>
+                    <item value="Femenino"/>
                   </model>
                 </properties>
               </component>
@@ -305,6 +307,9 @@
                   <foreground color="-5131346"/>
                   <model>
                     <item value="Seleccione el grado del alumno"/>
+                    <item value="Primaria"/>
+                    <item value="Secundaria"/>
+                    <item value="Preparatoria"/>
                   </model>
                 </properties>
               </component>
@@ -319,6 +324,12 @@
                   <foreground color="-5131346"/>
                   <model>
                     <item value="Seleccione el año al que ingresará el alumno"/>
+                    <item value="1"/>
+                    <item value="2"/>
+                    <item value="3"/>
+                    <item value="4"/>
+                    <item value="5"/>
+                    <item value="6"/>
                   </model>
                 </properties>
               </component>

@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -185,6 +187,45 @@ public class NewAlumnoGUI extends JFrame {
             }
         });
 
+        cbGenero.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (cbGenero.getSelectedIndex() > 0) {
+                    cbGenero.setForeground(Color.BLACK);
+                } else {
+                    cbGenero.setForeground(placeHolderColor);
+                }
+            }
+        });
+
+        cbExtraCurricular.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (cbExtraCurricular.getSelectedIndex() > 0) {
+                    cbExtraCurricular.setForeground(Color.BLACK);
+                } else {
+                    cbExtraCurricular.setForeground(placeHolderColor);
+                }
+            }
+        });
+
+        cbYear.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (cbYear.getSelectedIndex() > 0) {
+                    cbYear.setForeground(Color.BLACK);
+                } else {
+                    cbYear.setForeground(placeHolderColor);
+                }
+            }
+        });
+
+        cbGrado.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (cbGrado.getSelectedIndex() > 0) {
+                    cbGrado.setForeground(Color.BLACK);
+                } else {
+                    cbGrado.setForeground(placeHolderColor);
+                }
+            }
+        });
 
         btnRegistrar.addActionListener(e -> {
             String nombreAlumno    = tfNombreAlumno.getText();
