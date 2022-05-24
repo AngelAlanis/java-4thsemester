@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -100,11 +99,14 @@ public class NewAlumnoGUI extends JFrame {
             String rfcTutor      = tfRFCTutor.getText();
             String telefonoTutor = tfTelefonoTutor.getText();
 
-            int grado = cbGrado.getSelectedIndex();
-            int year  = cbYear.getSelectedIndex();
+            int    grado            = cbGrado.getSelectedIndex();
+            int    year             = cbYear.getSelectedIndex();
+            String cantidadRecibida = tfCantidadRecibida.getText();
 
-            String sql = "INSERT INTO `alumno` (`nombre`, `genero`, `fecha_nacimiento`, `telefono`) " +
-                    "VALUES ('" + nombreAlumno + "','" + generoAlumno + "','" + fechaNacimientoAlumno + "','" + telefonoAlumno + "')";
+            String sql = "INSERT INTO alumno (matricula, nombre, genero, fecha_nacimiento, telefono) " +
+                    "VALUES ('" + matriculaAlumno + "','" + nombreAlumno + "','" + generoAlumno + "','" + telefonoAlumno + "','" + telefonoAlumno + "')";
+
+            MainGUI.conectar.guardarAlumno(sql);
 
         });
 

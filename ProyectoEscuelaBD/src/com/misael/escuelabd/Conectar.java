@@ -60,7 +60,18 @@ public class Conectar {
 
     }
 
+    public void guardarAlumno(String sqlQuery) {
 
+        sqlQuery = "INSERT INTO contactos (nombre,teléfono,correo,categoría, direccion, cumpleaños) VALUES (?,?,?,?,?,?)";
 
+        try {
+            PreparedStatement preparedStatement = registro.prepareStatement(sqlQuery);
+            preparedStatement.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro guardado.");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
 
 }

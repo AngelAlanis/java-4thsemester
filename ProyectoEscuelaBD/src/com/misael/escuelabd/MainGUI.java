@@ -26,7 +26,7 @@ public class MainGUI extends JFrame {
     private JScrollPane spTableAlumnos;
     private JLabel      labelMenuPrincipal;
 
-    private Conectar conectar;
+    public static Conectar conectar;
 
     public MainGUI() {
         conectar = new Conectar();
