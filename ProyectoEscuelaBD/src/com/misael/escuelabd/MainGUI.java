@@ -83,6 +83,10 @@ public class MainGUI extends JFrame {
             var newAlumno = new NewAlumnoGUI(this);
         });
 
+        btnModificarAlumno.addActionListener(e -> {
+            var editAlumno = new EditAlumnoGUI(this);
+        });
+
         btnBajaAlumno.addActionListener(e -> {
             int idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
             int opcion   = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
@@ -96,7 +100,8 @@ public class MainGUI extends JFrame {
 
     public void connectToDatabase() {
         conectar.registro = conectar.conexion();
-        tableAlumnos.setModel(conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono from alumno"));
+        tableAlumnos.setModel(conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono FROM alumno"));
+        tableTutores.setModel(conectar.fillTable("SELECT id_tutor, nombre, rfc, telefono FROM tutor"));
     }
 
     public void refreshTable() {

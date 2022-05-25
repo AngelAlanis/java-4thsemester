@@ -35,7 +35,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto Medium" size="24" style="1"/>
-                  <foreground color="-16777216"/>
+                  <foreground color="-15236482"/>
                   <text value="Información del Alumno"/>
                 </properties>
               </component>
@@ -213,7 +213,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto Medium" size="24" style="1"/>
-                  <foreground color="-16777216"/>
+                  <foreground color="-15236482"/>
                   <text value="Información del tutor"/>
                 </properties>
               </component>
@@ -304,7 +304,7 @@
                 </constraints>
                 <properties>
                   <font name="Roboto Medium" size="24" style="1"/>
-                  <foreground color="-16777216"/>
+                  <foreground color="-15236482"/>
                   <text value="Información del grado"/>
                 </properties>
               </component>
