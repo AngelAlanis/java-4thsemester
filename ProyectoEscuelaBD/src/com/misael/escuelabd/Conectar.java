@@ -74,19 +74,22 @@ public class Conectar {
 
     }
 
-    public ArrayList<String> readData(String sqlQuery) {
+    public ArrayList<Object> readData(String sqlQuery) {
 
-        ArrayList<String> data = new ArrayList<>();
+        System.out.println(sqlQuery);
+
+        ArrayList<Object> data = new ArrayList<>();
 
         try {
-            Statement sentencia = registro.createStatement();
-            ResultSet resultSet = sentencia.executeQuery(sqlQuery);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
 
-            int i = 1;
+            int columns = resultSet.getMetaData().getColumnCount();
 
             while (resultSet.next()) {
-                data.add(resultSet.getString(i));
-                i++;
+                for (int i = 1; i <= columns; i++) {
+                    data.add(resultSet.getObject(i));
+                }
             }
 
         } catch (SQLException e) {

@@ -44,7 +44,7 @@ public class MainGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        //connectToDatabase();
+        connectToDatabase();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -94,6 +94,7 @@ public class MainGUI extends JFrame {
 
             if (opcion == JOptionPane.YES_OPTION) {
                 conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
+                refreshTable();
             }
 
         });
