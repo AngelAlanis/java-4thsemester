@@ -25,6 +25,8 @@ public class MainGUI extends JFrame {
     private JButton     btnNewAlumno;
     private JScrollPane spTableAlumnos;
     private JLabel      labelMenuPrincipal;
+    private JButton     btnModificarAlumno;
+    private JButton     btnEliminarAlumno;
 
     Conectar conectar;
 
@@ -34,7 +36,7 @@ public class MainGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        connectToDatabase();
+        //connectToDatabase();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -43,6 +45,16 @@ public class MainGUI extends JFrame {
         btnNewAlumno.addActionListener(e -> {
             var newAlumno = new NewAlumnoGUI(this);
         });
+
+        btnEliminarAlumno.addActionListener(e -> {
+            int idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
+            int opcion   = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
+            }
+
+        });
     }
 
     public void connectToDatabase() {
@@ -50,8 +62,8 @@ public class MainGUI extends JFrame {
         tableAlumnos.setModel(conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono from alumno"));
     }
 
-    public void refreshTable(){
-        conectar.fillTable("SELECT * from alumno");
+    public void refreshTable() {
+        conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono from alumno");
     }
 
     public static void main(String[] args) {

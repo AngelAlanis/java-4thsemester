@@ -108,7 +108,7 @@
           <size top="15" left="15" bottom="15" right="15"/>
         </border>
         <children>
-          <grid id="7ac58" binding="panelAlumnos" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="7ac58" binding="panelAlumnos" layout-manager="GridLayoutManager" row-count="3" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <card name="Card1"/>
@@ -136,6 +136,45 @@
                 </constraints>
                 <properties/>
               </component>
+              <scrollpane id="57e98" binding="spTableAlumnos">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="f3387" class="javax.swing.JTable" binding="tableAlumnos">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+              <component id="ab63d" class="javax.swing.JButton" binding="btnModificarAlumno">
+                <constraints>
+                  <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="40"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-14247543"/>
+                  <font name="Roboto Medium" size="16"/>
+                  <foreground color="-1"/>
+                  <text value="Modificar Alumno"/>
+                </properties>
+              </component>
+              <component id="70b31" class="javax.swing.JButton" binding="btnEliminarAlumno">
+                <constraints>
+                  <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="-1" height="40"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <background color="-14247543"/>
+                  <font name="Roboto Medium" size="16"/>
+                  <foreground color="-1"/>
+                  <text value="Eliminar Alumno"/>
+                </properties>
+              </component>
               <component id="e1069" class="javax.swing.JButton" binding="btnNewAlumno">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
@@ -149,19 +188,6 @@
                   <text value="Registrar Alumno"/>
                 </properties>
               </component>
-              <scrollpane id="57e98" binding="spTableAlumnos">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="f3387" class="javax.swing.JTable" binding="tableAlumnos">
-                    <constraints/>
-                    <properties/>
-                  </component>
-                </children>
-              </scrollpane>
             </children>
           </grid>
           <grid id="7c9da" binding="panelprofesores" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
