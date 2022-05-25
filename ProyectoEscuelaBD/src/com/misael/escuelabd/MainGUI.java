@@ -84,7 +84,8 @@ public class MainGUI extends JFrame {
         });
 
         btnModificarAlumno.addActionListener(e -> {
-            var editAlumno = new EditAlumnoGUI(this);
+            int idAlumno   = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
+            var editAlumno = new EditAlumnoGUI(this, idAlumno);
         });
 
         btnBajaAlumno.addActionListener(e -> {

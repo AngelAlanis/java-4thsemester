@@ -3,6 +3,7 @@ package com.misael.escuelabd;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class Conectar {
@@ -35,7 +36,7 @@ public class Conectar {
 
             columns = resultSet.getMetaData().getColumnCount();
 
-            for (int i = 1; i <= columns ; i++) {
+            for (int i = 1; i <= columns; i++) {
                 columnNames.add(resultSet.getMetaData().getColumnName(i));
             }
 
@@ -70,6 +71,29 @@ public class Conectar {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Fallo durante la ejecución de la operación");
         }
+
+    }
+
+    public ArrayList<String> readData(String sqlQuery) {
+
+        ArrayList<String> data = new ArrayList<>();
+
+        try {
+            Statement sentencia = registro.createStatement();
+            ResultSet resultSet = sentencia.executeQuery(sqlQuery);
+
+            int i = 1;
+
+            while (resultSet.next()) {
+                data.add(resultSet.getString(i));
+                i++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return data;
 
     }
 
