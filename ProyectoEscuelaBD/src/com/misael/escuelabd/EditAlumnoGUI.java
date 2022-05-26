@@ -96,8 +96,8 @@ public class EditAlumnoGUI extends JFrame {
         btnCancelar.addActionListener(e -> this.dispose());
         btnRegistrar.addActionListener(e -> {
             saveData();
-            main.refreshTable();
             this.dispose();
+            main.refreshTable();
         });
     }
 

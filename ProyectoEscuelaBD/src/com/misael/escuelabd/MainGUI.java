@@ -107,7 +107,8 @@ public class MainGUI extends JFrame {
     }
 
     public void refreshTable() {
-        conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono from alumno");
+        tableAlumnos.setModel(conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono from alumno"));
+        tableTutores.setModel(conectar.fillTable("SELECT id_tutor, nombre, rfc, telefono FROM tutor"));
     }
 
     private void cargarPanelAlumno() {
