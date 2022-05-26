@@ -50,7 +50,7 @@
             </constraints>
             <properties>
               <font name="Roboto Light" size="16"/>
-              <foreground color="-5131346"/>
+              <foreground color="-16777216"/>
               <text value="Ingrese el nombre del tutor"/>
             </properties>
           </component>
@@ -72,7 +72,7 @@
             </constraints>
             <properties>
               <font name="Roboto Light" size="16"/>
-              <foreground color="-5131346"/>
+              <foreground color="-16777216"/>
               <text value="Ingrese el RFC del tutor"/>
             </properties>
           </component>
@@ -104,7 +104,7 @@
           </component>
           <component id="a830e" class="javax.swing.JLabel" binding="labelTelefono">
             <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Roboto Medium" size="18"/>
@@ -120,7 +120,7 @@
             </constraints>
             <properties>
               <font name="Roboto Light" size="16"/>
-              <foreground color="-5131346"/>
+              <foreground color="-16777216"/>
               <text value="Ingrese el teléfono del tutor"/>
             </properties>
           </component>

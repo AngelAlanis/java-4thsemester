@@ -32,7 +32,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="16"/>
-          <foreground color="-5131346"/>
+          <foreground color="-16777216"/>
           <text value="Ingrese el nombre del alumno"/>
         </properties>
       </component>
@@ -56,7 +56,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="16"/>
-          <foreground color="-5131346"/>
+          <foreground color="-16777216"/>
           <text value="Ingrese la fecha de nacimiento del alumno"/>
         </properties>
       </component>
@@ -80,7 +80,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="16"/>
-          <foreground color="-5131346"/>
+          <foreground color="-16777216"/>
           <text value="Ingrese el teléfono del alumno"/>
         </properties>
       </component>
@@ -103,7 +103,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="16"/>
-          <foreground color="-5131346"/>
+          <foreground color="-16777216"/>
           <model>
             <item value="Seleccione el género del alumno"/>
             <item value="Masculino"/>
@@ -131,7 +131,7 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="16"/>
-          <foreground color="-5131346"/>
+          <foreground color="-16777216"/>
           <text value="Ingrese la matrícula del alumno"/>
         </properties>
       </component>

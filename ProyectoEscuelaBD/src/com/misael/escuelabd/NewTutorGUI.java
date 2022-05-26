@@ -53,6 +53,10 @@ public class NewTutorGUI extends JFrame {
 
             main.conectar.executeQuery(sqlQuery);
 
+            this.dispose();
+
+            main.refreshTable();
+
         });
 
         btnCancelar.addActionListener(e -> this.dispose());
