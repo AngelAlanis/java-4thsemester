@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.misael.escuelabd.NewTutorGUI">
+  <grid id="27dc6" binding="panelMain" layout-manager="GridLayoutManager" row-count="8" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="676" height="701"/>
+    </constraints>
+    <properties>
+      <background color="-1"/>
+    </properties>
+    <border type="empty">
+      <size top="15" left="15" bottom="15" right="15"/>
+    </border>
+    <children>
+      <component id="5243a" class="javax.swing.JLabel" binding="labelTitulo">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Black" size="24"/>
+          <foreground color="-14247543"/>
+          <text value="Registro nuevo tutor"/>
+        </properties>
+      </component>
+      <component id="dacdc" class="javax.swing.JLabel" binding="labelNombre">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Medium" size="18"/>
+          <foreground color="-16777216"/>
+          <text value="Nombre"/>
+        </properties>
+      </component>
+      <component id="a0652" class="javax.swing.JTextField" binding="tfNombre">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="40"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="16"/>
+          <foreground color="-5131346"/>
+          <text value="Ingrese el nombre del tutor"/>
+        </properties>
+      </component>
+      <component id="69181" class="javax.swing.JLabel" binding="labelRFC">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Medium" size="18"/>
+          <foreground color="-16777216"/>
+          <text value="RFC"/>
+        </properties>
+      </component>
+      <component id="6994f" class="javax.swing.JTextField" binding="tfRFC">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="40"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="16"/>
+          <foreground color="-5131346"/>
+          <text value="Ingrese el RFC del tutor"/>
+        </properties>
+      </component>
+      <component id="23378" class="javax.swing.JButton" binding="btnCancelar">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="40"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-14247543"/>
+          <font name="Roboto Medium" size="16"/>
+          <foreground color="-1"/>
+          <text value="Cancelar"/>
+        </properties>
+      </component>
+      <component id="6b51c" class="javax.swing.JButton" binding="btnGuardar">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="40"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-14247543"/>
+          <font name="Roboto Medium" size="16"/>
+          <foreground color="-1"/>
+          <text value="Guardar"/>
+        </properties>
+      </component>
+      <component id="58709" class="javax.swing.JLabel" binding="labelTelefono">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Roboto Medium" size="18"/>
+          <foreground color="-16777216"/>
+          <text value="Teléfono"/>
+        </properties>
+      </component>
+      <component id="477b1" class="javax.swing.JTextField" binding="tfTelefono">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="40"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Roboto Light" size="16"/>
+          <foreground color="-5131346"/>
+          <text value="Ingrese el teléfono del tutor"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>

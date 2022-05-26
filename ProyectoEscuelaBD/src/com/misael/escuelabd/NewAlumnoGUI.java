@@ -140,6 +140,7 @@ public class NewAlumnoGUI extends JFrame {
     }
 
     private void placeHolderListeners() {
+
         tfNombreAlumno.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {

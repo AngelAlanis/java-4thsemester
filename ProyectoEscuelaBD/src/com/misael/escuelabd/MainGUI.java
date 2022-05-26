@@ -17,7 +17,7 @@ public class MainGUI extends JFrame {
     private JLabel      labelLogo;
     private JPanel      panelInformacion;
     private JPanel      panelAlumnos;
-    private JPanel      panelprofesores;
+    private JPanel      panelOtrasConsultas;
     private JPanel      panelTutores;
     private JPanel      panelGrupos;
     private JTable      tableAlumnos;
@@ -34,6 +34,15 @@ public class MainGUI extends JFrame {
     private JButton     btnModificarTutor;
     private JLabel      labelTituloTutores;
     private JScrollPane spTutores;
+    private JTable      tableConsulta;
+    private JTextField  tfCustomQuery;
+    private JButton     btnConsultar;
+    private JScrollPane spConsulta;
+    private JLabel      lbTituloConsultas;
+    private JTable      tableGrupos;
+    private JLabel      labelTituloGrupos;
+    private JScrollPane spGrupos;
+    private JTextField  textField2;
 
     Conectar conectar;
 
@@ -95,18 +104,23 @@ public class MainGUI extends JFrame {
             if (opcion == JOptionPane.YES_OPTION) {
                 conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
             }
-
         });
+
+        btnNuevoTutor.addActionListener(e -> {
+            var newTutor = new NewTutorGUI(this);
+        });
+
     }
 
     public void connectToDatabase() {
         conectar.registro = conectar.conexion();
-        tableAlumnos.setModel(conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono FROM alumno"));
-        tableTutores.setModel(conectar.fillTable("SELECT id_tutor, nombre, rfc, telefono FROM tutor"));
+        refreshTable();
     }
 
     public void refreshTable() {
-        conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono from alumno");
+        tableAlumnos.setModel(conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono FROM alumno"));
+        tableTutores.setModel(conectar.fillTable("SELECT id_tutor, nombre, rfc, telefono FROM tutor"));
+        tableGrupos.setModel(conectar.fillTable("SELECT id_grado, clave, nivel, grado FROM grado"));
     }
 
     private void cargarPanelAlumno() {
@@ -132,7 +146,7 @@ public class MainGUI extends JFrame {
 
     private void cargarPanelProfesores() {
         panelInformacion.removeAll();
-        panelInformacion.add(panelprofesores);
+        panelInformacion.add(panelOtrasConsultas);
         panelInformacion.revalidate();
         panelInformacion.repaint();
     }
