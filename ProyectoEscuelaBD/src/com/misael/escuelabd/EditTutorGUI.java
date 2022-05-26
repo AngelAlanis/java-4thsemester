@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.util.ArrayList;
 
 public class EditTutorGUI extends JFrame {
     private JPanel     panelMain;
@@ -34,6 +35,7 @@ public class EditTutorGUI extends JFrame {
         this.setContentPane(panelMain);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         initComponents();
+        readData();
         initActionListeners();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -44,21 +46,30 @@ public class EditTutorGUI extends JFrame {
         placeHolderColor = new Color(177, 179, 174);
     }
 
+    public void readData() {
+        ArrayList<Object> data = main.conectar.readData("SELECT nombre, rfc, telefono FROM tutor WHERE id_tutor = " + idTutor);
+
+        tfNombre.setText(data.get(1).toString());
+        tfRFC.setText(data.get(2).toString());
+        tfTelefono.setText(data.get(3).toString());
+    }
+
     public void initActionListeners() {
 
         btnGuardar.addActionListener(e -> {
-            nombre   = tfNombre.getText();
-            rfc      = tfRFC.getText();
-            telefono = tfTelefono.getText();
-
-            sqlQuery = "UPDATE tutor SET nombre='" + nombre + "',rfc='" + rfc + "',telefono='" + telefono + "' WHERE id_tutor ='" + idTutor + "'";
-
-            main.conectar.executeQuery(sqlQuery);
+            saveData();
+            this.dispose();
+            main.refreshTable();
 
         });
 
         btnCancelar.addActionListener(e -> this.dispose());
 
+        placeHolderListeners();
+
+    }
+
+    private void placeHolderListeners() {
         tfNombre.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -115,8 +126,16 @@ public class EditTutorGUI extends JFrame {
                 }
             }
         });
+    }
 
+    private void saveData() {
+        nombre   = tfNombre.getText();
+        rfc      = tfRFC.getText();
+        telefono = tfTelefono.getText();
 
+        sqlQuery = "UPDATE tutor SET nombre='" + nombre + "',rfc='" + rfc + "',telefono='" + telefono + "' WHERE id_tutor ='" + idTutor + "'";
+
+        main.conectar.executeQuery(sqlQuery);
     }
 
     public void setBorderToComponents() {

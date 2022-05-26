@@ -32,7 +32,8 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="16"/>
-          <foreground color="-16777216"/>
+          <foreground color="-5131346"/>
+          <text value="Ingrese el nombre del alumno"/>
         </properties>
       </component>
       <component id="b5d87" class="javax.swing.JLabel" binding="labelFechaNacimiento">
@@ -55,7 +56,8 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="16"/>
-          <foreground color="-16777216"/>
+          <foreground color="-5131346"/>
+          <text value="Ingrese la fecha de nacimiento del alumno"/>
         </properties>
       </component>
       <component id="5d8f5" class="javax.swing.JLabel" binding="labelTelefono">
@@ -78,7 +80,8 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="16"/>
-          <foreground color="-16777216"/>
+          <foreground color="-5131346"/>
+          <text value="Ingrese el teléfono del alumno"/>
         </properties>
       </component>
       <component id="2cdb9" class="javax.swing.JLabel" binding="labelGenero">
@@ -99,9 +102,10 @@
           </grid>
         </constraints>
         <properties>
-          <font name="Roboto Light" size="16" style="0"/>
-          <foreground color="-16777216"/>
+          <font name="Roboto Light" size="16"/>
+          <foreground color="-5131346"/>
           <model>
+            <item value="Seleccione el género del alumno"/>
             <item value="Masculino"/>
             <item value="Femenino"/>
           </model>
@@ -127,7 +131,8 @@
         </constraints>
         <properties>
           <font name="Roboto Light" size="16"/>
-          <foreground color="-16777216"/>
+          <foreground color="-5131346"/>
+          <text value="Ingrese la matrícula del alumno"/>
         </properties>
       </component>
       <component id="b96e7" class="javax.swing.JLabel" binding="labelTitulo">
