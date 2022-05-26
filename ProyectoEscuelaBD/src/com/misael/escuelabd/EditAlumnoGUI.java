@@ -25,7 +25,7 @@ public class EditAlumnoGUI extends JFrame {
 
     public EditAlumnoGUI(MainGUI main, int idAlumno) {
 
-        this.main     = main;
+        this.main = main;
         this.idAlumno = idAlumno;
 
         this.setSize(600, 700);
@@ -47,14 +47,37 @@ public class EditAlumnoGUI extends JFrame {
     }
 
     public void readData() {
+        ArrayList<Object> data = main.conectar.readData("SELECT matricula, nombre, genero, fecha_nacimiento, telefono FROM alumno WHERE id_alumno = " + idAlumno);
 
-        ArrayList<String> data = main.conectar.readData("SELECT matricula, nombre, genero, fecha_nacimiento, telefono FROM alumno WHERE id_alumno = " + idAlumno);
+        tfMatricula.setText(data.get(0).toString());
+        tfNombre.setText(data.get(1).toString());
+        cbGenero.setSelectedIndex(getGenderIndex(data.get(2).toString()));
+        tfFechaNacimiento.setText(data.get(3).toString());
+        tfTelefono.setText(data.get(4).toString());
+    }
 
-        tfMatricula.setText(data.get(0));
-        tfNombre.setText(data.get(1));
-        cbGenero.setSelectedIndex(getGenderIndex(data.get(2)));
-        tfFechaNacimiento.setText(data.get(3));
-        tfTelefono.setText(data.get(4));
+    public void saveData() {
+        String matricula       = tfMatricula.getText();
+        String nombre          = tfNombre.getText();
+        String genero          = getGenderString(cbGenero.getSelectedIndex());
+        String fechaNacimiento = tfFechaNacimiento.getText();
+        String telefono        = tfTelefono.getText();
+
+        String sqlQuery = "UPDATE alumno SET matricula = '" + matricula + "', nombre = '" + nombre + "', genero='" + genero + "', fecha_nacimiento='" + fechaNacimiento + "', telefono='" + telefono + "' WHERE id_alumno=" + idAlumno;
+        main.conectar.executeQuery(sqlQuery);
+    }
+
+    public String getGenderString(int gender) {
+        switch (gender) {
+            case 0 -> {
+                return "Masculino";
+            }
+
+            case 1 -> {
+                return "Femenino";
+            }
+        }
+        return null;
     }
 
     public int getGenderIndex(String gender) {
@@ -71,7 +94,11 @@ public class EditAlumnoGUI extends JFrame {
 
     public void initActionListeners() {
         btnCancelar.addActionListener(e -> this.dispose());
-        btnRegistrar.addActionListener(e -> main.conectar.executeQuery(""));
+        btnRegistrar.addActionListener(e -> {
+            saveData();
+            this.dispose();
+            main.refreshTable();
+        });
     }
 
 }

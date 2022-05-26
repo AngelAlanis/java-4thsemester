@@ -118,6 +118,8 @@ public class NewAlumnoGUI extends JFrame {
 
             //sqlQuery = "INSERT INTO inscripcion (id_alumno, id_grado, monto, pagado)";
 
+            this.dispose();
+
             main.refreshTable();
 
         });
