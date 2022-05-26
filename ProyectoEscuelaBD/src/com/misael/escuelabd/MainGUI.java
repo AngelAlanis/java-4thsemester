@@ -94,8 +94,8 @@ public class MainGUI extends JFrame {
             var editTutor = new EditTutorGUI(this, idTutor);
         });
 
-        btnConsultar.addActionListener(e ->{
-            conectar.executeQuery(tfCustomQuery.getText().trim());
+        btnConsultar.addActionListener(e -> {
+            tableConsulta.setModel(conectar.fillTable(tfCustomQuery.getText().trim()));
         });
     }
 
