@@ -10,7 +10,7 @@ import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class NewTutorGUI extends JFrame {
+public class EditTutorGUI extends JFrame {
     private JPanel     panelMain;
     private JTextField tfNombre;
     private JTextField tfRFC;
@@ -25,9 +25,11 @@ public class NewTutorGUI extends JFrame {
     Color   placeHolderColor;
     MainGUI main;
     String  nombre, rfc, telefono, sqlQuery;
+    int idTutor;
 
-    public NewTutorGUI(MainGUI main) {
-        this.main = main;
+    public EditTutorGUI(MainGUI main, int idTutor) {
+        this.main    = main;
+        this.idTutor = idTutor;
         this.setSize(500, 700);
         this.setContentPane(panelMain);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -49,7 +51,7 @@ public class NewTutorGUI extends JFrame {
             rfc      = tfRFC.getText();
             telefono = tfTelefono.getText();
 
-            sqlQuery = "INSERT INTO tutor (nombre, rfc, telefono) VALUES ('" + nombre + "','" + rfc + "','" + telefono + "')";
+            sqlQuery = "UPDATE tutor SET nombre='" + nombre + "',rfc='" + rfc + "',telefono='" + telefono + "' WHERE id_tutor ='" + idTutor + "'";
 
             main.conectar.executeQuery(sqlQuery);
 

@@ -1,7 +1,13 @@
 package com.misael.escuelabd;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
@@ -51,7 +57,8 @@ public class NewAlumnoGUI extends JFrame {
     private JLabel            labelPrecioInscripcion;
     private Color             placeHolderColor;
 
-    String  sqlQuery;
+    String sqlQuery, nombreAlumno, nombreTutor, matriculaAlumno, fechaNacimientoAlumno, telefonoAlumno, telefonoTutor, rfcTutor, cantidadRecibida;
+    int generoAlumno, grado, year;
     int     currentPanel = 0;
     MainGUI main;
 
@@ -92,19 +99,17 @@ public class NewAlumnoGUI extends JFrame {
         placeHolderListeners();
 
         btnRegistrar.addActionListener(e -> {
-            String matriculaAlumno       = tfMatricula.getText();
-            String nombreAlumno          = tfNombreAlumno.getText();
-            int    generoAlumno          = cbGenero.getSelectedIndex();
-            String fechaNacimientoAlumno = tfFechaNacimiento.getText();
-            String telefonoAlumno        = tfTelefonoAlumno.getText();
-
-            String nombreTutor   = tfNombreTutor.getText();
-            String rfcTutor      = tfRFCTutor.getText();
-            String telefonoTutor = tfTelefonoTutor.getText();
-
-            int    grado            = cbGrado.getSelectedIndex();
-            int    year             = cbYear.getSelectedIndex();
-            String cantidadRecibida = tfCantidadRecibida.getText();
+            matriculaAlumno       = tfMatricula.getText();
+            nombreAlumno          = tfNombreAlumno.getText();
+            generoAlumno          = cbGenero.getSelectedIndex();
+            fechaNacimientoAlumno = tfFechaNacimiento.getText();
+            telefonoAlumno        = tfTelefonoAlumno.getText();
+            nombreTutor           = tfNombreTutor.getText();
+            rfcTutor              = tfRFCTutor.getText();
+            telefonoTutor         = tfTelefonoTutor.getText();
+            grado                 = cbGrado.getSelectedIndex();
+            year                  = cbYear.getSelectedIndex();
+            cantidadRecibida      = tfCantidadRecibida.getText();
 
             sqlQuery = "INSERT INTO alumno (matricula, nombre, genero, fecha_nacimiento, telefono) " +
                     "VALUES ('" + matriculaAlumno + "','" + nombreAlumno + "','" + generoAlumno + "','" + fechaNacimientoAlumno + "','" + telefonoAlumno + "')";

@@ -2,7 +2,14 @@ package com.misael.escuelabd;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -42,10 +49,8 @@ public class MainGUI extends JFrame {
     private JTable      tableGrupos;
     private JLabel      labelTituloGrupos;
     private JScrollPane spGrupos;
-    private JTextField  textField2;
 
     Conectar conectar;
-
 
     public MainGUI() {
         conectar = new Conectar();
@@ -60,6 +65,38 @@ public class MainGUI extends JFrame {
 
     public void initActionListeners() {
 
+        tabsListeners();
+
+        btnNewAlumno.addActionListener(e -> {
+            var newAlumno = new NewAlumnoGUI(this);
+        });
+
+        btnModificarAlumno.addActionListener(e -> {
+            int idAlumno   = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
+            var editAlumno = new EditAlumnoGUI(this, idAlumno);
+        });
+
+        btnBajaAlumno.addActionListener(e -> {
+            int idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
+            int opcion   = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
+            }
+        });
+
+        btnNuevoTutor.addActionListener(e -> {
+            var newTutor = new NewTutorGUI(this);
+        });
+
+        btnModificarTutor.addActionListener(e -> {
+            int idTutor   = (int) tableTutores.getValueAt(tableTutores.getSelectedRow(), 0);
+            var editTutor = new EditTutorGUI(this, idTutor);
+        });
+
+    }
+
+    private void tabsListeners() {
         labelAlumnos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -87,29 +124,6 @@ public class MainGUI extends JFrame {
                 cargarPanelProfesores();
             }
         });
-
-        btnNewAlumno.addActionListener(e -> {
-            var newAlumno = new NewAlumnoGUI(this);
-        });
-
-        btnModificarAlumno.addActionListener(e -> {
-            int idAlumno   = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
-            var editAlumno = new EditAlumnoGUI(this, idAlumno);
-        });
-
-        btnBajaAlumno.addActionListener(e -> {
-            int idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
-            int opcion   = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
-
-            if (opcion == JOptionPane.YES_OPTION) {
-                conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
-            }
-        });
-
-        btnNuevoTutor.addActionListener(e -> {
-            var newTutor = new NewTutorGUI(this);
-        });
-
     }
 
     public void connectToDatabase() {

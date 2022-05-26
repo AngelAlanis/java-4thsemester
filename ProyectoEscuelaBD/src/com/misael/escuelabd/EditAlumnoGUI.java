@@ -1,7 +1,13 @@
 package com.misael.escuelabd;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class EditAlumnoGUI extends JFrame {
@@ -21,11 +27,17 @@ public class EditAlumnoGUI extends JFrame {
     private JButton           btnCancelar;
 
     MainGUI main;
+    String  matricula;
+    String  nombre;
+    String  genero;
+    String  fechaNacimiento;
+    String  telefono;
+    String  sqlQuery;
     int     idAlumno;
 
     public EditAlumnoGUI(MainGUI main, int idAlumno) {
 
-        this.main = main;
+        this.main     = main;
         this.idAlumno = idAlumno;
 
         this.setSize(600, 700);
@@ -57,13 +69,12 @@ public class EditAlumnoGUI extends JFrame {
     }
 
     public void saveData() {
-        String matricula       = tfMatricula.getText();
-        String nombre          = tfNombre.getText();
-        String genero          = getGenderString(cbGenero.getSelectedIndex());
-        String fechaNacimiento = tfFechaNacimiento.getText();
-        String telefono        = tfTelefono.getText();
-
-        String sqlQuery = "UPDATE alumno SET matricula = '" + matricula + "', nombre = '" + nombre + "', genero='" + genero + "', fecha_nacimiento='" + fechaNacimiento + "', telefono='" + telefono + "' WHERE id_alumno=" + idAlumno;
+        matricula       = tfMatricula.getText();
+        nombre          = tfNombre.getText();
+        genero          = getGenderString(cbGenero.getSelectedIndex());
+        fechaNacimiento = tfFechaNacimiento.getText();
+        telefono        = tfTelefono.getText();
+        sqlQuery        = "UPDATE alumno SET matricula = '" + matricula + "', nombre = '" + nombre + "', genero='" + genero + "', fecha_nacimiento='" + fechaNacimiento + "', telefono='" + telefono + "' WHERE id_alumno=" + idAlumno;
         main.conectar.executeQuery(sqlQuery);
     }
 

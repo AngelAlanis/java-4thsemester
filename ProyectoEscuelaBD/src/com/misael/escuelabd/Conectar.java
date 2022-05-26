@@ -76,8 +76,6 @@ public class Conectar {
 
     public ArrayList<Object> readData(String sqlQuery) {
 
-        System.out.println(sqlQuery);
-
         ArrayList<Object> data = new ArrayList<>();
 
         try {
