@@ -51,9 +51,10 @@ public class NewAlumnoGUI extends JFrame {
     private JLabel            labelPrecioInscripcion;
     private Color             placeHolderColor;
 
-    String sqlQuery, nombreAlumno, nombreTutor, matriculaAlumno, fechaNacimientoAlumno, telefonoAlumno, telefonoTutor, rfcTutor, cantidadRecibida;
-    int generoAlumno, grado, year;
-    int     currentPanel = 0;
+    String sqlQuery, nombreAlumno, nombreTutor, matriculaAlumno, fechaNacimientoAlumno, telefonoAlumno, telefonoTutor, rfcTutor, cantidadRecibida, nivel;
+    int generoAlumno, nivelIndex, grado;
+    int currentPanel = 0;
+    int montoAPagar, montoPagado;
     MainGUI main;
 
     NewAlumnoGUI(MainGUI main) {
@@ -95,37 +96,37 @@ public class NewAlumnoGUI extends JFrame {
         btnRegistrar.addActionListener(e -> {
 
             try {
-                matriculaAlumno       = Utilities.validate(tfMatricula.getText());
-                nombreAlumno          = Utilities.validate(tfNombreAlumno.getText());
-                generoAlumno          = Utilities.validate(cbGenero.getSelectedIndex());
+                matriculaAlumno = Utilities.validate(tfMatricula.getText());
+                nombreAlumno = Utilities.validate(tfNombreAlumno.getText());
+                generoAlumno = Utilities.validate(cbGenero.getSelectedIndex());
                 fechaNacimientoAlumno = Utilities.validate(tfFechaNacimiento.getText());
-                telefonoAlumno        = Utilities.validate(tfTelefonoAlumno.getText());
-                nombreTutor           = Utilities.validate(tfNombreTutor.getText());
-                rfcTutor              = Utilities.validate(tfRFCTutor.getText());
-                telefonoTutor         = Utilities.validate(tfTelefonoTutor.getText());
-                grado                 = Utilities.validate(cbGrado.getSelectedIndex());
-                year                  = Utilities.validate(cbYear.getSelectedIndex());
-                cantidadRecibida      = Utilities.validate(tfCantidadRecibida.getText());
+                telefonoAlumno = Utilities.validate(tfTelefonoAlumno.getText());
+                nombreTutor = Utilities.validate(tfNombreTutor.getText());
+                rfcTutor = Utilities.validate(tfRFCTutor.getText());
+                telefonoTutor = Utilities.validate(tfTelefonoTutor.getText());
+                nivelIndex = Utilities.validate(cbGrado.getSelectedIndex());
+                nivel = getNivelFromIndex(nivelIndex);
+                grado = Utilities.validate(cbYear.getSelectedIndex());
+                cantidadRecibida = Utilities.validate(tfCantidadRecibida.getText());
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            sqlQuery = "INSERT INTO alumno (matricula, nombre, genero, fecha_nacimiento, telefono) " +
-                    "VALUES ('" + matriculaAlumno + "','" + nombreAlumno + "','" + generoAlumno + "','" + fechaNacimientoAlumno + "','" + telefonoAlumno + "')";
+            sqlQuery =
+                    "INSERT INTO alumno (matricula, nombre, genero, fecha_nacimiento, telefono)"
+                            + "\nVALUES ('" + matriculaAlumno + "','" + nombreAlumno + "','" + generoAlumno + "','" + fechaNacimientoAlumno + "','" + telefonoAlumno + "');"
+                            + "\nSET @AlumnoID = LAST_INSERT_ID();"
+                            + "\nINSERT INTO tutor(nombre, rfc, telefono)"
+                            + "\nVALUES ('" + nombreTutor + "','" + rfcTutor + "','" + telefonoTutor + "');"
+                            + "\nSET @TutorID = LAST_INSERT_ID();"
+                            + "\nSELECT id_grado INTO  @GradoID FROM grado WHERE grado= '" + grado + "' AND nivel ='" + nivel + "';"
+                            + "\nINSERT INTO inscripcion (id_alumno, id_grado, monto, pagado) VALUES (@AlumnoID, @GradoID" + ",'" + montoAPagar + "','" + montoPagado + "');";
 
+            System.out.println(sqlQuery);
             main.conectar.executeQuery(sqlQuery);
-
-            sqlQuery = "INSERT INTO tutor(nombre, rfc, telefono)" +
-                    "VALUES ('" + nombreTutor + "','" + rfcTutor + "','" + telefonoTutor + "')";
-
-            main.conectar.executeQuery(sqlQuery);
-
-            //sqlQuery = "INSERT INTO inscripcion (id_alumno, id_grado, monto, pagado)";
-
             this.dispose();
-
             main.refreshTable();
 
         });
@@ -345,6 +346,24 @@ public class NewAlumnoGUI extends JFrame {
     private void decreaseCurrentPanel() {
         if (currentPanel > 0) {
             currentPanel--;
+        }
+    }
+
+    private String getNivelFromIndex(int index) {
+        switch (index) {
+            case 1 -> {
+                return "Primaria";
+            }
+
+            case 2 -> {
+                return "Secundaria";
+            }
+
+            case 3 -> {
+                return "Preparatoria";
+            }
+
+            default -> throw new NullPointerException();
         }
     }
 

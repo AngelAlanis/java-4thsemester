@@ -54,7 +54,7 @@ public class MainGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        //connectToDatabase();
+        connectToDatabase();
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
