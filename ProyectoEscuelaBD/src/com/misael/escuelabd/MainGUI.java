@@ -2,14 +2,8 @@ package com.misael.escuelabd;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -17,7 +11,7 @@ public class MainGUI extends JFrame {
     private JPanel      panelMain;
     private JPanel      panelSidebar;
     private JLabel      labelAlumnos;
-    private JLabel      labelProfesores;
+    private JLabel      labelOtrasConsultas;
     private JLabel      labelTutores;
     private JLabel      labelGrupos;
     private JLabel      labelSidebarIcon;
@@ -50,6 +44,8 @@ public class MainGUI extends JFrame {
     private JLabel      labelTituloGrupos;
     private JScrollPane spGrupos;
 
+    private ImageIcon logo, add, delete, edit, group, home, mysql, remove_person, search, student, teacher, sidebar;
+
     Conectar conectar;
 
     public MainGUI() {
@@ -58,7 +54,8 @@ public class MainGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        connectToDatabase();
+        //connectToDatabase();
+        initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -118,6 +115,41 @@ public class MainGUI extends JFrame {
         });
     }
 
+    public void initComponents() {
+        add           = Utilities.setupIcon("add.png", 30, 30, Color.white);
+        delete        = Utilities.setupIcon("delete.png", 30, 30, Color.white);
+        group         = Utilities.setupIcon("group.png", 30, 30, Color.white);
+        home          = Utilities.setupIcon("home.png", 30, 30, Color.white);
+        mysql         = Utilities.setupIcon("mysql.png", 30, 30, Color.white);
+        remove_person = Utilities.setupIcon("remove_person.png", 30, 30, Color.white);
+        search        = Utilities.setupIcon("search.png", 30, 30, Color.white);
+        student       = Utilities.setupIcon("student.png", 30, 30, Color.white);
+        teacher       = Utilities.setupIcon("teacher.png", 30, 30, Color.white);
+        edit          = Utilities.setupIcon("edit.png", 30, 30, Color.white);
+        sidebar       = Utilities.setupIcon("sidebar.png", 30, 30, Color.white);
+        logo          = Utilities.setupImage("school_logo.png", 197, 45);
+
+        labelLogo.setIcon(logo);
+
+        labelSidebarIcon.setIcon(sidebar);
+
+        labelMenuPrincipal.setIcon(home);
+        labelGrupos.setIcon(group);
+        labelOtrasConsultas.setIcon(mysql);
+        labelAlumnos.setIcon(student);
+        labelTutores.setIcon(teacher);
+
+        btnNewAlumno.setIcon(add);
+        btnModificarAlumno.setIcon(edit);
+        btnBajaAlumno.setIcon(delete);
+
+        btnNuevoTutor.setIcon(add);
+        btnModificarTutor.setIcon(edit);
+
+        btnConsultar.setIcon(search);
+
+    }
+
     private void tabsListeners() {
         labelAlumnos.addMouseListener(new MouseAdapter() {
             @Override
@@ -140,7 +172,7 @@ public class MainGUI extends JFrame {
             }
         });
 
-        labelProfesores.addMouseListener(new MouseAdapter() {
+        labelOtrasConsultas.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 cargarPanelProfesores();
