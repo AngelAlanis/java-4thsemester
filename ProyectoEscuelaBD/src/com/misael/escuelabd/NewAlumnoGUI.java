@@ -89,6 +89,7 @@ public class NewAlumnoGUI extends JFrame {
         cbYear.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         cbExtraCurricular.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         tfCantidadRecibida.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfDireccion.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
     }
 
     public void initActionListeners() {
@@ -124,9 +125,11 @@ public class NewAlumnoGUI extends JFrame {
                     + "\nVALUES ('" + nombreTutor + "','" + rfcTutor + "','" + telefonoTutor + "');"
                     + "\nSET @TutorID = LAST_INSERT_ID();"
                     + "\nSELECT id_grado INTO  @GradoID FROM grado WHERE grado= '" + grado + "' AND nivel ='" + nivel + "';"
-                    + "\nINSERT INTO inscripcion (id_alumno, id_grado, monto, pagado) VALUES (@AlumnoID, @GradoID" + ",'" + montoAPagar + "','" + montoPagado + "');";
+                    + "\nINSERT INTO inscripcion (id_alumno, id_grado, monto, pagado) VALUES (@AlumnoID, @GradoID" + ",'" + montoAPagar + "','" + montoPagado + "');"
+                    + "\nINSERT INTO alumno_tutor (id_tutor, id_alumno, direccion) VALUES (@TutorID, @AlumnoID,'" + direccion + "');";
 
             System.out.println(sqlQuery);
+
             main.conectar.executeQuery(sqlQuery);
             this.dispose();
             main.refreshTable();
