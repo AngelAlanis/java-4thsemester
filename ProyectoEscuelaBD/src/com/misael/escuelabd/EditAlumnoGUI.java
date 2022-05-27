@@ -1,10 +1,14 @@
 package com.misael.escuelabd;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.Color;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 
 public class EditAlumnoGUI extends JFrame {
@@ -31,10 +35,8 @@ public class EditAlumnoGUI extends JFrame {
     String  telefono;
     String  sqlQuery;
     int     idAlumno;
-    Color   placeHolderColor;
 
     public EditAlumnoGUI(MainGUI main, int idAlumno) {
-        placeHolderColor = new Color(177, 179, 174);
         this.main        = main;
         this.idAlumno    = idAlumno;
 

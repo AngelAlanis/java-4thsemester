@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class Utilities {
 
-    static Color placeHolderColor = new Color(177, 179, 174);
+    final static Color placeHolderColor = new Color(177, 179, 174);
 
     public static String validate(String string) {
         if (string == null && string.isBlank()) {
@@ -58,6 +58,8 @@ public class Utilities {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        assert image != null;
         Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImage);
     }

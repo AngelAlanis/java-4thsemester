@@ -15,7 +15,7 @@ public class Conectar {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             // Tipo de conexión, servidor, base de datos, usuario, contraseña
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/escuela", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/escuela?allowMultiQueries=true", "root", "");
             System.out.println("Conexión realizada a la base de datos escuela.");
         } catch (Exception e) {
             e.printStackTrace();
