@@ -1,12 +1,6 @@
 package com.misael.escuelabd;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -73,12 +67,20 @@ public class EditAlumnoGUI extends JFrame {
     }
 
     public void saveData() {
-        matricula       = tfMatricula.getText();
-        nombre          = tfNombre.getText();
-        genero          = getGenderString(cbGenero.getSelectedIndex());
-        fechaNacimiento = tfFechaNacimiento.getText();
-        telefono        = tfTelefono.getText();
-        sqlQuery        = "UPDATE alumno SET matricula = '" + matricula + "', nombre = '" + nombre + "', genero='" + genero + "', fecha_nacimiento='" + fechaNacimiento + "', telefono='" + telefono + "' WHERE id_alumno=" + idAlumno;
+
+        try {
+            matricula       = Utilities.validate(tfMatricula.getText());
+            nombre          = Utilities.validate(tfNombre.getText());
+            genero          = Utilities.validate(getGenderString(cbGenero.getSelectedIndex()));
+            fechaNacimiento = Utilities.validate(tfFechaNacimiento.getText());
+            telefono        = Utilities.validate(tfTelefono.getText());
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        sqlQuery = "UPDATE alumno SET matricula = '" + matricula + "', nombre = '" + nombre + "', genero='" + genero + "', fecha_nacimiento='" + fechaNacimiento + "', telefono='" + telefono + "' WHERE id_alumno=" + idAlumno;
         main.conectar.executeQuery(sqlQuery);
     }
 

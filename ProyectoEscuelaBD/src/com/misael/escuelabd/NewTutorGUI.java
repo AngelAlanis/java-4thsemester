@@ -1,11 +1,6 @@
 package com.misael.escuelabd;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -45,16 +40,20 @@ public class NewTutorGUI extends JFrame {
     public void initActionListeners() {
 
         btnGuardar.addActionListener(e -> {
-            nombre   = tfNombre.getText();
-            rfc      = tfRFC.getText();
-            telefono = tfTelefono.getText();
+
+            try {
+                nombre   = Utilities.validate(tfNombre.getText());
+                rfc      = Utilities.validate(tfRFC.getText());
+                telefono = Utilities.validate(tfTelefono.getText());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             sqlQuery = "INSERT INTO tutor (nombre, rfc, telefono) VALUES ('" + nombre + "','" + rfc + "','" + telefono + "')";
-
             main.conectar.executeQuery(sqlQuery);
-
             this.dispose();
-
             main.refreshTable();
 
         });
@@ -117,8 +116,6 @@ public class NewTutorGUI extends JFrame {
                 }
             }
         });
-
-
     }
 
     public void setBorderToComponents() {

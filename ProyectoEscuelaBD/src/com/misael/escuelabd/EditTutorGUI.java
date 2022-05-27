@@ -1,11 +1,6 @@
 package com.misael.escuelabd;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -60,13 +55,11 @@ public class EditTutorGUI extends JFrame {
             saveData();
             this.dispose();
             main.refreshTable();
-
         });
 
         btnCancelar.addActionListener(e -> this.dispose());
 
         placeHolderListeners();
-
     }
 
     private void placeHolderListeners() {
@@ -129,9 +122,16 @@ public class EditTutorGUI extends JFrame {
     }
 
     private void saveData() {
-        nombre   = tfNombre.getText();
-        rfc      = tfRFC.getText();
-        telefono = tfTelefono.getText();
+
+        try {
+            nombre   = Utilities.validate(tfNombre.getText());
+            rfc      = Utilities.validate(tfRFC.getText());
+            telefono = Utilities.validate(tfTelefono.getText());
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         sqlQuery = "UPDATE tutor SET nombre='" + nombre + "',rfc='" + rfc + "',telefono='" + telefono + "' WHERE id_tutor ='" + idTutor + "'";
 

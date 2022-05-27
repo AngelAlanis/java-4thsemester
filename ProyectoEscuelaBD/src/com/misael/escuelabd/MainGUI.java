@@ -72,17 +72,29 @@ public class MainGUI extends JFrame {
         });
 
         btnModificarAlumno.addActionListener(e -> {
-            int idAlumno   = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
-            var editAlumno = new EditAlumnoGUI(this, idAlumno);
+            int idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
+
+            if (idAlumno >= 0) {
+                var editAlumno = new EditAlumnoGUI(this, idAlumno);
+            } else {
+                JOptionPane.showMessageDialog(null, "No seleccionó ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
         });
 
         btnBajaAlumno.addActionListener(e -> {
             int idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
-            int opcion   = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
-            if (opcion == JOptionPane.YES_OPTION) {
-                conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
+            if (idAlumno >= 0) {
+                int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No seleccionó ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
             }
+
         });
 
         btnNuevoTutor.addActionListener(e -> {
@@ -90,8 +102,13 @@ public class MainGUI extends JFrame {
         });
 
         btnModificarTutor.addActionListener(e -> {
-            int idTutor   = (int) tableTutores.getValueAt(tableTutores.getSelectedRow(), 0);
-            var editTutor = new EditTutorGUI(this, idTutor);
+            int idTutor = (int) tableTutores.getValueAt(tableTutores.getSelectedRow(), 0);
+            if (idTutor >= 0) {
+                var editTutor = new EditTutorGUI(this, idTutor);
+            } else {
+                JOptionPane.showMessageDialog(null, "No seleccionó ningún tutor.");
+            }
+
         });
 
         btnConsultar.addActionListener(e -> {

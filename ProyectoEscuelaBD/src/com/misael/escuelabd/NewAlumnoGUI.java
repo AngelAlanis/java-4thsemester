@@ -1,12 +1,6 @@
 package com.misael.escuelabd;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -99,17 +93,24 @@ public class NewAlumnoGUI extends JFrame {
         placeHolderListeners();
 
         btnRegistrar.addActionListener(e -> {
-            matriculaAlumno       = tfMatricula.getText();
-            nombreAlumno          = tfNombreAlumno.getText();
-            generoAlumno          = cbGenero.getSelectedIndex();
-            fechaNacimientoAlumno = tfFechaNacimiento.getText();
-            telefonoAlumno        = tfTelefonoAlumno.getText();
-            nombreTutor           = tfNombreTutor.getText();
-            rfcTutor              = tfRFCTutor.getText();
-            telefonoTutor         = tfTelefonoTutor.getText();
-            grado                 = cbGrado.getSelectedIndex();
-            year                  = cbYear.getSelectedIndex();
-            cantidadRecibida      = tfCantidadRecibida.getText();
+
+            try {
+                matriculaAlumno       = Utilities.validate(tfMatricula.getText());
+                nombreAlumno          = Utilities.validate(tfNombreAlumno.getText());
+                generoAlumno          = Utilities.validate(cbGenero.getSelectedIndex());
+                fechaNacimientoAlumno = Utilities.validate(tfFechaNacimiento.getText());
+                telefonoAlumno        = Utilities.validate(tfTelefonoAlumno.getText());
+                nombreTutor           = Utilities.validate(tfNombreTutor.getText());
+                rfcTutor              = Utilities.validate(tfRFCTutor.getText());
+                telefonoTutor         = Utilities.validate(tfTelefonoTutor.getText());
+                grado                 = Utilities.validate(cbGrado.getSelectedIndex());
+                year                  = Utilities.validate(cbYear.getSelectedIndex());
+                cantidadRecibida      = Utilities.validate(tfCantidadRecibida.getText());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             sqlQuery = "INSERT INTO alumno (matricula, nombre, genero, fecha_nacimiento, telefono) " +
                     "VALUES ('" + matriculaAlumno + "','" + nombreAlumno + "','" + generoAlumno + "','" + fechaNacimientoAlumno + "','" + telefonoAlumno + "')";
