@@ -58,7 +58,7 @@ public class MainGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        //connectToDatabase();
+        connectToDatabase();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -72,29 +72,30 @@ public class MainGUI extends JFrame {
         });
 
         btnModificarAlumno.addActionListener(e -> {
-            int idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
-
-            if (idAlumno >= 0) {
-                var editAlumno = new EditAlumnoGUI(this, idAlumno);
-            } else {
+            int idAlumno = 0;
+            try {
+                idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "No seleccionó ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-
+            var editAlumno = new EditAlumnoGUI(this, idAlumno);
         });
 
         btnBajaAlumno.addActionListener(e -> {
-            int idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
 
-            if (idAlumno >= 0) {
-                int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
-
-                if (opcion == JOptionPane.YES_OPTION) {
-                    conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
-                }
-            } else {
+            int idAlumno = 0;
+            try {
+                idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "No seleccionó ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.YES_OPTION) {
+                conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
+            }
         });
 
         btnNuevoTutor.addActionListener(e -> {
@@ -102,13 +103,14 @@ public class MainGUI extends JFrame {
         });
 
         btnModificarTutor.addActionListener(e -> {
-            int idTutor = (int) tableTutores.getValueAt(tableTutores.getSelectedRow(), 0);
-            if (idTutor >= 0) {
-                var editTutor = new EditTutorGUI(this, idTutor);
-            } else {
-                JOptionPane.showMessageDialog(null, "No seleccionó ningún tutor.");
+            int idTutor;
+            try {
+                idTutor = (int) tableTutores.getValueAt(tableTutores.getSelectedRow(), 0);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "No seleccionó un tutor.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-
+            var editTutor = new EditTutorGUI(this, idTutor);
         });
 
         btnConsultar.addActionListener(e -> {

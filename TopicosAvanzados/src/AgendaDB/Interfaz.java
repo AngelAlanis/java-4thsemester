@@ -151,7 +151,6 @@ public class Interfaz extends JFrame {
         DefaultTableModel                 tableModel = (DefaultTableModel) table.getModel();
         TableRowSorter<DefaultTableModel> trs        = new TableRowSorter<>(tableModel);
         table.setRowSorter(trs);
-
         trs.setRowFilter(RowFilter.regexFilter("(?i)" + busqueda));
     }
 

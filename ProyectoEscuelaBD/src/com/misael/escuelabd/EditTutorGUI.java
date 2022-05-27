@@ -44,9 +44,9 @@ public class EditTutorGUI extends JFrame {
     public void readData() {
         ArrayList<Object> data = main.conectar.readData("SELECT nombre, rfc, telefono FROM tutor WHERE id_tutor = " + idTutor);
 
-        tfNombre.setText(data.get(1).toString());
-        tfRFC.setText(data.get(2).toString());
-        tfTelefono.setText(data.get(3).toString());
+        tfNombre.setText(data.get(0).toString());
+        tfRFC.setText(data.get(1).toString());
+        tfTelefono.setText(data.get(2).toString());
     }
 
     public void initActionListeners() {
