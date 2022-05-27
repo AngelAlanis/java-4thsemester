@@ -49,9 +49,11 @@ public class NewAlumnoGUI extends JFrame {
     private JTextField        tfCantidadRecibida;
     private JLabel            labelCantidadAPagar;
     private JLabel            labelPrecioInscripcion;
+    private JLabel            labelDireccion;
+    private JTextField        tfDireccion;
     private Color             placeHolderColor;
 
-    String sqlQuery, nombreAlumno, nombreTutor, matriculaAlumno, fechaNacimientoAlumno, telefonoAlumno, telefonoTutor, rfcTutor, cantidadRecibida, nivel;
+    String sqlQuery, nombreAlumno, nombreTutor, matriculaAlumno, fechaNacimientoAlumno, telefonoAlumno, telefonoTutor, rfcTutor, direccion, cantidadRecibida, nivel;
     int generoAlumno, nivelIndex, grado;
     int currentPanel = 0;
     int montoAPagar, montoPagado;
@@ -96,33 +98,33 @@ public class NewAlumnoGUI extends JFrame {
         btnRegistrar.addActionListener(e -> {
 
             try {
-                matriculaAlumno = Utilities.validate(tfMatricula.getText());
-                nombreAlumno = Utilities.validate(tfNombreAlumno.getText());
-                generoAlumno = Utilities.validate(cbGenero.getSelectedIndex());
+                matriculaAlumno       = Utilities.validate(tfMatricula.getText());
+                nombreAlumno          = Utilities.validate(tfNombreAlumno.getText());
+                generoAlumno          = Utilities.validate(cbGenero.getSelectedIndex());
                 fechaNacimientoAlumno = Utilities.validate(tfFechaNacimiento.getText());
-                telefonoAlumno = Utilities.validate(tfTelefonoAlumno.getText());
-                nombreTutor = Utilities.validate(tfNombreTutor.getText());
-                rfcTutor = Utilities.validate(tfRFCTutor.getText());
-                telefonoTutor = Utilities.validate(tfTelefonoTutor.getText());
-                nivelIndex = Utilities.validate(cbGrado.getSelectedIndex());
-                nivel = getNivelFromIndex(nivelIndex);
-                grado = Utilities.validate(cbYear.getSelectedIndex());
-                cantidadRecibida = Utilities.validate(tfCantidadRecibida.getText());
+                telefonoAlumno        = Utilities.validate(tfTelefonoAlumno.getText());
+                nombreTutor           = Utilities.validate(tfNombreTutor.getText());
+                rfcTutor              = Utilities.validate(tfRFCTutor.getText());
+                telefonoTutor         = Utilities.validate(tfTelefonoTutor.getText());
+                nivelIndex            = Utilities.validate(cbGrado.getSelectedIndex());
+                direccion             = Utilities.validate(tfDireccion.getText());
+                nivel                 = getNivelFromIndex(nivelIndex);
+                grado                 = Utilities.validate(cbYear.getSelectedIndex());
+                cantidadRecibida      = Utilities.validate(tfCantidadRecibida.getText());
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            sqlQuery =
-                    "INSERT INTO alumno (matricula, nombre, genero, fecha_nacimiento, telefono)"
-                            + "\nVALUES ('" + matriculaAlumno + "','" + nombreAlumno + "','" + generoAlumno + "','" + fechaNacimientoAlumno + "','" + telefonoAlumno + "');"
-                            + "\nSET @AlumnoID = LAST_INSERT_ID();"
-                            + "\nINSERT INTO tutor(nombre, rfc, telefono)"
-                            + "\nVALUES ('" + nombreTutor + "','" + rfcTutor + "','" + telefonoTutor + "');"
-                            + "\nSET @TutorID = LAST_INSERT_ID();"
-                            + "\nSELECT id_grado INTO  @GradoID FROM grado WHERE grado= '" + grado + "' AND nivel ='" + nivel + "';"
-                            + "\nINSERT INTO inscripcion (id_alumno, id_grado, monto, pagado) VALUES (@AlumnoID, @GradoID" + ",'" + montoAPagar + "','" + montoPagado + "');";
+            sqlQuery = "INSERT INTO alumno (matricula, nombre, genero, fecha_nacimiento, telefono)"
+                    + "\nVALUES ('" + matriculaAlumno + "','" + nombreAlumno + "','" + generoAlumno + "','" + fechaNacimientoAlumno + "','" + telefonoAlumno + "');"
+                    + "\nSET @AlumnoID = LAST_INSERT_ID();"
+                    + "\nINSERT INTO tutor(nombre, rfc, telefono)"
+                    + "\nVALUES ('" + nombreTutor + "','" + rfcTutor + "','" + telefonoTutor + "');"
+                    + "\nSET @TutorID = LAST_INSERT_ID();"
+                    + "\nSELECT id_grado INTO  @GradoID FROM grado WHERE grado= '" + grado + "' AND nivel ='" + nivel + "';"
+                    + "\nINSERT INTO inscripcion (id_alumno, id_grado, monto, pagado) VALUES (@AlumnoID, @GradoID" + ",'" + montoAPagar + "','" + montoPagado + "');";
 
             System.out.println(sqlQuery);
             main.conectar.executeQuery(sqlQuery);
@@ -149,192 +151,20 @@ public class NewAlumnoGUI extends JFrame {
     }
 
     private void placeHolderListeners() {
-
-        tfNombreAlumno.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfNombreAlumno.getText().equals("Ingrese el nombre del alumno")) {
-                    tfNombreAlumno.setText("");
-                    tfNombreAlumno.setForeground(Color.BLACK);
-                }
-            }
-
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfNombreAlumno.getText().trim().equals("Ingrese el nombre del alumno") || tfNombreAlumno.getText().trim().isEmpty()) {
-                    tfNombreAlumno.setText("Ingrese el nombre del alumno");
-                    tfNombreAlumno.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfMatricula.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfMatricula.getText().equals("Ingrese la matrícula del alumno")) {
-                    tfMatricula.setText("");
-                    tfMatricula.setForeground(Color.BLACK);
-                }
-            }
-
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfMatricula.getText().trim().equals("Ingrese la matrícula del alumno") || tfMatricula.getText().trim().isEmpty()) {
-                    tfMatricula.setText("Ingrese la matrícula del alumno");
-                    tfMatricula.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfFechaNacimiento.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfFechaNacimiento.getText().equals("Ingrese la fecha de nacimiento del alumno")) {
-                    tfFechaNacimiento.setText("");
-                    tfFechaNacimiento.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfFechaNacimiento.getText().trim().equals("Ingrese la fecha de nacimiento del alumno") || tfFechaNacimiento.getText().trim().isEmpty()) {
-                    tfFechaNacimiento.setText("Ingrese la fecha de nacimiento del alumno");
-                    tfFechaNacimiento.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfTelefonoAlumno.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfTelefonoAlumno.getText().equals("Ingrese el teléfono del alumno")) {
-                    tfTelefonoAlumno.setText("");
-                    tfTelefonoAlumno.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfTelefonoAlumno.getText().trim().equals("Ingrese el teléfono del alumno") || tfTelefonoAlumno.getText().trim().isEmpty()) {
-                    tfTelefonoAlumno.setText("Ingrese el teléfono del alumno");
-                    tfTelefonoAlumno.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfNombreTutor.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfNombreTutor.getText().equals("Ingrese el nombre del tutor")) {
-                    tfNombreTutor.setText("");
-                    tfNombreTutor.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfNombreTutor.getText().trim().equals("Ingrese el nombre del tutor") || tfNombreTutor.getText().trim().isEmpty()) {
-                    tfNombreTutor.setText("Ingrese el nombre del tutor");
-                    tfNombreTutor.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfRFCTutor.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfRFCTutor.getText().equals("Ingrese el RFC del tutor")) {
-                    tfRFCTutor.setText("");
-                    tfRFCTutor.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfRFCTutor.getText().trim().equals("Ingrese el RFC del tutor") || tfRFCTutor.getText().trim().isEmpty()) {
-                    tfRFCTutor.setText("Ingrese el RFC del tutor");
-                    tfRFCTutor.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfTelefonoTutor.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfTelefonoTutor.getText().equals("Ingrese el teléfono del tutor")) {
-                    tfTelefonoTutor.setText("");
-                    tfTelefonoTutor.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfTelefonoTutor.getText().trim().equals("Ingrese el teléfono del tutor") || tfTelefonoTutor.getText().trim().isEmpty()) {
-                    tfTelefonoTutor.setText("Ingrese el teléfono del tutor");
-                    tfTelefonoTutor.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfCantidadRecibida.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfCantidadRecibida.getText().equals("Ingrese la cantidad recibida")) {
-                    tfCantidadRecibida.setText("");
-                    tfCantidadRecibida.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfCantidadRecibida.getText().trim().equals("Ingrese la cantidad recibida") || tfCantidadRecibida.getText().trim().isEmpty()) {
-                    tfCantidadRecibida.setText("Ingrese la cantidad recibida");
-                    tfCantidadRecibida.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        cbGenero.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                if (cbGenero.getSelectedIndex() > 0) {
-                    cbGenero.setForeground(Color.BLACK);
-                } else {
-                    cbGenero.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        cbExtraCurricular.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                if (cbExtraCurricular.getSelectedIndex() > 0) {
-                    cbExtraCurricular.setForeground(Color.BLACK);
-                } else {
-                    cbExtraCurricular.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        cbYear.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                if (cbYear.getSelectedIndex() > 0) {
-                    cbYear.setForeground(Color.BLACK);
-                } else {
-                    cbYear.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        cbGrado.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                if (cbGrado.getSelectedIndex() > 0) {
-                    cbGrado.setForeground(Color.BLACK);
-                } else {
-                    cbGrado.setForeground(placeHolderColor);
-                }
-            }
-        });
+        Utilities.setPlacerHolder(tfNombreAlumno, "Ingrese el nombre del alumno");
+        Utilities.setPlacerHolder(tfMatricula, "Ingrese la matrícula del alumno");
+        Utilities.setPlacerHolder(tfFechaNacimiento, "Ingrese la fecha de nacimiento del alumno");
+        Utilities.setPlacerHolder(tfTelefonoAlumno, "Ingrese el teléfono del alumno");
+        Utilities.setPlacerHolder(tfNombreTutor, "Ingrese el nombre del tutor");
+        Utilities.setPlacerHolder(tfTelefonoAlumno, "Ingrese el teléfono del alumno");
+        Utilities.setPlacerHolder(tfRFCTutor, "Ingrese el RFC del tutor");
+        Utilities.setPlacerHolder(tfTelefonoTutor, "Ingrese el teléfono del tutor");
+        Utilities.setPlacerHolder(tfDireccion, "Ingrese la dirección del tutor");
+        Utilities.setPlacerHolder(tfCantidadRecibida, "Ingrese la cantidad recibida");
+        Utilities.setPlaceHolder(cbGenero, 0);
+        Utilities.setPlaceHolder(cbExtraCurricular, 0);
+        Utilities.setPlaceHolder(cbYear, 0);
+        Utilities.setPlaceHolder(cbGrado, 0);
     }
 
     private void incrementCurrentPanel() {

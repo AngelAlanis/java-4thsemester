@@ -17,6 +17,8 @@ public class EditTutorGUI extends JFrame {
     private JLabel     labelNombre;
     private JLabel     labelRFC;
     private JLabel     labelTelefono;
+    private JLabel     labelDireccion;
+    private JTextField tfDireccion;
 
     Color   placeHolderColor;
     MainGUI main;
@@ -63,66 +65,13 @@ public class EditTutorGUI extends JFrame {
     }
 
     private void placeHolderListeners() {
-        tfNombre.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfNombre.getText().equals("Ingrese el nombre del tutor")) {
-                    tfNombre.setText("");
-                    tfNombre.setForeground(Color.BLACK);
-                }
-            }
-
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfNombre.getText().trim().equals("Ingrese el nombre del tutor") || tfNombre.getText().trim().isEmpty()) {
-                    tfNombre.setText("Ingrese el nombre del tutor");
-                    tfNombre.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfRFC.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfRFC.getText().equals("Ingrese el RFC del tutor")) {
-                    tfRFC.setText("");
-                    tfRFC.setForeground(Color.BLACK);
-                }
-            }
-
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfRFC.getText().trim().equals("Ingrese el RFC del tutor") || tfRFC.getText().trim().isEmpty()) {
-                    tfRFC.setText("Ingrese el RFC del tutor");
-                    tfRFC.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfTelefono.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfTelefono.getText().equals("Ingrese el teléfono del tutor")) {
-                    tfTelefono.setText("");
-                    tfTelefono.setForeground(Color.BLACK);
-                }
-            }
-
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfTelefono.getText().trim().equals("Ingrese el teléfono del tutor") || tfTelefono.getText().trim().isEmpty()) {
-                    tfTelefono.setText("Ingrese el teléfono del tutor");
-                    tfTelefono.setForeground(placeHolderColor);
-                }
-            }
-        });
+        Utilities.setPlacerHolder(tfNombre, "Ingrese el nombre del tutor");
+        Utilities.setPlacerHolder(tfRFC, "Ingrese el RFC del tutor");
+        Utilities.setPlacerHolder(tfTelefono, "Ingrese el teléfono del tutor");
+        Utilities.setPlacerHolder(tfDireccion, "Ingrese la dirección del tutor");
     }
 
     private void saveData() {
-
         try {
             nombre   = Utilities.validate(tfNombre.getText());
             rfc      = Utilities.validate(tfRFC.getText());

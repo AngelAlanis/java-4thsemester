@@ -120,91 +120,11 @@ public class EditAlumnoGUI extends JFrame {
     }
 
     private void placeHolderListeners() {
-
-        tfNombre.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfNombre.getText().equals("Ingrese el nombre del alumno")) {
-                    tfNombre.setText("");
-                    tfNombre.setForeground(Color.BLACK);
-                }
-            }
-
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfNombre.getText().trim().equals("Ingrese el nombre del alumno") || tfNombre.getText().trim().isEmpty()) {
-                    tfNombre.setText("Ingrese el nombre del alumno");
-                    tfNombre.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfMatricula.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfMatricula.getText().equals("Ingrese la matrícula del alumno")) {
-                    tfMatricula.setText("");
-                    tfMatricula.setForeground(Color.BLACK);
-                }
-            }
-
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfMatricula.getText().trim().equals("Ingrese la matrícula del alumno") || tfMatricula.getText().trim().isEmpty()) {
-                    tfMatricula.setText("Ingrese la matrícula del alumno");
-                    tfMatricula.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfFechaNacimiento.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfFechaNacimiento.getText().equals("Ingrese la fecha de nacimiento del alumno")) {
-                    tfFechaNacimiento.setText("");
-                    tfFechaNacimiento.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfFechaNacimiento.getText().trim().equals("Ingrese la fecha de nacimiento del alumno") || tfFechaNacimiento.getText().trim().isEmpty()) {
-                    tfFechaNacimiento.setText("Ingrese la fecha de nacimiento del alumno");
-                    tfFechaNacimiento.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        tfTelefono.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (tfTelefono.getText().equals("Ingrese el teléfono del alumno")) {
-                    tfTelefono.setText("");
-                    tfTelefono.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (tfTelefono.getText().trim().equals("Ingrese el teléfono del alumno") || tfTelefono.getText().trim().isEmpty()) {
-                    tfTelefono.setText("Ingrese el teléfono del alumno");
-                    tfTelefono.setForeground(placeHolderColor);
-                }
-            }
-        });
-
-        cbGenero.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                if (cbGenero.getSelectedIndex() > 0) {
-                    cbGenero.setForeground(Color.BLACK);
-                } else {
-                    cbGenero.setForeground(placeHolderColor);
-                }
-            }
-        });
-
+        Utilities.setPlacerHolder(tfNombre, "Ingrese el nombre del alumno");
+        Utilities.setPlacerHolder(tfMatricula, "Ingrese la matrícula del alumno");
+        Utilities.setPlacerHolder(tfFechaNacimiento, "Ingrese la fecha de nacimiento del alumno");
+        Utilities.setPlacerHolder(tfTelefono, "Ingrese el teléfono del alumno");
+        Utilities.setPlaceHolder(cbGenero, 0);
     }
 
 }

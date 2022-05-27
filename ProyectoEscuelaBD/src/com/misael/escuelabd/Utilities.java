@@ -3,12 +3,17 @@ package com.misael.escuelabd;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.util.Objects;
 
 public class Utilities {
+
+    static Color placeHolderColor = new Color(177, 179, 174);
 
     public static String validate(String string) {
         if (string == null && string.isBlank()) {
@@ -74,6 +79,39 @@ public class Utilities {
         }
 
         return image;
+    }
+
+    public static void setPlacerHolder(JTextField textField, String placeHolderText) {
+        textField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField.getText().equals(placeHolderText)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().trim().equals(placeHolderText) || textField.getText().trim().isEmpty()) {
+                    textField.setText(placeHolderText);
+                    textField.setForeground(placeHolderColor);
+                }
+            }
+        });
+    }
+
+    public static void setPlaceHolder(JComboBox comboBox, int minimumIndex) {
+        comboBox.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (comboBox.getSelectedIndex() > minimumIndex) {
+                    comboBox.setForeground(Color.BLACK);
+                } else {
+                    comboBox.setForeground(placeHolderColor);
+                }
+            }
+        });
+
     }
 
 }
