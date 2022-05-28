@@ -125,12 +125,16 @@ public class Utilities {
         trs.setRowFilter(RowFilter.regexFilter("(?i)" + busqueda));
     }
 
-    public static void setupTable(JTable table){
+    public static void setupTable(JTable table) {
         table.setFocusable(false);
         table.setIntercellSpacing(new Dimension(0, 0));
         table.setRowHeight(25);
         table.setSelectionBackground(new Color(245, 127, 8));
         table.setShowVerticalLines(false);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setRowSelectionInterval(0, 0);
+        table.setColumnSelectionAllowed(false);
+        table.setCellSelectionEnabled(false);
         table.getTableHeader().setReorderingAllowed(false);
         table.getTableHeader().setFont(new Font("Roboto Medium", Font.PLAIN, 16));
         table.getTableHeader().setOpaque(false);

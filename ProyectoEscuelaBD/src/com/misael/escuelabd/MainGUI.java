@@ -53,17 +53,29 @@ public class MainGUI extends JFrame {
     private JTextField  tfFinanzas;
     private JScrollPane spFinanzas;
 
-    private ImageIcon logo, add, delete, edit, group, home, mysql, money, search, student, teacher, sidebar;
+    private ImageIcon logo;
+    private ImageIcon add;
+    private ImageIcon delete;
+    private ImageIcon edit;
+    private ImageIcon group;
+    private ImageIcon home;
+    private ImageIcon mysql;
+    private ImageIcon money;
+    private ImageIcon search;
+    private ImageIcon student;
+    private ImageIcon teacher;
+    private ImageIcon sidebar;
 
     Conectar conectar;
 
     public MainGUI() {
         conectar = new Conectar();
         this.setSize(1024, 728);
+        this.setExtendedState(MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        connectToDatabase();
+        //connectToDatabase();
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);

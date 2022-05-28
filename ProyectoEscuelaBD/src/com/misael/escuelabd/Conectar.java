@@ -20,6 +20,7 @@ public class Conectar {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Problemas al conectar");
+            System.exit(0);
         }
         return connection;
     }
