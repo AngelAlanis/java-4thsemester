@@ -62,7 +62,7 @@ public class MainGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        //connectToDatabase();
+        connectToDatabase();
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -132,7 +132,7 @@ public class MainGUI extends JFrame {
         tfBusquedaTutores.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                Utilities.filtrarLista(tfBusquedaAlumnos.getText(), tableTutores);
+                Utilities.filtrarLista(tfBusquedaTutores.getText(), tableTutores);
             }
         });
 
