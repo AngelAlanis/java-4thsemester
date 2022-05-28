@@ -3,6 +3,7 @@ package com.misael.escuelabd;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -62,7 +63,7 @@ public class MainGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        connectToDatabase();
+        //connectToDatabase();
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -177,6 +178,17 @@ public class MainGUI extends JFrame {
         btnModificarTutor.setIcon(edit);
 
         btnConsultar.setIcon(search);
+
+        tableAlumnos.setFocusable(false);
+        tableAlumnos.setIntercellSpacing(new Dimension(0, 0));
+        tableAlumnos.setRowHeight(25);
+        tableAlumnos.setSelectionBackground(Color.BLUE);
+        tableAlumnos.setShowVerticalLines(false);
+        tableAlumnos.getTableHeader().setReorderingAllowed(false);
+        tableAlumnos.getTableHeader().setFont(new Font("Roboto medium", Font.PLAIN, 24));
+        tableAlumnos.getTableHeader().setOpaque(false);
+        tableAlumnos.getTableHeader().setBackground(Color.CYAN);
+        tableAlumnos.getTableHeader().setForeground(Color.WHITE);
 
     }
 
