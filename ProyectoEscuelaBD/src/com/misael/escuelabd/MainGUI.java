@@ -63,7 +63,7 @@ public class MainGUI extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
         initActionListeners();
-        //connectToDatabase();
+        connectToDatabase();
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -101,6 +101,7 @@ public class MainGUI extends JFrame {
             int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
             if (opcion == JOptionPane.YES_OPTION) {
                 conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
+                refreshTable();
             }
         });
 
@@ -146,18 +147,18 @@ public class MainGUI extends JFrame {
     }
 
     public void initComponents() {
-        add     = Utilities.setupIcon("add.png", 30, 30, Color.white);
-        delete  = Utilities.setupIcon("delete.png", 30, 30, Color.white);
-        group   = Utilities.setupIcon("group.png", 30, 30, Color.white);
-        home    = Utilities.setupIcon("home.png", 30, 30, Color.white);
-        mysql   = Utilities.setupIcon("mysql.png", 30, 30, Color.white);
-        money   = Utilities.setupIcon("money.png", 30, 30, Color.white);
-        search  = Utilities.setupIcon("search.png", 30, 30, Color.white);
+        add = Utilities.setupIcon("add.png", 30, 30, Color.white);
+        delete = Utilities.setupIcon("delete.png", 30, 30, Color.white);
+        group = Utilities.setupIcon("group.png", 30, 30, Color.white);
+        home = Utilities.setupIcon("home.png", 30, 30, Color.white);
+        mysql = Utilities.setupIcon("mysql.png", 30, 30, Color.white);
+        money = Utilities.setupIcon("money.png", 30, 30, Color.white);
+        search = Utilities.setupIcon("search.png", 30, 30, Color.white);
         student = Utilities.setupIcon("student.png", 30, 30, Color.white);
         teacher = Utilities.setupIcon("teacher.png", 30, 30, Color.white);
-        edit    = Utilities.setupIcon("edit.png", 30, 30, Color.white);
+        edit = Utilities.setupIcon("edit.png", 30, 30, Color.white);
         sidebar = Utilities.setupIcon("sidebar.png", 30, 30, Color.white);
-        logo    = Utilities.setupImage("school_logo.png", 197, 45);
+        logo = Utilities.setupImage("school_logo.png", 197, 45);
 
         labelLogo.setIcon(logo);
 
@@ -179,16 +180,11 @@ public class MainGUI extends JFrame {
 
         btnConsultar.setIcon(search);
 
-        tableAlumnos.setFocusable(false);
-        tableAlumnos.setIntercellSpacing(new Dimension(0, 0));
-        tableAlumnos.setRowHeight(25);
-        tableAlumnos.setSelectionBackground(Color.BLUE);
-        tableAlumnos.setShowVerticalLines(false);
-        tableAlumnos.getTableHeader().setReorderingAllowed(false);
-        tableAlumnos.getTableHeader().setFont(new Font("Roboto medium", Font.PLAIN, 24));
-        tableAlumnos.getTableHeader().setOpaque(false);
-        tableAlumnos.getTableHeader().setBackground(Color.CYAN);
-        tableAlumnos.getTableHeader().setForeground(Color.WHITE);
+        Utilities.setupTable(tableAlumnos);
+        Utilities.setupTable(tableTutores);
+        Utilities.setupTable(tableFinanzas);
+        Utilities.setupTable(tableGrupos);
+        Utilities.setupTable(tableConsulta);
 
     }
 
@@ -235,7 +231,9 @@ public class MainGUI extends JFrame {
     }
 
     public void refreshTable() {
-        tableAlumnos.setModel(conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono FROM alumno"));
+        tableAlumnos.setModel(conectar.fillTable("SELECT alumno.id_alumno, alumno.matricula, alumno.nombre, grado.nivel, grado.grado, alumno.genero, alumno.fecha_nacimiento, alumno.telefono, tutor.nombre \n" +
+                                                         "FROM alumno, tutor, alumno_tutor, grado, inscripcion\n" +
+                                                         "WHERE alumno.id_alumno = alumno_tutor.id_alumno AND alumno_tutor.id_tutor = tutor.id_tutor AND inscripcion.id_alumno = alumno.id_alumno AND grado.id_grado = inscripcion.id_grado;"));
         tableTutores.setModel(conectar.fillTable("SELECT id_tutor, nombre, rfc, telefono FROM tutor"));
         tableGrupos.setModel(conectar.fillTable("SELECT id_grado, clave, nivel, grado FROM grado"));
         tableFinanzas.setModel(conectar.fillTable("SELECT inscripcion.id_inscripcion, inscripcion.id_alumno, alumno.matricula, alumno.nombre, grado.nivel, grado.grado, monto, pagado FROM inscripcion, alumno, grado WHERE inscripcion.id_alumno = alumno.id_alumno AND inscripcion.id_grado = grado.id_grado"));

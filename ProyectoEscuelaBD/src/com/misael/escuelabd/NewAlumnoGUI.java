@@ -73,8 +73,9 @@ public class NewAlumnoGUI extends JFrame {
     public void initComponents() {
         setBorderToComponents();
         placeHolderColor = new Color(177, 179, 174);
+        labelExtracurricular.setVisible(false);
+        cbExtraCurricular.setVisible(false);
     }
-
 
     private void setBorderToComponents() {
         tfNombreAlumno.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
@@ -97,7 +98,6 @@ public class NewAlumnoGUI extends JFrame {
         placeHolderListeners();
 
         btnRegistrar.addActionListener(e -> {
-
             try {
                 matriculaAlumno       = Utilities.validate(tfMatricula.getText());
                 nombreAlumno          = Utilities.validate(tfNombreAlumno.getText());
@@ -111,7 +111,7 @@ public class NewAlumnoGUI extends JFrame {
                 direccion             = Utilities.validate(tfDireccion.getText());
                 nivel                 = getNivelFromIndex(nivelIndex);
                 grado                 = Utilities.validate(cbYear.getSelectedIndex());
-                cantidadRecibida      = Utilities.validate(tfCantidadRecibida.getText());
+                montoPagado           = Integer.parseInt(Utilities.validate(tfCantidadRecibida.getText()));
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -151,6 +151,42 @@ public class NewAlumnoGUI extends JFrame {
                 loadCurrentPanel();
             }
         });
+
+        cbGrado.addActionListener(e -> {
+            if (cbGrado.getSelectedIndex() == 3) {
+                labelExtracurricular.setVisible(true);
+                cbExtraCurricular.setVisible(true);
+            } else {
+                labelExtracurricular.setVisible(false);
+                cbExtraCurricular.setVisible(false);
+            }
+        });
+
+        cbYear.addActionListener(e -> {
+            if (cbGrado.getSelectedIndex() > 0 || cbYear.getSelectedIndex() > 0) {
+                montoAPagar = calculateInscriptionCost();
+                labelPrecioInscripcion.setText("$" + montoAPagar);
+            }
+        });
+
+    }
+
+    private int calculateInscriptionCost() {
+        switch (cbGrado.getSelectedIndex()) {
+            case 1 -> {
+                return 2000;
+            }
+            case 2 -> {
+                return 2500;
+            }
+            case 3 -> {
+                return 3000;
+            }
+
+            default -> {
+                return -1;
+            }
+        }
     }
 
     private void placeHolderListeners() {
@@ -193,7 +229,7 @@ public class NewAlumnoGUI extends JFrame {
             }
 
             case 3 -> {
-                return "Preparatoria";
+                return "Bachillerato";
             }
 
             default -> throw new NullPointerException();

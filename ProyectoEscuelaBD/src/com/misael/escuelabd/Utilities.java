@@ -124,4 +124,18 @@ public class Utilities {
         table.setRowSorter(trs);
         trs.setRowFilter(RowFilter.regexFilter("(?i)" + busqueda));
     }
+
+    public static void setupTable(JTable table){
+        table.setFocusable(false);
+        table.setIntercellSpacing(new Dimension(0, 0));
+        table.setRowHeight(25);
+        table.setSelectionBackground(new Color(245, 127, 8));
+        table.setShowVerticalLines(false);
+        table.getTableHeader().setReorderingAllowed(false);
+        table.getTableHeader().setFont(new Font("Roboto Medium", Font.PLAIN, 16));
+        table.getTableHeader().setOpaque(false);
+        table.getTableHeader().setBackground(new Color(38, 153, 137));
+        table.getTableHeader().setForeground(Color.WHITE);
+
+    }
 }
