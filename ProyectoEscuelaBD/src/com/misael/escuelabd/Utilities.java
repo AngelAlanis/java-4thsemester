@@ -2,6 +2,8 @@ package com.misael.escuelabd;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -116,4 +118,10 @@ public class Utilities {
 
     }
 
+    public static void filtrarLista(String busqueda, JTable table) {
+        DefaultTableModel                 tableModel = (DefaultTableModel) table.getModel();
+        TableRowSorter<DefaultTableModel> trs        = new TableRowSorter<>(tableModel);
+        table.setRowSorter(trs);
+        trs.setRowFilter(RowFilter.regexFilter("(?i)" + busqueda));
+    }
 }

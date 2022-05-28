@@ -4,6 +4,8 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -23,14 +25,14 @@ public class MainGUI extends JFrame {
     private JPanel      panelGrupos;
     private JTable      tableAlumnos;
     private JLabel      labelTitulo;
-    private JTextField  tfBusqueda;
+    private JTextField  tfBusquedaAlumnos;
     private JButton     btnNewAlumno;
     private JScrollPane spTableAlumnos;
     private JLabel      labelMenuPrincipal;
     private JButton     btnModificarAlumno;
     private JButton     btnBajaAlumno;
     private JTable      tableTutores;
-    private JTextField  textField1;
+    private JTextField  tfBusquedaTutores;
     private JButton     btnNuevoTutor;
     private JButton     btnModificarTutor;
     private JLabel      labelTituloTutores;
@@ -112,6 +114,20 @@ public class MainGUI extends JFrame {
 
         btnConsultar.addActionListener(e -> {
             tableConsulta.setModel(conectar.fillTable(tfCustomQuery.getText().trim()));
+        });
+
+        tfBusquedaAlumnos.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Utilities.filtrarLista(tfBusquedaAlumnos.getText(), tableAlumnos);
+            }
+        });
+
+        tfBusquedaTutores.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Utilities.filtrarLista(tfBusquedaAlumnos.getText(), tableTutores);
+            }
         });
     }
 
