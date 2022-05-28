@@ -45,8 +45,14 @@ public class MainGUI extends JFrame {
     private JTable      tableGrupos;
     private JLabel      labelTituloGrupos;
     private JScrollPane spGrupos;
+    private JLabel      labelFinanzas;
+    private JPanel      panelFinanzas;
+    private JTable      tableFinanzas;
+    private JLabel      labelTituloFinanzas;
+    private JTextField  tfFinanzas;
+    private JScrollPane spFinanzas;
 
-    private ImageIcon logo, add, delete, edit, group, home, mysql, remove_person, search, student, teacher, sidebar;
+    private ImageIcon logo, add, delete, edit, group, home, mysql, money, search, student, teacher, sidebar;
 
     Conectar conectar;
 
@@ -129,21 +135,28 @@ public class MainGUI extends JFrame {
                 Utilities.filtrarLista(tfBusquedaAlumnos.getText(), tableTutores);
             }
         });
+
+        tfFinanzas.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Utilities.filtrarLista(tfFinanzas.getText(), tableFinanzas);
+            }
+        });
     }
 
     public void initComponents() {
-        add           = Utilities.setupIcon("add.png", 30, 30, Color.white);
-        delete        = Utilities.setupIcon("delete.png", 30, 30, Color.white);
-        group         = Utilities.setupIcon("group.png", 30, 30, Color.white);
-        home          = Utilities.setupIcon("home.png", 30, 30, Color.white);
-        mysql         = Utilities.setupIcon("mysql.png", 30, 30, Color.white);
-        remove_person = Utilities.setupIcon("remove_person.png", 30, 30, Color.white);
-        search        = Utilities.setupIcon("search.png", 30, 30, Color.white);
-        student       = Utilities.setupIcon("student.png", 30, 30, Color.white);
-        teacher       = Utilities.setupIcon("teacher.png", 30, 30, Color.white);
-        edit          = Utilities.setupIcon("edit.png", 30, 30, Color.white);
-        sidebar       = Utilities.setupIcon("sidebar.png", 30, 30, Color.white);
-        logo          = Utilities.setupImage("school_logo.png", 197, 45);
+        add     = Utilities.setupIcon("add.png", 30, 30, Color.white);
+        delete  = Utilities.setupIcon("delete.png", 30, 30, Color.white);
+        group   = Utilities.setupIcon("group.png", 30, 30, Color.white);
+        home    = Utilities.setupIcon("home.png", 30, 30, Color.white);
+        mysql   = Utilities.setupIcon("mysql.png", 30, 30, Color.white);
+        money   = Utilities.setupIcon("money.png", 30, 30, Color.white);
+        search  = Utilities.setupIcon("search.png", 30, 30, Color.white);
+        student = Utilities.setupIcon("student.png", 30, 30, Color.white);
+        teacher = Utilities.setupIcon("teacher.png", 30, 30, Color.white);
+        edit    = Utilities.setupIcon("edit.png", 30, 30, Color.white);
+        sidebar = Utilities.setupIcon("sidebar.png", 30, 30, Color.white);
+        logo    = Utilities.setupImage("school_logo.png", 197, 45);
 
         labelLogo.setIcon(logo);
 
@@ -154,6 +167,7 @@ public class MainGUI extends JFrame {
         labelOtrasConsultas.setIcon(mysql);
         labelAlumnos.setIcon(student);
         labelTutores.setIcon(teacher);
+        labelFinanzas.setIcon(money);
 
         btnNewAlumno.setIcon(add);
         btnModificarAlumno.setIcon(edit);
@@ -194,6 +208,13 @@ public class MainGUI extends JFrame {
                 cargarPanelProfesores();
             }
         });
+
+        labelFinanzas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                cargarPanelFinanzas();
+            }
+        });
     }
 
     public void connectToDatabase() {
@@ -205,6 +226,7 @@ public class MainGUI extends JFrame {
         tableAlumnos.setModel(conectar.fillTable("SELECT id_alumno, matricula, nombre, genero, fecha_nacimiento, telefono FROM alumno"));
         tableTutores.setModel(conectar.fillTable("SELECT id_tutor, nombre, rfc, telefono FROM tutor"));
         tableGrupos.setModel(conectar.fillTable("SELECT id_grado, clave, nivel, grado FROM grado"));
+        tableFinanzas.setModel(conectar.fillTable("SELECT inscripcion.id_inscripcion, inscripcion.id_alumno, alumno.matricula, alumno.nombre, grado.nivel, grado.grado, monto, pagado FROM inscripcion, alumno, grado WHERE inscripcion.id_alumno = alumno.id_alumno AND inscripcion.id_grado = grado.id_grado"));
     }
 
     private void cargarPanelAlumno() {
@@ -231,6 +253,13 @@ public class MainGUI extends JFrame {
     private void cargarPanelProfesores() {
         panelInformacion.removeAll();
         panelInformacion.add(panelOtrasConsultas);
+        panelInformacion.revalidate();
+        panelInformacion.repaint();
+    }
+
+    private void cargarPanelFinanzas() {
+        panelInformacion.removeAll();
+        panelInformacion.add(panelFinanzas);
         panelInformacion.revalidate();
         panelInformacion.repaint();
     }
