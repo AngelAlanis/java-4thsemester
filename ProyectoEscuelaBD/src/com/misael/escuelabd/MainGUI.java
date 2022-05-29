@@ -83,6 +83,14 @@ public class MainGUI extends JFrame {
         this.setVisible(true);
     }
 
+    public void initComponents() {
+        readIcons();
+        setIcons();
+        setupTables();
+
+        filterGUI = new FilterGUI();
+    }
+
     public void initActionListeners() {
 
         initTabsListeners();
@@ -98,7 +106,6 @@ public class MainGUI extends JFrame {
         btnModificarAlumno.addActionListener(e -> modifyAlumno());
 
         btnBajaAlumno.addActionListener(e -> disableAlumno());
-
 
         btnModificarTutor.addActionListener(e -> modifyTutor());
 
@@ -126,18 +133,15 @@ public class MainGUI extends JFrame {
         });
 
         btnFiltro.addActionListener(e -> {
+            filterGUI.setLocation(btnFiltro.getX() + btnFiltro.getWidth() * 3, btnFiltro.getY() + btnFiltro.getHeight() * 2);
             filterGUI.setVisible(!filterGUI.isVisible());
+            tableAlumnos.setModel(conectar.fillTable("SELECT alumno.id_alumno, alumno.matricula, alumno.nombre, grado.nivel, grado.grado, alumno.genero, alumno.fecha_nacimiento, alumno.telefono, tutor.nombre \n" +
+                                                             "FROM alumno, tutor, alumno_tutor, grado, inscripcion\n" +
+                                                             "WHERE alumno.id_alumno = alumno_tutor.id_alumno AND alumno_tutor.id_tutor = tutor.id_tutor AND inscripcion.id_alumno = alumno.id_alumno AND grado.id_grado = inscripcion.id_grado\n" +
+                                                             filterGUI.fullQuery + ";"));
+
         });
     }
-
-    public void initComponents() {
-        readIcons();
-        setIcons();
-        setupTables();
-
-        filterGUI = new FilterGUI(btnFiltro.getX() + btnFiltro.getWidth() * 3, btnFiltro.getY() + btnFiltro.getHeight() * 2);
-    }
-
 
     private void initTabsListeners() {
         labelAlumnos.addMouseListener(new MouseAdapter() {
