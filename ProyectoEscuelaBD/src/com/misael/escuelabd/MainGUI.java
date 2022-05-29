@@ -3,7 +3,6 @@ package com.misael.escuelabd;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -52,6 +51,7 @@ public class MainGUI extends JFrame {
     private JLabel      labelTituloFinanzas;
     private JTextField  tfFinanzas;
     private JScrollPane spFinanzas;
+    private JButton     btnFiltro;
 
     private ImageIcon logo;
     private ImageIcon add;
@@ -65,6 +65,8 @@ public class MainGUI extends JFrame {
     private ImageIcon student;
     private ImageIcon teacher;
     private ImageIcon sidebar;
+    private ImageIcon filter;
+    private FilterGUI filterGUI;
 
     Conectar conectar;
 
@@ -74,67 +76,33 @@ public class MainGUI extends JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setContentPane(panelMain);
+        initComponents();
         initActionListeners();
         //connectToDatabase();
-        initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
     public void initActionListeners() {
 
-        tabsListeners();
+        initTabsListeners();
 
         btnNewAlumno.addActionListener(e -> {
             var newAlumno = new NewAlumnoGUI(this);
-        });
-
-        btnModificarAlumno.addActionListener(e -> {
-            int idAlumno = 0;
-            try {
-                idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "No seleccionó ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            var editAlumno = new EditAlumnoGUI(this, idAlumno);
-        });
-
-        btnBajaAlumno.addActionListener(e -> {
-
-            int idAlumno = 0;
-            try {
-                idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "No seleccionó ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
-            if (opcion == JOptionPane.YES_OPTION) {
-                conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
-                refreshTable();
-            }
         });
 
         btnNuevoTutor.addActionListener(e -> {
             var newTutor = new NewTutorGUI(this);
         });
 
-        btnModificarTutor.addActionListener(e -> {
-            int idTutor;
-            try {
-                idTutor = (int) tableTutores.getValueAt(tableTutores.getSelectedRow(), 0);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "No seleccionó un tutor.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            var editTutor = new EditTutorGUI(this, idTutor);
-        });
+        btnModificarAlumno.addActionListener(e -> modifyAlumno());
 
-        btnConsultar.addActionListener(e -> {
-            tableConsulta.setModel(conectar.fillTable(tfCustomQuery.getText().trim()));
-        });
+        btnBajaAlumno.addActionListener(e -> disableAlumno());
+
+
+        btnModificarTutor.addActionListener(e -> modifyTutor());
+
+        btnConsultar.addActionListener(e -> tableConsulta.setModel(conectar.fillTable(tfCustomQuery.getText().trim())));
 
         tfBusquedaAlumnos.addKeyListener(new KeyAdapter() {
             @Override
@@ -156,51 +124,22 @@ public class MainGUI extends JFrame {
                 Utilities.filtrarLista(tfFinanzas.getText(), tableFinanzas);
             }
         });
+
+        btnFiltro.addActionListener(e -> {
+            filterGUI.setVisible(!filterGUI.isVisible());
+        });
     }
 
     public void initComponents() {
-        add = Utilities.setupIcon("add.png", 30, 30, Color.white);
-        delete = Utilities.setupIcon("delete.png", 30, 30, Color.white);
-        group = Utilities.setupIcon("group.png", 30, 30, Color.white);
-        home = Utilities.setupIcon("home.png", 30, 30, Color.white);
-        mysql = Utilities.setupIcon("mysql.png", 30, 30, Color.white);
-        money = Utilities.setupIcon("money.png", 30, 30, Color.white);
-        search = Utilities.setupIcon("search.png", 30, 30, Color.white);
-        student = Utilities.setupIcon("student.png", 30, 30, Color.white);
-        teacher = Utilities.setupIcon("teacher.png", 30, 30, Color.white);
-        edit = Utilities.setupIcon("edit.png", 30, 30, Color.white);
-        sidebar = Utilities.setupIcon("sidebar.png", 30, 30, Color.white);
-        logo = Utilities.setupImage("school_logo.png", 197, 45);
+        readIcons();
+        setIcons();
+        setupTables();
 
-        labelLogo.setIcon(logo);
-
-        labelSidebarIcon.setIcon(sidebar);
-
-        labelMenuPrincipal.setIcon(home);
-        labelGrupos.setIcon(group);
-        labelOtrasConsultas.setIcon(mysql);
-        labelAlumnos.setIcon(student);
-        labelTutores.setIcon(teacher);
-        labelFinanzas.setIcon(money);
-
-        btnNewAlumno.setIcon(add);
-        btnModificarAlumno.setIcon(edit);
-        btnBajaAlumno.setIcon(delete);
-
-        btnNuevoTutor.setIcon(add);
-        btnModificarTutor.setIcon(edit);
-
-        btnConsultar.setIcon(search);
-
-        Utilities.setupTable(tableAlumnos);
-        Utilities.setupTable(tableTutores);
-        Utilities.setupTable(tableFinanzas);
-        Utilities.setupTable(tableGrupos);
-        Utilities.setupTable(tableConsulta);
-
+        filterGUI = new FilterGUI(btnFiltro.getX() + btnFiltro.getWidth() * 3, btnFiltro.getY() + btnFiltro.getHeight() * 2);
     }
 
-    private void tabsListeners() {
+
+    private void initTabsListeners() {
         labelAlumnos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -284,6 +223,86 @@ public class MainGUI extends JFrame {
         panelInformacion.add(panelFinanzas);
         panelInformacion.revalidate();
         panelInformacion.repaint();
+    }
+
+    private void modifyTutor() {
+        int idTutor;
+        try {
+            idTutor = (int) tableTutores.getValueAt(tableTutores.getSelectedRow(), 0);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "No seleccionó un tutor.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        var editTutor = new EditTutorGUI(this, idTutor);
+    }
+
+    private void disableAlumno() {
+        int idAlumno = 0;
+        try {
+            idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "No seleccionó ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar este alumno?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (opcion == JOptionPane.YES_OPTION) {
+            conectar.executeQuery("DELETE FROM alumno WHERE id_alumno = " + idAlumno);
+            refreshTable();
+        }
+    }
+
+    private void modifyAlumno() {
+        int idAlumno = 0;
+        try {
+            idAlumno = (int) tableAlumnos.getValueAt(tableAlumnos.getSelectedRow(), 0);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "No seleccionó ningún alumno", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        var editAlumno = new EditAlumnoGUI(this, idAlumno);
+    }
+
+    private void setupTables() {
+        Utilities.setupTable(tableAlumnos);
+        Utilities.setupTable(tableTutores);
+        Utilities.setupTable(tableFinanzas);
+        Utilities.setupTable(tableGrupos);
+        Utilities.setupTable(tableConsulta);
+    }
+
+    private void readIcons() {
+        add     = Utilities.setupIcon("add.png", 30, 30, Color.white);
+        delete  = Utilities.setupIcon("delete.png", 30, 30, Color.white);
+        group   = Utilities.setupIcon("group.png", 30, 30, Color.white);
+        home    = Utilities.setupIcon("home.png", 30, 30, Color.white);
+        mysql   = Utilities.setupIcon("mysql.png", 30, 30, Color.white);
+        money   = Utilities.setupIcon("money.png", 30, 30, Color.white);
+        search  = Utilities.setupIcon("search.png", 30, 30, Color.white);
+        student = Utilities.setupIcon("student.png", 30, 30, Color.white);
+        teacher = Utilities.setupIcon("teacher.png", 30, 30, Color.white);
+        edit    = Utilities.setupIcon("edit.png", 30, 30, Color.white);
+        sidebar = Utilities.setupIcon("sidebar.png", 30, 30, Color.white);
+        filter  = Utilities.setupIcon("filter.png", 30, 30, Color.white);
+        logo    = Utilities.setupImage("school_logo.png", 197, 45);
+    }
+
+    private void setIcons() {
+        labelLogo.setIcon(logo);
+        labelSidebarIcon.setIcon(sidebar);
+        btnFiltro.setIcon(filter);
+        labelMenuPrincipal.setIcon(home);
+        labelGrupos.setIcon(group);
+        labelOtrasConsultas.setIcon(mysql);
+        labelAlumnos.setIcon(student);
+        labelTutores.setIcon(teacher);
+        labelFinanzas.setIcon(money);
+        btnNewAlumno.setIcon(add);
+        btnModificarAlumno.setIcon(edit);
+        btnBajaAlumno.setIcon(delete);
+        btnNuevoTutor.setIcon(add);
+        btnModificarTutor.setIcon(edit);
+        btnConsultar.setIcon(search);
     }
 
     public static void main(String[] args) {

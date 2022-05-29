@@ -40,7 +40,9 @@ public class Utilities {
         int g = color.getGreen();
         int b = color.getBlue();
 
+
         try {
+
             bufferedImage = ImageIO.read(Objects.requireNonNull(Utilities.class.getClassLoader().getResource(url)));
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,7 +134,7 @@ public class Utilities {
         table.setSelectionBackground(new Color(245, 127, 8));
         table.setShowVerticalLines(false);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.setRowSelectionInterval(0, 0);
+        //table.setRowSelectionInterval(0, 0);
         table.setColumnSelectionAllowed(false);
         table.setCellSelectionEnabled(false);
         table.getTableHeader().setReorderingAllowed(false);
