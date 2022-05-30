@@ -1,5 +1,6 @@
 package com.misael.escuelabd;
 
+import Animacion.Animacion;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.ImageIcon;
@@ -18,51 +19,51 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MainGUI extends JFrame {
-    private FilterGUI   filterGUI;
-    private ImageIcon   add;
-    private ImageIcon   delete;
-    private ImageIcon   edit;
-    private ImageIcon   filter;
-    private ImageIcon   group;
-    private ImageIcon   home;
-    private ImageIcon   logo;
-    private ImageIcon   money;
-    private ImageIcon   mysql;
-    private ImageIcon   search;
-    private ImageIcon   sidebar;
-    private ImageIcon   student;
-    private ImageIcon   teacher;
 
-    private JButton     btnBajaAlumno;
-    private JButton     btnConsultar;
-    private JButton     btnFiltro;
-    private JButton     btnModificarAlumno;
-    private JButton     btnModificarTutor;
-    private JButton     btnNewAlumno;
-    private JButton     btnNuevoTutor;
+    private FilterGUI filterGUI;
+    private ImageIcon add;
+    private ImageIcon delete;
+    private ImageIcon edit;
+    private ImageIcon filter;
+    private ImageIcon group;
+    private ImageIcon home;
+    private ImageIcon logo;
+    private ImageIcon money;
+    private ImageIcon mysql;
+    private ImageIcon search;
+    private ImageIcon sidebar;
+    private ImageIcon student;
+    private ImageIcon teacher;
 
-    private JLabel      labelAlumnos;
-    private JLabel      labelFinanzas;
-    private JLabel      labelGrupos;
-    private JLabel      labelLogo;
-    private JLabel      labelMenuPrincipal;
-    private JLabel      labelOtrasConsultas;
-    private JLabel      labelSidebarIcon;
-    private JLabel      labelTitulo;
-    private JLabel      labelTituloFinanzas;
-    private JLabel      labelTituloGrupos;
-    private JLabel      labelTituloTutores;
-    private JLabel      labelTutores;
-    private JLabel      lbTituloConsultas;
+    private JButton btnAlumnos;
+    private JButton btnBajaAlumno;
+    private JButton btnConsultar;
+    private JButton btnFiltro;
+    private JButton btnFinanzas;
+    private JButton btnGrupos;
+    private JButton btnMenuPrincipal;
+    private JButton btnModificarAlumno;
+    private JButton btnModificarTutor;
+    private JButton btnNewAlumno;
+    private JButton btnNuevoTutor;
+    private JButton btnOtrasConsultas;
+    private JButton btnTutores;
 
-    private JPanel      panelAlumnos;
-    private JPanel      panelFinanzas;
-    private JPanel      panelGrupos;
-    private JPanel      panelInformacion;
-    private JPanel      panelMain;
-    private JPanel      panelOtrasConsultas;
-    private JPanel      panelSidebar;
-    private JPanel      panelTutores;
+    private JLabel labelLogo;
+    private JLabel labelTitulo;
+    private JLabel labelTituloFinanzas;
+    private JLabel labelTituloGrupos;
+    private JLabel labelTituloTutores;
+    private JLabel lbTituloConsultas;
+
+    private JPanel panelAlumnos;
+    private JPanel panelFinanzas;
+    private JPanel panelGrupos;
+    private JPanel panelInformacion;
+    private JPanel panelMain;
+    private JPanel panelOtrasConsultas;
+    private JPanel panelSidebar;
+    private JPanel panelTutores;
 
     private JScrollPane spConsulta;
     private JScrollPane spFinanzas;
@@ -70,17 +71,17 @@ public class MainGUI extends JFrame {
     private JScrollPane spTableAlumnos;
     private JScrollPane spTutores;
 
-    private JTable      tableConsulta;
-    private JTable      tableFinanzas;
-    private JTable      tableGrupos;
-    private JTable      tableTutores;
+    private JTable tableConsulta;
+    private JTable tableFinanzas;
+    private JTable tableGrupos;
+    private JTable tableTutores;
 
-    private JTextField  tfBusquedaAlumnos;
-    private JTextField  tfBusquedaTutores;
-    private JTextField  tfCustomQuery;
-    private JTextField  tfFinanzas;
+    private JTextField tfBusquedaAlumnos;
+    private JTextField tfBusquedaTutores;
+    private JTextField tfCustomQuery;
+    private JTextField tfFinanzas;
 
-    public  JTable      tableAlumnos;
+    public  JTable  tableAlumnos;
 
     Conectar conectar;
 
@@ -92,7 +93,7 @@ public class MainGUI extends JFrame {
         this.setContentPane(panelMain);
         initComponents();
         initActionListeners();
-        connectToDatabase();
+        //connectToDatabase();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -152,40 +153,11 @@ public class MainGUI extends JFrame {
     }
 
     private void initTabsListeners() {
-        labelAlumnos.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                cargarPanelAlumno();
-            }
-        });
-
-        labelTutores.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                cargarPanelTutores();
-            }
-        });
-
-        labelGrupos.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                cargarPanelGrupos();
-            }
-        });
-
-        labelOtrasConsultas.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                cargarPanelProfesores();
-            }
-        });
-
-        labelFinanzas.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                cargarPanelFinanzas();
-            }
-        });
+        btnAlumnos.addActionListener(e -> cargarPanelAlumno());
+        btnTutores.addActionListener(e -> cargarPanelTutores());
+        btnGrupos.addActionListener(e -> cargarPanelGrupos());
+        btnFinanzas.addActionListener(e -> cargarPanelFinanzas());
+        btnOtrasConsultas.addActionListener(e -> cargarPanelConsultas());
     }
 
     public void connectToDatabase() {
@@ -223,7 +195,7 @@ public class MainGUI extends JFrame {
         panelInformacion.repaint();
     }
 
-    private void cargarPanelProfesores() {
+    private void cargarPanelConsultas() {
         panelInformacion.removeAll();
         panelInformacion.add(panelOtrasConsultas);
         panelInformacion.revalidate();
@@ -307,14 +279,13 @@ public class MainGUI extends JFrame {
         btnModificarTutor.setIcon(edit);
         btnNewAlumno.setIcon(add);
         btnNuevoTutor.setIcon(add);
-        labelAlumnos.setIcon(student);
-        labelFinanzas.setIcon(money);
-        labelGrupos.setIcon(group);
+        btnAlumnos.setIcon(student);
+        btnFinanzas.setIcon(money);
+        btnGrupos.setIcon(group);
         labelLogo.setIcon(logo);
-        labelMenuPrincipal.setIcon(home);
-        labelOtrasConsultas.setIcon(mysql);
-        labelSidebarIcon.setIcon(sidebar);
-        labelTutores.setIcon(teacher);
+        btnMenuPrincipal.setIcon(home);
+        btnOtrasConsultas.setIcon(mysql);
+        btnTutores.setIcon(teacher);
     }
 
     public static void main(String[] args) {

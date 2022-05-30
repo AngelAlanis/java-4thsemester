@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="NefAnimacion_V2.1_jdk18">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Libraries/NefAnimacion_V2.1_jdk18.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
