@@ -1,21 +1,25 @@
 package com.misael.escuelabd;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.Color;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class NewTutorGUI extends JFrame {
-    private JPanel     panelMain;
-    private JTextField tfNombre;
-    private JTextField tfRFC;
     private JButton    btnCancelar;
     private JButton    btnGuardar;
-    private JTextField tfTelefono;
-    private JLabel     labelTitulo;
     private JLabel     labelNombre;
     private JLabel     labelRFC;
     private JLabel     labelTelefono;
+    private JLabel     labelTitulo;
+    private JPanel     panelMain;
+    private JTextField tfNombre;
+    private JTextField tfRFC;
+    private JTextField tfTelefono;
 
     Color   placeHolderColor;
     MainGUI main;
@@ -39,24 +43,7 @@ public class NewTutorGUI extends JFrame {
 
     public void initActionListeners() {
 
-        btnGuardar.addActionListener(e -> {
-
-            try {
-                nombre   = Utilities.validate(tfNombre.getText());
-                rfc      = Utilities.validate(tfRFC.getText());
-                telefono = Utilities.validate(tfTelefono.getText());
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            sqlQuery = "INSERT INTO tutor (nombre, rfc, telefono) VALUES ('" + nombre + "','" + rfc + "','" + telefono + "')";
-            main.conectar.executeQuery(sqlQuery);
-            this.dispose();
-            main.refreshTable();
-
-        });
+        btnGuardar.addActionListener(e -> saveTutor());
 
         btnCancelar.addActionListener(e -> this.dispose());
 
@@ -67,10 +54,27 @@ public class NewTutorGUI extends JFrame {
 
     }
 
+    private void saveTutor() {
+        try {
+            nombre   = Utilities.validate(tfNombre.getText());
+            rfc      = Utilities.validate(tfRFC.getText());
+            telefono = Utilities.validate(tfTelefono.getText());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        sqlQuery = "INSERT INTO tutor (nombre, rfc, telefono) VALUES ('" + nombre + "','" + rfc + "','" + telefono + "')";
+        main.conectar.executeQuery(sqlQuery);
+        this.dispose();
+        main.refreshTable();
+    }
+
     public void setBorderToComponents() {
         tfNombre.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-        tfTelefono.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
         tfRFC.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
+        tfTelefono.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
     }
 
 }

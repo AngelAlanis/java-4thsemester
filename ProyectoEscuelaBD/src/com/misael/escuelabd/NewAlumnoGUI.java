@@ -14,53 +14,53 @@ import java.awt.event.MouseEvent;
 
 public class NewAlumnoGUI extends JFrame {
 
-    private JPanel            panelCards;
-    private JPanel            panelInfoAlumno;
-    private JPanel            panelInfoTutor;
-    private JPanel            panelInfoGrado;
-    private JLabel            labelTituloAlumno;
-    private JTextField        tfTelefonoAlumno;
-    private JTextField        tfNombreAlumno;
+    private JButton           btnAnterior;
+    private JButton           btnRegistrar;
+    private JButton           btnSiguiente;
+    private JComboBox<String> cbExtraCurricular;
     private JComboBox<String> cbGenero;
-    private JLabel            labelNombre;
-    private JLabel            labelGenero;
-    private JLabel            labelTelefono;
-    private JPanel            panelMain;
-    private JLabel            labelAnterior;
-    private JLabel            labelSiguiente;
-    private JTextField        tfNombreTutor;
-    private JTextField        tfRFCTutor;
-    private JTextField        tfTelefonoTutor;
-    private JLabel            labelNombreTutor;
-    private JLabel            labelRFC;
-    private JLabel            labelTelefonoTutor;
     private JComboBox<String> cbGrado;
     private JComboBox<String> cbYear;
-    private JComboBox<String> cbExtraCurricular;
-    private JLabel            labelGrado;
-    private JLabel            lbYear;
-    private JLabel            labelExtracurricular;
-    private JLabel            labelTituloTutor;
-    private JLabel            labelTituloGrado;
-    private JButton           btnRegistrar;
-    private JTextField        tfFechaNacimiento;
-    private JLabel            lbFechaNacimiento;
-    private JButton           btnAnterior;
-    private JButton           btnSiguiente;
-    private JLabel            labelMatricula;
-    private JTextField        tfMatricula;
-    private JLabel            lbCantidadRecibida;
-    private JTextField        tfCantidadRecibida;
+    private JLabel            labelAnterior;
     private JLabel            labelCantidadAPagar;
-    private JLabel            labelPrecioInscripcion;
     private JLabel            labelDireccion;
+    private JLabel            labelExtracurricular;
+    private JLabel            labelGenero;
+    private JLabel            labelGrado;
+    private JLabel            labelMatricula;
+    private JLabel            labelNombre;
+    private JLabel            labelNombreTutor;
+    private JLabel            labelPrecioInscripcion;
+    private JLabel            labelRFC;
+    private JLabel            labelSiguiente;
+    private JLabel            labelTelefono;
+    private JLabel            labelTelefonoTutor;
+    private JLabel            labelTituloAlumno;
+    private JLabel            labelTituloGrado;
+    private JLabel            labelTituloTutor;
+    private JLabel            lbCantidadRecibida;
+    private JLabel            lbFechaNacimiento;
+    private JLabel            lbYear;
+    private JPanel            panelCards;
+    private JPanel            panelInfoAlumno;
+    private JPanel            panelInfoGrado;
+    private JPanel            panelInfoTutor;
+    private JPanel            panelMain;
+    private JTextField        tfCantidadRecibida;
     private JTextField        tfDireccion;
+    private JTextField        tfFechaNacimiento;
+    private JTextField        tfMatricula;
+    private JTextField        tfNombreAlumno;
+    private JTextField        tfNombreTutor;
+    private JTextField        tfRFCTutor;
+    private JTextField        tfTelefonoAlumno;
+    private JTextField        tfTelefonoTutor;
 
-    String sqlQuery, nombreAlumno, nombreTutor, matriculaAlumno, fechaNacimientoAlumno, telefonoAlumno, telefonoTutor, rfcTutor, direccion, cantidadRecibida, nivel;
-    int generoAlumno, nivelIndex, grado;
-    int currentPanel = 0;
-    int montoAPagar, montoPagado;
     MainGUI main;
+    String sqlQuery, nombreAlumno, nombreTutor, matriculaAlumno, fechaNacimientoAlumno, telefonoAlumno, telefonoTutor, rfcTutor, direccion, cantidadRecibida, nivel;
+    int currentPanel = 0;
+    int generoAlumno, nivelIndex, grado;
+    int montoAPagar, montoPagado;
 
     NewAlumnoGUI(MainGUI main) {
         this.main = main;
@@ -80,19 +80,19 @@ public class NewAlumnoGUI extends JFrame {
     }
 
     private void setBorderToComponents() {
-        tfNombreAlumno.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-        tfMatricula.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        cbExtraCurricular.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        cbGenero.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        cbGrado.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        cbYear.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfCantidadRecibida.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfDireccion.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
         tfFechaNacimiento.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfMatricula.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfNombreAlumno.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         tfNombreTutor.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         tfRFCTutor.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         tfTelefonoAlumno.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         tfTelefonoTutor.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-        cbGenero.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-        cbGrado.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-        cbYear.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-        cbExtraCurricular.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-        tfCantidadRecibida.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-        tfDireccion.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
     }
 
     public void initActionListeners() {
@@ -160,19 +160,19 @@ public class NewAlumnoGUI extends JFrame {
     }
 
     private void getInput() {
-        matriculaAlumno       = Utilities.validate(tfMatricula.getText());
-        nombreAlumno          = Utilities.validate(tfNombreAlumno.getText());
-        generoAlumno          = Utilities.validate(cbGenero.getSelectedIndex());
+        direccion             = Utilities.validate(tfDireccion.getText());
         fechaNacimientoAlumno = Utilities.validate(tfFechaNacimiento.getText());
-        telefonoAlumno        = Utilities.validate(tfTelefonoAlumno.getText());
+        generoAlumno          = Utilities.validate(cbGenero.getSelectedIndex());
+        grado                 = Utilities.validate(cbYear.getSelectedIndex());
+        matriculaAlumno       = Utilities.validate(tfMatricula.getText());
+        montoPagado           = Integer.parseInt(Utilities.validate(tfCantidadRecibida.getText()));
+        nivel                 = getNivelFromIndex(nivelIndex);
+        nivelIndex            = Utilities.validate(cbGrado.getSelectedIndex());
+        nombreAlumno          = Utilities.validate(tfNombreAlumno.getText());
         nombreTutor           = Utilities.validate(tfNombreTutor.getText());
         rfcTutor              = Utilities.validate(tfRFCTutor.getText());
+        telefonoAlumno        = Utilities.validate(tfTelefonoAlumno.getText());
         telefonoTutor         = Utilities.validate(tfTelefonoTutor.getText());
-        nivelIndex            = Utilities.validate(cbGrado.getSelectedIndex());
-        direccion             = Utilities.validate(tfDireccion.getText());
-        nivel                 = getNivelFromIndex(nivelIndex);
-        grado                 = Utilities.validate(cbYear.getSelectedIndex());
-        montoPagado           = Integer.parseInt(Utilities.validate(tfCantidadRecibida.getText()));
     }
 
     private int calculateInscriptionCost() {
@@ -194,20 +194,20 @@ public class NewAlumnoGUI extends JFrame {
     }
 
     private void placeHolderListeners() {
-        Utilities.setPlacerHolder(tfNombreAlumno, "Ingrese el nombre del alumno");
-        Utilities.setPlacerHolder(tfMatricula, "Ingrese la matrícula del alumno");
-        Utilities.setPlacerHolder(tfFechaNacimiento, "Ingrese la fecha de nacimiento del alumno");
-        Utilities.setPlacerHolder(tfTelefonoAlumno, "Ingrese el teléfono del alumno");
-        Utilities.setPlacerHolder(tfNombreTutor, "Ingrese el nombre del tutor");
-        Utilities.setPlacerHolder(tfTelefonoAlumno, "Ingrese el teléfono del alumno");
-        Utilities.setPlacerHolder(tfRFCTutor, "Ingrese el RFC del tutor");
-        Utilities.setPlacerHolder(tfTelefonoTutor, "Ingrese el teléfono del tutor");
-        Utilities.setPlacerHolder(tfDireccion, "Ingrese la dirección del tutor");
-        Utilities.setPlacerHolder(tfCantidadRecibida, "Ingrese la cantidad recibida");
-        Utilities.setPlaceHolder(cbGenero, 0);
         Utilities.setPlaceHolder(cbExtraCurricular, 0);
-        Utilities.setPlaceHolder(cbYear, 0);
+        Utilities.setPlaceHolder(cbGenero, 0);
         Utilities.setPlaceHolder(cbGrado, 0);
+        Utilities.setPlaceHolder(cbYear, 0);
+        Utilities.setPlacerHolder(tfCantidadRecibida, "Ingrese la cantidad recibida");
+        Utilities.setPlacerHolder(tfDireccion, "Ingrese la dirección del tutor");
+        Utilities.setPlacerHolder(tfFechaNacimiento, "Ingrese la fecha de nacimiento del alumno");
+        Utilities.setPlacerHolder(tfMatricula, "Ingrese la matrícula del alumno");
+        Utilities.setPlacerHolder(tfNombreAlumno, "Ingrese el nombre del alumno");
+        Utilities.setPlacerHolder(tfNombreTutor, "Ingrese el nombre del tutor");
+        Utilities.setPlacerHolder(tfRFCTutor, "Ingrese el RFC del tutor");
+        Utilities.setPlacerHolder(tfTelefonoAlumno, "Ingrese el teléfono del alumno");
+        Utilities.setPlacerHolder(tfTelefonoAlumno, "Ingrese el teléfono del alumno");
+        Utilities.setPlacerHolder(tfTelefonoTutor, "Ingrese el teléfono del tutor");
     }
 
     private void incrementCurrentPanel() {

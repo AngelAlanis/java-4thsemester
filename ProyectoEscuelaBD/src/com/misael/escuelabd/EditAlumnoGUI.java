@@ -12,28 +12,28 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 public class EditAlumnoGUI extends JFrame {
-    private JTextField        tfNombre;
-    private JLabel            labelNombre;
-    private JLabel            labelGenero;
+    private JButton           btnCancelar;
+    private JButton           btnRegistrar;
     private JComboBox<String> cbGenero;
+    private JLabel            labelFechaNacimiento;
+    private JLabel            labelGenero;
     private JLabel            labelMatricula;
-    private JTextField        tfMatricula;
+    private JLabel            labelNombre;
+    private JLabel            labelTelefono;
     private JLabel            labelTitulo;
     private JPanel            panelMain;
-    private JButton           btnRegistrar;
-    private JLabel            labelFechaNacimiento;
     private JTextField        tfFechaNacimiento;
-    private JLabel            labelTelefono;
+    private JTextField        tfMatricula;
+    private JTextField        tfNombre;
     private JTextField        tfTelefono;
-    private JButton           btnCancelar;
 
     MainGUI main;
+    String  fechaNacimiento;
+    String  genero;
     String  matricula;
     String  nombre;
-    String  genero;
-    String  fechaNacimiento;
-    String  telefono;
     String  sqlQuery;
+    String  telefono;
     int     idAlumno;
 
     public EditAlumnoGUI(MainGUI main, int idAlumno) {
@@ -51,20 +51,20 @@ public class EditAlumnoGUI extends JFrame {
     }
 
     public void initComponents() {
-        tfNombre.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-        tfMatricula.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-        tfFechaNacimiento.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-        tfTelefono.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
         cbGenero.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfFechaNacimiento.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfMatricula.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfNombre.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
+        tfTelefono.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
     }
 
     public void readData() {
         ArrayList<Object> data = main.conectar.readData("SELECT matricula, nombre, genero, fecha_nacimiento, telefono FROM alumno WHERE id_alumno = " + idAlumno);
 
-        tfMatricula.setText(data.get(0).toString());
-        tfNombre.setText(data.get(1).toString());
         cbGenero.setSelectedIndex(getGenderIndex(data.get(2).toString()));
         tfFechaNacimiento.setText(data.get(3).toString());
+        tfMatricula.setText(data.get(0).toString());
+        tfNombre.setText(data.get(1).toString());
         tfTelefono.setText(data.get(4).toString());
     }
 
@@ -82,10 +82,10 @@ public class EditAlumnoGUI extends JFrame {
     }
 
     private void getInput() {
+        fechaNacimiento = Utilities.validate(tfFechaNacimiento.getText());
+        genero          = Utilities.validate(getGenderString(cbGenero.getSelectedIndex()));
         matricula       = Utilities.validate(tfMatricula.getText());
         nombre          = Utilities.validate(tfNombre.getText());
-        genero          = Utilities.validate(getGenderString(cbGenero.getSelectedIndex()));
-        fechaNacimiento = Utilities.validate(tfFechaNacimiento.getText());
         telefono        = Utilities.validate(tfTelefono.getText());
     }
 
@@ -125,11 +125,11 @@ public class EditAlumnoGUI extends JFrame {
     }
 
     private void placeHolderListeners() {
-        Utilities.setPlacerHolder(tfNombre, "Ingrese el nombre del alumno");
-        Utilities.setPlacerHolder(tfMatricula, "Ingrese la matrícula del alumno");
-        Utilities.setPlacerHolder(tfFechaNacimiento, "Ingrese la fecha de nacimiento del alumno");
-        Utilities.setPlacerHolder(tfTelefono, "Ingrese el teléfono del alumno");
         Utilities.setPlaceHolder(cbGenero, 0);
+        Utilities.setPlacerHolder(tfFechaNacimiento, "Ingrese la fecha de nacimiento del alumno");
+        Utilities.setPlacerHolder(tfMatricula, "Ingrese la matrícula del alumno");
+        Utilities.setPlacerHolder(tfNombre, "Ingrese el nombre del alumno");
+        Utilities.setPlacerHolder(tfTelefono, "Ingrese el teléfono del alumno");
     }
 
 }

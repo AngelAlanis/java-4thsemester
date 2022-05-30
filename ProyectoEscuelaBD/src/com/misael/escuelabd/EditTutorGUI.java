@@ -11,18 +11,18 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 public class EditTutorGUI extends JFrame {
-    private JPanel     panelMain;
-    private JTextField tfNombre;
-    private JTextField tfRFC;
     private JButton    btnCancelar;
     private JButton    btnGuardar;
-    private JTextField tfTelefono;
-    private JLabel     labelTitulo;
+    private JLabel     labelDireccion;
     private JLabel     labelNombre;
     private JLabel     labelRFC;
     private JLabel     labelTelefono;
-    private JLabel     labelDireccion;
+    private JLabel     labelTitulo;
+    private JPanel     panelMain;
     private JTextField tfDireccion;
+    private JTextField tfNombre;
+    private JTextField tfRFC;
+    private JTextField tfTelefono;
 
     MainGUI main;
     String  nombre, rfc, telefono, sqlQuery;
@@ -66,10 +66,10 @@ public class EditTutorGUI extends JFrame {
     }
 
     private void placeHolderListeners() {
+        Utilities.setPlacerHolder(tfDireccion, "Ingrese la dirección del tutor");
         Utilities.setPlacerHolder(tfNombre, "Ingrese el nombre del tutor");
         Utilities.setPlacerHolder(tfRFC, "Ingrese el RFC del tutor");
         Utilities.setPlacerHolder(tfTelefono, "Ingrese el teléfono del tutor");
-        Utilities.setPlacerHolder(tfDireccion, "Ingrese la dirección del tutor");
     }
 
     private void saveData() {
@@ -94,8 +94,8 @@ public class EditTutorGUI extends JFrame {
 
     public void setBorderToComponents() {
         tfNombre.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
-        tfTelefono.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
         tfRFC.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
+        tfTelefono.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
     }
 
 }

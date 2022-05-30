@@ -136,19 +136,19 @@ public class Utilities {
     }
 
     public static void setupTable(JTable table) {
+        table.getTableHeader().setBackground(new Color(38, 153, 137));
+        table.getTableHeader().setFont(new Font("Roboto Medium", Font.PLAIN, 16));
+        table.getTableHeader().setForeground(Color.WHITE);
+        table.getTableHeader().setOpaque(false);
+        table.getTableHeader().setReorderingAllowed(false);
+        table.setCellSelectionEnabled(false);
+        table.setColumnSelectionAllowed(false);
         table.setFocusable(false);
         table.setIntercellSpacing(new Dimension(0, 0));
         table.setRowHeight(25);
         table.setSelectionBackground(new Color(245, 127, 8));
-        table.setShowVerticalLines(false);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.setColumnSelectionAllowed(false);
-        table.setCellSelectionEnabled(false);
-        table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setFont(new Font("Roboto Medium", Font.PLAIN, 16));
-        table.getTableHeader().setOpaque(false);
-        table.getTableHeader().setBackground(new Color(38, 153, 137));
-        table.getTableHeader().setForeground(Color.WHITE);
+        table.setShowVerticalLines(false);
 
     }
 }

@@ -18,64 +18,69 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MainGUI extends JFrame {
-    private JPanel      panelMain;
-    private JPanel      panelSidebar;
-    private JLabel      labelAlumnos;
-    private JLabel      labelOtrasConsultas;
-    private JLabel      labelTutores;
-    private JLabel      labelGrupos;
-    private JLabel      labelSidebarIcon;
-    private JLabel      labelLogo;
-    private JPanel      panelInformacion;
-    private JPanel      panelAlumnos;
-    private JPanel      panelOtrasConsultas;
-    private JPanel      panelTutores;
-    private JPanel      panelGrupos;
-    public JTable      tableAlumnos;
-    private JLabel      labelTitulo;
-    private JTextField  tfBusquedaAlumnos;
-    private JButton     btnNewAlumno;
-    private JScrollPane spTableAlumnos;
-    private JLabel      labelMenuPrincipal;
-    private JButton     btnModificarAlumno;
+    private FilterGUI   filterGUI;
+    private ImageIcon   add;
+    private ImageIcon   delete;
+    private ImageIcon   edit;
+    private ImageIcon   filter;
+    private ImageIcon   group;
+    private ImageIcon   home;
+    private ImageIcon   logo;
+    private ImageIcon   money;
+    private ImageIcon   mysql;
+    private ImageIcon   search;
+    private ImageIcon   sidebar;
+    private ImageIcon   student;
+    private ImageIcon   teacher;
+
     private JButton     btnBajaAlumno;
-    private JTable      tableTutores;
-    private JTextField  tfBusquedaTutores;
-    private JButton     btnNuevoTutor;
-    private JButton     btnModificarTutor;
-    private JLabel      labelTituloTutores;
-    private JScrollPane spTutores;
-    private JTable      tableConsulta;
-    private JTextField  tfCustomQuery;
     private JButton     btnConsultar;
-    private JScrollPane spConsulta;
-    private JLabel      lbTituloConsultas;
-    private JTable      tableGrupos;
-    private JLabel      labelTituloGrupos;
-    private JScrollPane spGrupos;
-    private JLabel      labelFinanzas;
-    private JPanel      panelFinanzas;
-    private JTable      tableFinanzas;
-    private JLabel      labelTituloFinanzas;
-    private JTextField  tfFinanzas;
-    private JScrollPane spFinanzas;
     private JButton     btnFiltro;
+    private JButton     btnModificarAlumno;
+    private JButton     btnModificarTutor;
+    private JButton     btnNewAlumno;
+    private JButton     btnNuevoTutor;
 
-    private ImageIcon logo;
-    private ImageIcon add;
-    private ImageIcon delete;
-    private ImageIcon edit;
-    private ImageIcon group;
-    private ImageIcon home;
-    private ImageIcon mysql;
-    private ImageIcon money;
-    private ImageIcon search;
-    private ImageIcon student;
-    private ImageIcon teacher;
-    private ImageIcon sidebar;
-    private ImageIcon filter;
+    private JLabel      labelAlumnos;
+    private JLabel      labelFinanzas;
+    private JLabel      labelGrupos;
+    private JLabel      labelLogo;
+    private JLabel      labelMenuPrincipal;
+    private JLabel      labelOtrasConsultas;
+    private JLabel      labelSidebarIcon;
+    private JLabel      labelTitulo;
+    private JLabel      labelTituloFinanzas;
+    private JLabel      labelTituloGrupos;
+    private JLabel      labelTituloTutores;
+    private JLabel      labelTutores;
+    private JLabel      lbTituloConsultas;
 
-    private FilterGUI filterGUI;
+    private JPanel      panelAlumnos;
+    private JPanel      panelFinanzas;
+    private JPanel      panelGrupos;
+    private JPanel      panelInformacion;
+    private JPanel      panelMain;
+    private JPanel      panelOtrasConsultas;
+    private JPanel      panelSidebar;
+    private JPanel      panelTutores;
+
+    private JScrollPane spConsulta;
+    private JScrollPane spFinanzas;
+    private JScrollPane spGrupos;
+    private JScrollPane spTableAlumnos;
+    private JScrollPane spTutores;
+
+    private JTable      tableConsulta;
+    private JTable      tableFinanzas;
+    private JTable      tableGrupos;
+    private JTable      tableTutores;
+
+    private JTextField  tfBusquedaAlumnos;
+    private JTextField  tfBusquedaTutores;
+    private JTextField  tfCustomQuery;
+    private JTextField  tfFinanzas;
+
+    public  JTable      tableAlumnos;
 
     Conectar conectar;
 
@@ -272,44 +277,44 @@ public class MainGUI extends JFrame {
 
     private void setupTables() {
         Utilities.setupTable(tableAlumnos);
-        Utilities.setupTable(tableTutores);
+        Utilities.setupTable(tableConsulta);
         Utilities.setupTable(tableFinanzas);
         Utilities.setupTable(tableGrupos);
-        Utilities.setupTable(tableConsulta);
+        Utilities.setupTable(tableTutores);
     }
 
     private void readIcons() {
         add     = Utilities.setupIcon("add.png", 30, 30, Color.white);
         delete  = Utilities.setupIcon("delete.png", 30, 30, Color.white);
+        edit    = Utilities.setupIcon("edit.png", 30, 30, Color.white);
+        filter  = Utilities.setupIcon("filter.png", 30, 30, Color.white);
         group   = Utilities.setupIcon("group.png", 30, 30, Color.white);
         home    = Utilities.setupIcon("home.png", 30, 30, Color.white);
-        mysql   = Utilities.setupIcon("mysql.png", 30, 30, Color.white);
+        logo    = Utilities.setupImage("school_logo.png", 197, 45);
         money   = Utilities.setupIcon("money.png", 30, 30, Color.white);
+        mysql   = Utilities.setupIcon("mysql.png", 30, 30, Color.white);
         search  = Utilities.setupIcon("search.png", 30, 30, Color.white);
+        sidebar = Utilities.setupIcon("sidebar.png", 30, 30, Color.white);
         student = Utilities.setupIcon("student.png", 30, 30, Color.white);
         teacher = Utilities.setupIcon("teacher.png", 30, 30, Color.white);
-        edit    = Utilities.setupIcon("edit.png", 30, 30, Color.white);
-        sidebar = Utilities.setupIcon("sidebar.png", 30, 30, Color.white);
-        filter  = Utilities.setupIcon("filter.png", 30, 30, Color.white);
-        logo    = Utilities.setupImage("school_logo.png", 197, 45);
     }
 
     private void setIcons() {
-        labelLogo.setIcon(logo);
-        labelSidebarIcon.setIcon(sidebar);
-        btnFiltro.setIcon(filter);
-        labelMenuPrincipal.setIcon(home);
-        labelGrupos.setIcon(group);
-        labelOtrasConsultas.setIcon(mysql);
-        labelAlumnos.setIcon(student);
-        labelTutores.setIcon(teacher);
-        labelFinanzas.setIcon(money);
-        btnNewAlumno.setIcon(add);
-        btnModificarAlumno.setIcon(edit);
         btnBajaAlumno.setIcon(delete);
-        btnNuevoTutor.setIcon(add);
-        btnModificarTutor.setIcon(edit);
         btnConsultar.setIcon(search);
+        btnFiltro.setIcon(filter);
+        btnModificarAlumno.setIcon(edit);
+        btnModificarTutor.setIcon(edit);
+        btnNewAlumno.setIcon(add);
+        btnNuevoTutor.setIcon(add);
+        labelAlumnos.setIcon(student);
+        labelFinanzas.setIcon(money);
+        labelGrupos.setIcon(group);
+        labelLogo.setIcon(logo);
+        labelMenuPrincipal.setIcon(home);
+        labelOtrasConsultas.setIcon(mysql);
+        labelSidebarIcon.setIcon(sidebar);
+        labelTutores.setIcon(teacher);
     }
 
     public static void main(String[] args) {
