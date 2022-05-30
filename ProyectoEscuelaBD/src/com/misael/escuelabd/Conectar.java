@@ -1,8 +1,13 @@
 package com.misael.escuelabd;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -11,7 +16,7 @@ public class Conectar {
     Connection connection;
     Connection registro;
 
-    public Connection conexion() {
+    public Connection connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             // Tipo de conexión, servidor, base de datos, usuario, contraseña
@@ -26,7 +31,6 @@ public class Conectar {
     }
 
     public DefaultTableModel fillTable(String sqlQuery) {
-
         Vector<Vector<Object>> data        = new Vector<>();
         int                    columns;
         Vector<Object>         columnNames = new Vector<>();
@@ -63,7 +67,6 @@ public class Conectar {
     }
 
     public void executeQuery(String sqlQuery) {
-
         try {
             PreparedStatement preparedStatement = registro.prepareStatement(sqlQuery);
             preparedStatement.executeUpdate();
@@ -76,7 +79,6 @@ public class Conectar {
     }
 
     public ArrayList<Object> readData(String sqlQuery) {
-
         ArrayList<Object> data = new ArrayList<>();
 
         try {

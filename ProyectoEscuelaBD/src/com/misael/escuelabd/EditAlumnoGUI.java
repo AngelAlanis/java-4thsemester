@@ -37,8 +37,8 @@ public class EditAlumnoGUI extends JFrame {
     int     idAlumno;
 
     public EditAlumnoGUI(MainGUI main, int idAlumno) {
-        this.main        = main;
-        this.idAlumno    = idAlumno;
+        this.main     = main;
+        this.idAlumno = idAlumno;
 
         this.setSize(600, 700);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -69,13 +69,8 @@ public class EditAlumnoGUI extends JFrame {
     }
 
     public void saveData() {
-
         try {
-            matricula       = Utilities.validate(tfMatricula.getText());
-            nombre          = Utilities.validate(tfNombre.getText());
-            genero          = Utilities.validate(getGenderString(cbGenero.getSelectedIndex()));
-            fechaNacimiento = Utilities.validate(tfFechaNacimiento.getText());
-            telefono        = Utilities.validate(tfTelefono.getText());
+            getInput();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -84,6 +79,14 @@ public class EditAlumnoGUI extends JFrame {
 
         sqlQuery = "UPDATE alumno SET matricula = '" + matricula + "', nombre = '" + nombre + "', genero='" + genero + "', fecha_nacimiento='" + fechaNacimiento + "', telefono='" + telefono + "' WHERE id_alumno=" + idAlumno;
         main.conectar.executeQuery(sqlQuery);
+    }
+
+    private void getInput() {
+        matricula       = Utilities.validate(tfMatricula.getText());
+        nombre          = Utilities.validate(tfNombre.getText());
+        genero          = Utilities.validate(getGenderString(cbGenero.getSelectedIndex()));
+        fechaNacimiento = Utilities.validate(tfFechaNacimiento.getText());
+        telefono        = Utilities.validate(tfTelefono.getText());
     }
 
     public String getGenderString(int gender) {

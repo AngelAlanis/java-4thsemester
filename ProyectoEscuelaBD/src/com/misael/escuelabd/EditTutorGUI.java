@@ -1,9 +1,13 @@
 package com.misael.escuelabd;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.Color;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.util.ArrayList;
 
 public class EditTutorGUI extends JFrame {
@@ -20,7 +24,6 @@ public class EditTutorGUI extends JFrame {
     private JLabel     labelDireccion;
     private JTextField tfDireccion;
 
-    Color   placeHolderColor;
     MainGUI main;
     String  nombre, rfc, telefono, sqlQuery;
     int idTutor;
@@ -40,7 +43,6 @@ public class EditTutorGUI extends JFrame {
 
     public void initComponents() {
         setBorderToComponents();
-        placeHolderColor = new Color(177, 179, 174);
     }
 
     public void readData() {
@@ -52,7 +54,6 @@ public class EditTutorGUI extends JFrame {
     }
 
     public void initActionListeners() {
-
         btnGuardar.addActionListener(e -> {
             saveData();
             this.dispose();
@@ -73,9 +74,7 @@ public class EditTutorGUI extends JFrame {
 
     private void saveData() {
         try {
-            nombre   = Utilities.validate(tfNombre.getText());
-            rfc      = Utilities.validate(tfRFC.getText());
-            telefono = Utilities.validate(tfTelefono.getText());
+            getInput();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -85,6 +84,12 @@ public class EditTutorGUI extends JFrame {
         sqlQuery = "UPDATE tutor SET nombre='" + nombre + "',rfc='" + rfc + "',telefono='" + telefono + "' WHERE id_tutor ='" + idTutor + "'";
 
         main.conectar.executeQuery(sqlQuery);
+    }
+
+    private void getInput() {
+        nombre   = Utilities.validate(tfNombre.getText());
+        rfc      = Utilities.validate(tfRFC.getText());
+        telefono = Utilities.validate(tfTelefono.getText());
     }
 
     public void setBorderToComponents() {

@@ -1,15 +1,11 @@
 package com.misael.escuelabd;
 
-import com.formdev.flatlaf.FlatLightLaf;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
 
 public class FilterGUI extends JFrame {
     private JCheckBox         activoCheckBox;
@@ -28,69 +24,77 @@ public class FilterGUI extends JFrame {
     private JButton           aplicarButton;
     private JLabel            filtrarLabel;
     private JComboBox<String> gradosComboBox;
-    private MainGUI           mainGui;
     public  String            fullQuery   = "";
     private String            activeQuery = "";
     private String            genderQuery = "";
     private String            levelQuery  = "";
+    private String            gradeQuery  = "";
 
-    public FilterGUI(MainGUI mainGui) {
-        this.mainGui = mainGui;
+    public FilterGUI() {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panelMain);
         this.setUndecorated(true);
         initActionListeners();
-        initComponents();
         this.pack();
-    }
-
-    public void initComponents() {
-        aplicarButton.addActionListener(e -> {
-
-            if (activoCheckBox.isSelected() && !inactivoCheckBox.isSelected()) {
-                activeQuery = " AND alumno.activo = 1";
-            } else if (inactivoCheckBox.isSelected() && !activoCheckBox.isSelected()) {
-                activeQuery = " AND alumno.activo = 0";
-            } else if (activoCheckBox.isSelected() && inactivoCheckBox.isSelected()) {
-                activeQuery = "";
-            }
-
-            if (masculinoCheckBox.isSelected() && !femeninoCheckBox.isSelected()) {
-                genderQuery = " AND alumno.genero = 1";
-            } else if (femeninoCheckBox.isSelected() && !masculinoCheckBox.isSelected()) {
-                genderQuery = " AND alumno.genero = 2";
-            } else if (masculinoCheckBox.isSelected() && femeninoCheckBox.isSelected()) {
-                genderQuery = "";
-            }
-
-            if (primariaCheckBox.isSelected() && !secundariaCheckBox.isSelected() && !bachilleratoCheckBox.isSelected()) {
-                levelQuery = " AND grado.nivel = 'Primaria'";
-            } else if (secundariaCheckBox.isSelected() && !primariaCheckBox.isSelected() && !bachilleratoCheckBox.isSelected()) {
-                levelQuery = " AND grado.nivel = 'Secundaria'";
-            } else if (bachilleratoCheckBox.isSelected() && !primariaCheckBox.isSelected() && !secundariaCheckBox.isSelected()) {
-                levelQuery = " AND grado.nivel = 'Bachillerato'";
-            } else if (primariaCheckBox.isSelected() && secundariaCheckBox.isSelected() && bachilleratoCheckBox.isSelected()) {
-                levelQuery = "";
-            }
-
-            if (gradosComboBox.getSelectedIndex() > 0) {
-                levelQuery += " AND grado.grado = '" + gradosComboBox.getSelectedIndex() + "'";
-            } else {
-                levelQuery += "";
-            }
-
-            fullQuery = activeQuery + genderQuery + levelQuery;
-
-            mainGui.tableAlumnos.setModel(mainGui.conectar.fillTable("SELECT alumno.id_alumno, alumno.matricula, alumno.nombre, grado.nivel, grado.grado, alumno.genero, alumno.fecha_nacimiento, alumno.telefono, tutor.nombre \n" +
-                                                                             "FROM alumno, tutor, alumno_tutor, grado, inscripcion\n" +
-                                                                             "WHERE alumno.id_alumno = alumno_tutor.id_alumno AND alumno_tutor.id_tutor = tutor.id_tutor AND inscripcion.id_alumno = alumno.id_alumno AND grado.id_grado = inscripcion.id_grado\n" +
-                                                                             fullQuery + ";"));
-
-        });
     }
 
     public void initActionListeners() {
         cancelarButton.addActionListener(e -> this.setVisible(false));
+
+        aplicarButton.addActionListener(e -> {
+            activeQuery = getActiveQuery();
+            genderQuery = getGenderQuery();
+            levelQuery  = getLevelQuery();
+            gradeQuery  = getGradeQuery();
+
+            fullQuery = activeQuery + genderQuery + levelQuery + gradeQuery;
+
+
+        });
+
     }
 
+    private String getGradeQuery() {
+        if (gradosComboBox.getSelectedIndex() > 0) {
+            return "AND grado.grado = '" + gradosComboBox.getSelectedIndex() + "'";
+        }
+        return "";
+    }
+
+    private String getLevelQuery() {
+        if (primariaCheckBox.isSelected() && !secundariaCheckBox.isSelected() && !bachilleratoCheckBox.isSelected()) {
+            return " AND grado.nivel = 'Primaria'";
+        } else if (secundariaCheckBox.isSelected() && !primariaCheckBox.isSelected() && !bachilleratoCheckBox.isSelected()) {
+            return " AND grado.nivel = 'Secundaria'";
+        } else if (bachilleratoCheckBox.isSelected() && !primariaCheckBox.isSelected() && !secundariaCheckBox.isSelected()) {
+            return " AND grado.nivel = 'Bachillerato'";
+        } else if (primariaCheckBox.isSelected() && secundariaCheckBox.isSelected() && bachilleratoCheckBox.isSelected()) {
+            return "";
+        }
+        return "";
+    }
+
+    private String getGenderQuery() {
+        if (masculinoCheckBox.isSelected() && !femeninoCheckBox.isSelected()) {
+            return " AND alumno.genero = 0";
+        } else if (femeninoCheckBox.isSelected() && !masculinoCheckBox.isSelected()) {
+            return " AND alumno.genero = 1";
+        } else if (masculinoCheckBox.isSelected() && femeninoCheckBox.isSelected()) {
+            return "";
+        }
+        return "";
+    }
+
+    private String getActiveQuery() {
+        if (activoCheckBox.isSelected() && !inactivoCheckBox.isSelected()) {
+            return " AND alumno.activo = 1";
+        } else if
+        (inactivoCheckBox.isSelected() && !activoCheckBox.isSelected()) {
+            return " AND alumno.activo = 0";
+        } else if
+        (activoCheckBox.isSelected() && inactivoCheckBox.isSelected()) {
+            return "";
+        }
+        return "";
+    }
 }

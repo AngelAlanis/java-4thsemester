@@ -2,8 +2,16 @@ package com.misael.escuelabd;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -23,7 +31,7 @@ public class MainGUI extends JFrame {
     private JPanel      panelOtrasConsultas;
     private JPanel      panelTutores;
     private JPanel      panelGrupos;
-    public JTable      tableAlumnos;
+    private JTable      tableAlumnos;
     private JLabel      labelTitulo;
     private JTextField  tfBusquedaAlumnos;
     private JButton     btnNewAlumno;
@@ -66,6 +74,7 @@ public class MainGUI extends JFrame {
     private ImageIcon teacher;
     private ImageIcon sidebar;
     private ImageIcon filter;
+
     private FilterGUI filterGUI;
 
     Conectar conectar;
@@ -78,17 +87,16 @@ public class MainGUI extends JFrame {
         this.setContentPane(panelMain);
         initComponents();
         initActionListeners();
-        connectToDatabase();
+        //connectToDatabase();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
     public void initComponents() {
+        filterGUI = new FilterGUI();
         readIcons();
         setIcons();
         setupTables();
-
-        filterGUI = new FilterGUI(this);
     }
 
     public void initActionListeners() {
@@ -176,7 +184,7 @@ public class MainGUI extends JFrame {
     }
 
     public void connectToDatabase() {
-        conectar.registro = conectar.conexion();
+        conectar.registro = conectar.connect();
         refreshTable();
     }
 

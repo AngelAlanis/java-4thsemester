@@ -1,10 +1,14 @@
 package com.misael.escuelabd;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.Color;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -51,7 +55,6 @@ public class NewAlumnoGUI extends JFrame {
     private JLabel            labelPrecioInscripcion;
     private JLabel            labelDireccion;
     private JTextField        tfDireccion;
-    private Color             placeHolderColor;
 
     String sqlQuery, nombreAlumno, nombreTutor, matriculaAlumno, fechaNacimientoAlumno, telefonoAlumno, telefonoTutor, rfcTutor, direccion, cantidadRecibida, nivel;
     int generoAlumno, nivelIndex, grado;
@@ -72,7 +75,6 @@ public class NewAlumnoGUI extends JFrame {
 
     public void initComponents() {
         setBorderToComponents();
-        placeHolderColor = new Color(177, 179, 174);
         labelExtracurricular.setVisible(false);
         cbExtraCurricular.setVisible(false);
     }
@@ -99,19 +101,7 @@ public class NewAlumnoGUI extends JFrame {
 
         btnRegistrar.addActionListener(e -> {
             try {
-                matriculaAlumno       = Utilities.validate(tfMatricula.getText());
-                nombreAlumno          = Utilities.validate(tfNombreAlumno.getText());
-                generoAlumno          = Utilities.validate(cbGenero.getSelectedIndex());
-                fechaNacimientoAlumno = Utilities.validate(tfFechaNacimiento.getText());
-                telefonoAlumno        = Utilities.validate(tfTelefonoAlumno.getText());
-                nombreTutor           = Utilities.validate(tfNombreTutor.getText());
-                rfcTutor              = Utilities.validate(tfRFCTutor.getText());
-                telefonoTutor         = Utilities.validate(tfTelefonoTutor.getText());
-                nivelIndex            = Utilities.validate(cbGrado.getSelectedIndex());
-                direccion             = Utilities.validate(tfDireccion.getText());
-                nivel                 = getNivelFromIndex(nivelIndex);
-                grado                 = Utilities.validate(cbYear.getSelectedIndex());
-                montoPagado           = Integer.parseInt(Utilities.validate(tfCantidadRecibida.getText()));
+                getInput();
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Verifique los datos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -128,12 +118,10 @@ public class NewAlumnoGUI extends JFrame {
                     + "\nINSERT INTO inscripcion (id_alumno, id_grado, monto, pagado) VALUES (@AlumnoID, @GradoID" + ",'" + montoAPagar + "','" + montoPagado + "');"
                     + "\nINSERT INTO alumno_tutor (id_tutor, id_alumno, direccion) VALUES (@TutorID, @AlumnoID,'" + direccion + "');";
 
-            System.out.println(sqlQuery);
 
             main.conectar.executeQuery(sqlQuery);
             this.dispose();
             main.refreshTable();
-
         });
 
         btnSiguiente.addMouseListener(new MouseAdapter() {
@@ -169,6 +157,22 @@ public class NewAlumnoGUI extends JFrame {
             }
         });
 
+    }
+
+    private void getInput() {
+        matriculaAlumno       = Utilities.validate(tfMatricula.getText());
+        nombreAlumno          = Utilities.validate(tfNombreAlumno.getText());
+        generoAlumno          = Utilities.validate(cbGenero.getSelectedIndex());
+        fechaNacimientoAlumno = Utilities.validate(tfFechaNacimiento.getText());
+        telefonoAlumno        = Utilities.validate(tfTelefonoAlumno.getText());
+        nombreTutor           = Utilities.validate(tfNombreTutor.getText());
+        rfcTutor              = Utilities.validate(tfRFCTutor.getText());
+        telefonoTutor         = Utilities.validate(tfTelefonoTutor.getText());
+        nivelIndex            = Utilities.validate(cbGrado.getSelectedIndex());
+        direccion             = Utilities.validate(tfDireccion.getText());
+        nivel                 = getNivelFromIndex(nivelIndex);
+        grado                 = Utilities.validate(cbYear.getSelectedIndex());
+        montoPagado           = Integer.parseInt(Utilities.validate(tfCantidadRecibida.getText()));
     }
 
     private int calculateInscriptionCost() {

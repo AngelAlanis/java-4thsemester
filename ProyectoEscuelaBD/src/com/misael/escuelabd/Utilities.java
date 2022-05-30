@@ -1,10 +1,18 @@
 package com.misael.escuelabd;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
@@ -134,7 +142,6 @@ public class Utilities {
         table.setSelectionBackground(new Color(245, 127, 8));
         table.setShowVerticalLines(false);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //table.setRowSelectionInterval(0, 0);
         table.setColumnSelectionAllowed(false);
         table.setCellSelectionEnabled(false);
         table.getTableHeader().setReorderingAllowed(false);
