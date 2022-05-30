@@ -29,8 +29,10 @@ public class FilterGUI extends JFrame {
     private String            genderQuery = "";
     private String            levelQuery  = "";
     private String            gradeQuery  = "";
+    private MainGUI           main;
 
-    public FilterGUI() {
+    public FilterGUI(MainGUI main) {
+        this.main = main;
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panelMain);
         this.setUndecorated(true);
@@ -49,6 +51,10 @@ public class FilterGUI extends JFrame {
 
             fullQuery = activeQuery + genderQuery + levelQuery + gradeQuery;
 
+            main.tableAlumnos.setModel(main.conectar.fillTable("SELECT alumno.id_alumno, alumno.matricula, alumno.nombre, grado.nivel, grado.grado, alumno.genero, alumno.fecha_nacimiento, alumno.telefono, tutor.nombre \n" +
+                                                                       "FROM alumno, tutor, alumno_tutor, grado, inscripcion\n" +
+                                                                       "WHERE alumno.id_alumno = alumno_tutor.id_alumno AND alumno_tutor.id_tutor = tutor.id_tutor AND inscripcion.id_alumno = alumno.id_alumno AND grado.id_grado = inscripcion.id_grado\n" +
+                                                                       fullQuery + ";"));
 
         });
 
@@ -76,9 +82,9 @@ public class FilterGUI extends JFrame {
 
     private String getGenderQuery() {
         if (masculinoCheckBox.isSelected() && !femeninoCheckBox.isSelected()) {
-            return " AND alumno.genero = 0";
-        } else if (femeninoCheckBox.isSelected() && !masculinoCheckBox.isSelected()) {
             return " AND alumno.genero = 1";
+        } else if (femeninoCheckBox.isSelected() && !masculinoCheckBox.isSelected()) {
+            return " AND alumno.genero = 2";
         } else if (masculinoCheckBox.isSelected() && femeninoCheckBox.isSelected()) {
             return "";
         }

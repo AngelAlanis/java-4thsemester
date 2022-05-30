@@ -31,7 +31,7 @@ public class MainGUI extends JFrame {
     private JPanel      panelOtrasConsultas;
     private JPanel      panelTutores;
     private JPanel      panelGrupos;
-    private JTable      tableAlumnos;
+    public JTable      tableAlumnos;
     private JLabel      labelTitulo;
     private JTextField  tfBusquedaAlumnos;
     private JButton     btnNewAlumno;
@@ -87,13 +87,13 @@ public class MainGUI extends JFrame {
         this.setContentPane(panelMain);
         initComponents();
         initActionListeners();
-        //connectToDatabase();
+        connectToDatabase();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
     public void initComponents() {
-        filterGUI = new FilterGUI();
+        filterGUI = new FilterGUI(this);
         readIcons();
         setIcons();
         setupTables();
