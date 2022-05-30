@@ -28,12 +28,14 @@ public class FilterGUI extends JFrame {
     private JButton           aplicarButton;
     private JLabel            filtrarLabel;
     private JComboBox<String> gradosComboBox;
+    private MainGUI           mainGui;
     public  String            fullQuery   = "";
     private String            activeQuery = "";
     private String            genderQuery = "";
     private String            levelQuery  = "";
 
-    public FilterGUI() {
+    public FilterGUI(MainGUI mainGui) {
+        this.mainGui = mainGui;
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(panelMain);
         this.setUndecorated(true);
@@ -54,9 +56,9 @@ public class FilterGUI extends JFrame {
             }
 
             if (masculinoCheckBox.isSelected() && !femeninoCheckBox.isSelected()) {
-                genderQuery = " AND alumno.genero = 0";
-            } else if (femeninoCheckBox.isSelected() && !masculinoCheckBox.isSelected()) {
                 genderQuery = " AND alumno.genero = 1";
+            } else if (femeninoCheckBox.isSelected() && !masculinoCheckBox.isSelected()) {
+                genderQuery = " AND alumno.genero = 2";
             } else if (masculinoCheckBox.isSelected() && femeninoCheckBox.isSelected()) {
                 genderQuery = "";
             }
@@ -72,24 +74,23 @@ public class FilterGUI extends JFrame {
             }
 
             if (gradosComboBox.getSelectedIndex() > 0) {
-                levelQuery += "AND grado.grado = '" + gradosComboBox.getSelectedIndex() + "'";
+                levelQuery += " AND grado.grado = '" + gradosComboBox.getSelectedIndex() + "'";
             } else {
                 levelQuery += "";
             }
 
             fullQuery = activeQuery + genderQuery + levelQuery;
 
-            System.out.println(fullQuery);
+            mainGui.tableAlumnos.setModel(mainGui.conectar.fillTable("SELECT alumno.id_alumno, alumno.matricula, alumno.nombre, grado.nivel, grado.grado, alumno.genero, alumno.fecha_nacimiento, alumno.telefono, tutor.nombre \n" +
+                                                                             "FROM alumno, tutor, alumno_tutor, grado, inscripcion\n" +
+                                                                             "WHERE alumno.id_alumno = alumno_tutor.id_alumno AND alumno_tutor.id_tutor = tutor.id_tutor AND inscripcion.id_alumno = alumno.id_alumno AND grado.id_grado = inscripcion.id_grado\n" +
+                                                                             fullQuery + ";"));
+
         });
     }
 
     public void initActionListeners() {
         cancelarButton.addActionListener(e -> this.setVisible(false));
-    }
-
-    public static void main(String[] args) {
-        FlatLightLaf.setup();
-        var filter = new FilterGUI();
     }
 
 }
