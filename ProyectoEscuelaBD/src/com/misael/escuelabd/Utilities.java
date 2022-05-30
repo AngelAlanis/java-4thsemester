@@ -141,7 +141,7 @@ public class Utilities {
         table.getTableHeader().setForeground(Color.WHITE);
         table.getTableHeader().setOpaque(false);
         table.getTableHeader().setReorderingAllowed(false);
-        table.setCellSelectionEnabled(false);
+        //table.setCellSelectionEnabled(false);
         table.setColumnSelectionAllowed(false);
         table.setFocusable(false);
         table.setIntercellSpacing(new Dimension(0, 0));

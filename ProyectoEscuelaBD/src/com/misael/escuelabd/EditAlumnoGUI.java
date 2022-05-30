@@ -91,11 +91,11 @@ public class EditAlumnoGUI extends JFrame {
 
     public String getGenderString(int gender) {
         switch (gender) {
-            case 0 -> {
+            case 1 -> {
                 return "Masculino";
             }
 
-            case 1 -> {
+            case 2 -> {
                 return "Femenino";
             }
         }
@@ -105,10 +105,10 @@ public class EditAlumnoGUI extends JFrame {
     public int getGenderIndex(String gender) {
         switch (gender) {
             case "Masculino" -> {
-                return 0;
+                return 1;
             }
             case "Femenino" -> {
-                return 1;
+                return 2;
             }
         }
         return -1;

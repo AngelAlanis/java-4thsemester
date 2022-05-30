@@ -1,6 +1,5 @@
 package com.misael.escuelabd;
 
-import Animacion.Animacion;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.ImageIcon;
@@ -15,8 +14,6 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MainGUI extends JFrame {
 
@@ -93,7 +90,7 @@ public class MainGUI extends JFrame {
         this.setContentPane(panelMain);
         initComponents();
         initActionListeners();
-        //connectToDatabase();
+        connectToDatabase();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
@@ -171,6 +168,7 @@ public class MainGUI extends JFrame {
                                                          "WHERE alumno.id_alumno = alumno_tutor.id_alumno AND alumno_tutor.id_tutor = tutor.id_tutor AND inscripcion.id_alumno = alumno.id_alumno AND grado.id_grado = inscripcion.id_grado;"));
         tableTutores.setModel(conectar.fillTable("SELECT id_tutor, nombre, rfc, telefono FROM tutor"));
         tableGrupos.setModel(conectar.fillTable("SELECT id_grado, clave, nivel, grado FROM grado"));
+
         tableFinanzas.setModel(conectar.fillTable("SELECT inscripcion.id_inscripcion, inscripcion.id_alumno, alumno.matricula, alumno.nombre, grado.nivel, grado.grado, monto, pagado FROM inscripcion, alumno, grado WHERE inscripcion.id_alumno = alumno.id_alumno AND inscripcion.id_grado = grado.id_grado"));
     }
 
