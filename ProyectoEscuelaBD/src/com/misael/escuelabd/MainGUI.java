@@ -1,6 +1,5 @@
 package com.misael.escuelabd;
 
-import Animacion.Animacion;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.ImageIcon;
@@ -15,8 +14,6 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MainGUI extends JFrame {
 

@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/ProyectoFarmacia/ProyectoFarmacia.iml" filepath="$PROJECT_DIR$/ProyectoFarmacia/ProyectoFarmacia.iml" />
       <module fileurl="file://$PROJECT_DIR$/ProyectoHilos/ProyectoHilos.iml" filepath="$PROJECT_DIR$/ProyectoHilos/ProyectoHilos.iml" />
       <module fileurl="file://$PROJECT_DIR$/ProyectoMatematicas/ProyectoMatematicas.iml" filepath="$PROJECT_DIR$/ProyectoMatematicas/ProyectoMatematicas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SimulacionPseudoaleatorios/SimulacionPseudoaleatorios.iml" filepath="$PROJECT_DIR$/SimulacionPseudoaleatorios/SimulacionPseudoaleatorios.iml" />
       <module fileurl="file://$PROJECT_DIR$/TopicosAvanzados/TopicosAvanzados.iml" filepath="$PROJECT_DIR$/TopicosAvanzados/TopicosAvanzados.iml" />
       <module fileurl="file://$PROJECT_DIR$/java-4thsemester.iml" filepath="$PROJECT_DIR$/java-4thsemester.iml" />
     </modules>
