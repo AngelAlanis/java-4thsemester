@@ -75,7 +75,31 @@ public class Metodos {
         return respuestasFloat;
     }
 
-    public static void productosMedios() {
+    public static float[] productosMedios(int x0, int x1, int n) {
+        float[] respuestasEnteras = new float[n + 2];
+        float[] respuestasFloat   = new float[n + 2];
+        int     siguienteValor;
+        String  valorToString;
+        int     length;
+        respuestasEnteras[0] = x0;
+        respuestasEnteras[1] = x1;
+        respuestasFloat[0]   = respuestasEnteras[0] / 10000;
+        respuestasFloat[1]   = respuestasEnteras[1] / 10000;
+
+        for (int i = 2; i < respuestasEnteras.length; i++) {
+            siguienteValor = (int) (respuestasEnteras[i - 1] * respuestasEnteras[i - 2]);
+            valorToString  = String.valueOf(siguienteValor);
+
+            if (valorToString.length() % 2 == 1) {
+                valorToString = "0" + valorToString;
+            }
+
+            length = valorToString.length();
+
+            respuestasEnteras[i] = Integer.parseInt(valorToString.charAt((length / 2) - 2) + "" + valorToString.charAt((length / 2) - 1) + "" + valorToString.charAt((length / 2)) + "" + valorToString.charAt((length / 2) + 1));
+            respuestasFloat[i]   = respuestasEnteras[i] / 10000;
+        }
+        return respuestasFloat;
 
     }
 
