@@ -166,8 +166,8 @@ public class NewAlumnoGUI extends JFrame {
         grado                 = Utilities.validate(cbYear.getSelectedIndex());
         matriculaAlumno       = Utilities.validate(tfMatricula.getText());
         montoPagado           = Integer.parseInt(Utilities.validate(tfCantidadRecibida.getText()));
-        nivel                 = getNivelFromIndex(nivelIndex);
         nivelIndex            = Utilities.validate(cbGrado.getSelectedIndex());
+        nivel                 = getNivelFromIndex(nivelIndex);
         nombreAlumno          = Utilities.validate(tfNombreAlumno.getText());
         nombreTutor           = Utilities.validate(tfNombreTutor.getText());
         rfcTutor              = Utilities.validate(tfRFCTutor.getText());
@@ -222,7 +222,8 @@ public class NewAlumnoGUI extends JFrame {
         }
     }
 
-    private String getNivelFromIndex(int index) {
+    private String  getNivelFromIndex(int index) {
+        System.out.println(index);
         switch (index) {
             case 1 -> {
                 return "Primaria";

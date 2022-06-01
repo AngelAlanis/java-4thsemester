@@ -140,7 +140,6 @@ public class Metodos {
 
         for (int i = 1; i < respuestasEnteras.length; i++) {
             siguienteValor       = (int) (((a * respuestasEnteras[i - 1]) + c) % m);
-            System.out.println(siguienteValor);
             respuestasEnteras[i] = siguienteValor;
             respuestasFloat[i]   = respuestasEnteras[i] / (m - 1);
         }

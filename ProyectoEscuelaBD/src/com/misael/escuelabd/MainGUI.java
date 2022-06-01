@@ -78,7 +78,10 @@ public class MainGUI extends JFrame {
     private JTextField tfCustomQuery;
     private JTextField tfFinanzas;
 
-    public  JTable  tableAlumnos;
+    public  JTable tableAlumnos;
+    private JLabel labelTotalesFinanzas;
+
+    private float totalGanacias, totalPorPagar, totalPagado;
 
     Conectar conectar;
 
@@ -170,6 +173,22 @@ public class MainGUI extends JFrame {
         tableGrupos.setModel(conectar.fillTable("SELECT id_grado, clave, nivel, grado FROM grado"));
 
         tableFinanzas.setModel(conectar.fillTable("SELECT inscripcion.id_inscripcion, inscripcion.id_alumno, alumno.matricula, alumno.nombre, grado.nivel, grado.grado, monto, pagado FROM inscripcion, alumno, grado WHERE inscripcion.id_alumno = alumno.id_alumno AND inscripcion.id_grado = grado.id_grado"));
+
+        totalPorPagar = 0;
+        totalPagado   = 0;
+        totalGanacias = 0;
+
+        for (int i = 0; i < tableFinanzas.getRowCount(); i++) {
+            totalPorPagar += Float.parseFloat(String.valueOf(tableFinanzas.getValueAt(i, 6)));
+            totalPagado += Float.parseFloat(String.valueOf(tableFinanzas.getValueAt(i, 7)));
+        }
+
+        totalPorPagar = (totalPagado - totalPorPagar) * -1;
+        totalGanacias = totalPagado;
+
+        String resumenFinanzas = "Por pagar: $" + totalPorPagar + "    Pagado: $" + totalPagado + "     Ganancias: $" + totalGanacias;
+
+        labelTotalesFinanzas.setText(resumenFinanzas);
     }
 
     private void cargarPanelAlumno() {
